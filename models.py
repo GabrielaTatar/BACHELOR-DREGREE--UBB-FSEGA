@@ -12,6 +12,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+
 class Utilizatori(db.Model):
   __tablename__ = 'utilizatori'
 
@@ -22,9 +23,9 @@ class Utilizatori(db.Model):
   tip_utilizator = db.Column(db.String(50), nullable = False)
   public_id = db.Column(db.String(50), unique = True)
   admin = db.Column(db.Boolean)
-  pacienti = db.relationship('Pacienti', backref='Utilizatori', uselist=False)
-  nutritionisti = db.relationship('Nutritionisti', backref='Utilizatori', uselist=False)
-  psihologi = db.relationship('Psihologi', backref='Utilizatori', uselist=False)
+  pacienti = db.relationship('Pacienti', backref='utilizatori', uselist=False)
+  nutritionisti = db.relationship('Nutritionisti', backref='utilizatori', uselist=False)
+  psihologi = db.relationship('Psihologi', backref='utilizatori', uselist=False)
   doctori = db.relationship('Doctori', backref='utilizatori', uselist=False)
   
   def __init__(self, nume_utilizator, parola, email, tip_utilizator, public_id, admin):
@@ -43,11 +44,12 @@ class Fisa_Medicala(db.Model):
   istoric_medical = db.Column(db.String(50), nullable = False)
   observatii = db.Column(db.String(500), nullable = False)
   pacienti_id_pacient = db.Column(db.Integer, db.ForeignKey('pacienti.id_pacient'), unique = True)
-  consultatii = db.relationship('Consultatii', backref = 'Fisa_Medicala')  
+  consultatii = db.relationship('Consultatii', backref = 'fisa_medicala')  
 
-  def __init__(self, istoric_medical, observatii):
+  def __init__(self, istoric_medical, observatii, pacienti_id_pacient):
     self.istoric_medical = istoric_medical
     self.observatii = observatii
+    self.pacienti_id_pacient = pacienti_id_pacient
 
 
 class Pacienti(db.Model):
@@ -63,9 +65,9 @@ class Pacienti(db.Model):
   localitate = db.Column(db.String(100), nullable = False)
   adresa = db.Column(db.String(200), nullable = False)
   utilizatori_id_utilizator = db.Column(db.Integer, db.ForeignKey('utilizatori.id_utilizator'))
-  fisa_medicala = db.relationship('Fisa_Medicala', backref='Pacienti', uselist = False)
+  fisa_medicala = db.relationship('Fisa_Medicala', backref='pacienti', uselist = False)
 
-  def __init__(self, nume, prenume, CNP, nr_telefon, email, judet, localitate, adresa):
+  def __init__(self, nume, prenume, CNP, nr_telefon, email, judet, localitate, adresa, utilizatori_id_utilizator):
     self.nume = nume
     self.prenume = prenume
     self.CNP = CNP
@@ -74,6 +76,7 @@ class Pacienti(db.Model):
     self.judet = judet
     self.localitate = localitate
     self.adresa = adresa
+    self.utilizatori_id_utilizator = utilizatori_id_utilizator
 
 
 class Nutritionisti(db.Model):
@@ -87,16 +90,18 @@ class Nutritionisti(db.Model):
   contact = db.Column(db.String(100), nullable = False)
   recenzii = db.Column(db.String(300), nullable = False)
   utilizatori_id_utilizator = db.Column(db.Integer, db.ForeignKey('utilizatori.id_utilizator'))
-  nutritie_indicatie = db.relationship('Nutritie_Indicatie', backref = 'Nutritionisti')
+  nutritie_indicatie = db.relationship('Nutritie_Indicatie', backref = 'nutritionisti')
   cadre_medicale_id_cadru = db.Column(db.Integer, db.ForeignKey('cadre_medicale.id_cadru'))
 
-  def __init__(self, nume, prenume, cabinet, descriere, contact, recenzii):
+  def __init__(self, nume, prenume, cabinet, descriere, contact, recenzii,  utilizatori_id_utilizator, cadre_medicale_id_cadru):
     self.nume = nume
     self.prenume = prenume
     self.cabinet = cabinet
     self.descriere = descriere
     self.contact = contact
     self.recenzii = recenzii
+    self.utilizatori_id_utilizator = utilizatori_id_utilizator
+    self.cadre_medicale_id_cadru = cadre_medicale_id_cadru
 
 
 class Doctori(db.Model):
@@ -110,11 +115,11 @@ class Doctori(db.Model):
   descriere = db.Column(db.String(200), nullable = False)
   contact = db.Column(db.String(100), nullable = False, unique = True)
   recenzii = db.Column(db.String(300), nullable = False)
-  utilizatori_id = db.Column(db.Integer, db.ForeignKey('utilizatori.id_utilizator'))
+  utilizatori_id_utilizator = db.Column(db.Integer, db.ForeignKey('utilizatori.id_utilizator'))
   retete_medicale = db.relationship('Retete_Medicale', backref = 'doctori')
   cadre_medicale_id_cadru = db.Column(db.Integer, db.ForeignKey('cadre_medicale.id_cadru'))
   
-  def __init__(self, nume, prenume, tip_doctor, cabinet, descriere, contact, recenzii, utilizatori_id, cadre_medicale_id_cadru):
+  def __init__(self, nume, prenume, tip_doctor, cabinet, descriere, contact, recenzii, utilizatori_id_utilizator, cadre_medicale_id_cadru):
     self.nume = nume
     self.prenume = prenume
     self.tip_doctor = tip_doctor
@@ -122,7 +127,7 @@ class Doctori(db.Model):
     self.descriere = descriere
     self.contact = contact
     self.recenzii = recenzii
-    self.utilizatori_id = utilizatori_id
+    self.utilizatori_id_utilizator = utilizatori_id_utilizator
     self.cadre_medicale_id_cadru = cadre_medicale_id_cadru
 
 
@@ -137,7 +142,7 @@ class Psihologi(db.Model):
   contact = db.Column(db.String(100), nullable = False, unique = True)
   recenzii = db.Column(db.String(300), nullable = False)
   utilizatori_id_utilizator = db.Column(db.Integer, db.ForeignKey('utilizatori.id_utilizator'))
-  psiholog_terapie = db.relationship('Psiholog_Terapie', backref = 'Psihologi')
+  psiholog_terapie = db.relationship('Psiholog_Terapie', backref = 'psihologi')
   cadre_medicale_id_cadru = db.Column(db.Integer, db.ForeignKey('cadre_medicale.id_cadru'))
 
   def __init__(self, nume, prenume, cabinet, descriere, contact, recenzii, utilizatori_id_utilizator, cadre_medicale_id_cadru):
@@ -161,9 +166,12 @@ class Nutritie_Indicatie(db.Model):
   nutritionisti_id_nutritionist = db.Column(db.Integer, db.ForeignKey('nutritionisti.id_nutritionist'))
   planuri_alimentare_id_plan = db.Column(db.Integer, db.ForeignKey('planuri_alimentare.id_plan'))
 
-  def __init__(self, denumire, pret):
+  def __init__(self, denumire, pret, formular_de_prescriptie_id_formular, nutritionisti_id_nutritionist, planuri_alimentare_id_plan):
     self.denumire = denumire
     self.pret = pret
+    self.formular_de_prescriptie_id_formular = formular_de_prescriptie_id_formular
+    self.nutritionisti_id_nutritionist = nutritionisti_id_nutritionist
+    self.planuri_alimentare_id_plan = planuri_alimentare_id_plan
 
 
 class Planuri_Alimentare(db.Model):
@@ -173,7 +181,7 @@ class Planuri_Alimentare(db.Model):
   dieta = db.Column(db.String(500), nullable = False)
   ingrediente = db.Column(db.String(500), nullable = False)
   observatii = db.Column(db.String(500), nullable = False)
-  nutritie_indicatie = db.relationship('Nutritie_Indicatie', backref = 'Planuri_Alimentare')
+  nutritie_indicatie = db.relationship('Nutritie_Indicatie', backref = 'planuri_alimentare')
 
   def __init__(self, dieta, ingrediente, observatii):
     self.dieta = dieta
@@ -190,9 +198,11 @@ class Retete_Medicale(db.Model):
   formular_de_prescriptie_id_formular = db.Column(db.Integer, db.ForeignKey('formular_de_prescriptie.id_formular'))
   doctori_id_doctor = db.Column(db.Integer, db.ForeignKey('doctori.id_doctor'))
 
-  def __init__(self, denumire_diagnostic, medicamente):
+  def __init__(self, denumire_diagnostic, medicamente, formular_de_prescriptie_id_formular, doctori_id_doctor):
     self.denumire_diagnostic = denumire_diagnostic
     self.medicamente = medicamente
+    self.formular_de_prescriptie_id_formular = formular_de_prescriptie_id_formular
+    self.doctori_id_doctor = doctori_id_doctor
 
 
 class Psiholog_Terapie(db.Model):
@@ -205,9 +215,12 @@ class Psiholog_Terapie(db.Model):
   psihologi_id_psiholog = db.Column(db.Integer, db.ForeignKey('psihologi.id_psiholog'))
   terapii_id_terapie = db.Column(db.Integer, db.ForeignKey('terapii.id_terapie'))
 
-  def __init__(self, denumire, pret):
+  def __init__(self, denumire, pret, formular_de_prescriptie_id_formular, psihologi_id_psiholog, terapii_id_terapie):
     self.denumire = denumire
     self.pret = pret
+    self.formular_de_prescriptie_id_formular = formular_de_prescriptie_id_formular
+    self.psihologi_id_psiholog = psihologi_id_psiholog
+    self.terapii_id_terapie = terapii_id_terapie
 
 
 class Terapii(db.Model):
@@ -231,7 +244,7 @@ class Consultatii(db.Model):
   id_consultatie = db.Column(db.Integer, primary_key = True)
   data = db.Column(db.Date, default=date.today, nullable = False)
   simptome = db.Column(db.String(400), nullable = False)
-  diagostic = db.Column(db.String(200), nullable = False)
+  diagnostic = db.Column(db.String(200), nullable = False)
   durata = db.Column(db.Integer, nullable = False)
   pret = db.Column(db.Integer, nullable = False)
   schema_tratament = db.Column(db.String(500), nullable = False)
@@ -239,13 +252,16 @@ class Consultatii(db.Model):
   fisa_medicala_id_fisa = db.Column(db.Integer, db.ForeignKey('fisa_medicala.id_fisa'))
   cadre_medicale_id_cadru = db.Column(db.Integer, db.ForeignKey('cadre_medicale.id_cadru'))
   
-  def __init__(self, data, simptome, diagnostic, durata, pret, schema_tratament):
+  def __init__(self, data, simptome, diagnostic, durata, pret, schema_tratament, formular_de_prescriptie_id_formular, fisa_medicala_id_fisa, cadre_medicale_id_cadru):
     self.data = data
     self.simptome = simptome
     self.diagnostic = diagnostic
     self.durata = durata
     self.pret = pret
-    self.schema_tratament = schema_tratament 
+    self.schema_tratament = schema_tratament
+    self.formular_de_prescriptie_id_formular = formular_de_prescriptie_id_formular
+    self.fisa_medicala_id_fisa = fisa_medicala_id_fisa
+    self.cadre_medicale_id_cadru = cadre_medicale_id_cadru 
 
 
 class Formular_de_prescriptie(db.Model):
@@ -253,10 +269,10 @@ class Formular_de_prescriptie(db.Model):
 
   id_formular = db.Column(db.Integer, primary_key = True)
   tip_formular = db.Column(db.String(100), nullable = False)
-  nutritie_indicatie = db.relationship('Nutritie_Indicatie', backref='Formular_de_prescriptie', uselist = False)
-  psiholog_terapie = db.relationship('Psiholog_Terapie', backref='Formular_de_prescriptie', uselist = False)
-  retete_medicale = db.relationship('Retete_Medicale', backref='Formular_de_prescriptie', uselist = False)
-  consultatii = db.relationship('Consultatii', backref='Formular_de_prescriptie', uselist = False)
+  nutritie_indicatie = db.relationship('Nutritie_Indicatie', backref='formular_de_prescriptie', uselist = False)
+  psiholog_terapie = db.relationship('Psiholog_Terapie', backref='formular_de_prescriptie', uselist = False)
+  retete_medicale = db.relationship('Retete_Medicale', backref='formular_de_prescriptie', uselist = False)
+  consultatii = db.relationship('Consultatii', backref='formular_de_prescriptie', uselist = False)
 
   def __init__(self, tip_formular):
     self.tip_formular = tip_formular
@@ -267,14 +283,14 @@ class Cadre_medicale(db.Model):
 
   id_cadru = db.Column(db.Integer, primary_key = True)
   tip_cadru_medical = db.Column(db.String(100), nullable = False)
-  nutritionisti = db.relationship('Nutritionisti', backref = 'Cadre_medicale', uselist = False)
-  doctori = db.relationship('Doctori', backref = 'Cadre_medicale', uselist = False)
-  psihologi = db.relationship('Psihologi', backref = 'Cadre_medicale', uselist = False)
-  consultatii = db.relationship('Consultatii', backref = 'Cadre_medicale')
+  nutritionisti = db.relationship('Nutritionisti', backref = 'cadre_medicale', uselist = False)
+  doctori = db.relationship('Doctori', backref = 'cadre_medicale', uselist = False)
+  psihologi = db.relationship('Psihologi', backref = 'cadre_medicale', uselist = False)
+  consultatii = db.relationship('Consultatii', backref = 'cadre_medicale')
 
   def __init__(self, tip_cadru_medical):
     self.tip_cadru_medical = tip_cadru_medical
-  
+    
 
 with app.app_context():
   db.create_all()

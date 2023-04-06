@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
-from models import db, Doctori, Utilizatori, Pacienti, Nutritionisti, Psihologi, Fisa_Medicala, Planuri_Alimentare, Consultatii, Retete_Medicale, Terapii, Formular_de_prescriptie, Cadre_medicale
+from models import db, Doctori, Utilizatori, Pacienti, Nutritionisti, Psihologi, Fisa_Medicala, Planuri_Alimentare, Consultatii, Retete_Medicale, Terapii, Formular_de_prescriptie, Cadre_medicale, Nutritie_Indicatie, Psiholog_Terapie
 import uuid
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
@@ -17,53 +17,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:''@localhost/oncologie'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
-# ma = Marshmallow(app)
-
-
-# class DoctoriSchema(ma.Schema):
-#    class Meta:
-#       fields = ("nume", "prenume", "tip_doctor", "cabinet", "descriere", "contact", "recenzii")
-
-# doctor_schema = DoctoriSchema()
-# doctori_schema = DoctoriSchema(many=True)
-
-# @app.route('/doctor', methods = ['POST'])
-# def add_doctor():
-#    nume = request.json['nume']
-#    prenume = request.json['prenume']
-#    tip_doctor = request.json['tip_doctor']
-#    cabinet = request.json['cabinet']
-#    descriere = request.json['descriere']
-#    contact = request.json['contact']
-#    recenzii = request.json['recenzii']
-   
-#    my_doctori = Doctori(nume, prenume, tip_doctor, cabinet, descriere, contact, recenzii)
-#    db.session.add(my_doctori)
-#    db.session.commit()
-   
-#    return doctor_schema.jsonify(my_doctori)
-
-
-# @app.route('/get', methods = ['GET'])
-# def get_doctor():
-#    all_doctori = Doctori.query.all()
-#    result = doctori_schema.dump(all_doctori)
-
-#    return jsonify(result)
-
-
-# @app.route('/doctori/<id_doctor>/', methods = ['GET'])
-# def doctor_return(id_doctor):
-#    doctor = Doctori.query.get(id_doctor)
-#    return doctor_schema.jsonify(doctor)
-
-
-# mylist = Doctori
-
-# if mylist is not Doctori: 
-#    for x in mylist:
-#       print(x)
-
 
 def token_required(f):
     @wraps(f)
@@ -92,7 +45,7 @@ def token_required(f):
 def create_user(current_user):
 
    if not current_user.admin:
-      return jsonify({'message' : 'Cannot perform that function!'})
+     return jsonify({'message' : 'Cannot perform that function!'})
 
    data = request.get_json()
    
@@ -157,12 +110,12 @@ def get_one_user(current_user, public_id):
 def promote_user(current_user, public_id):
 
    if not current_user.admin:
-      return jsonify({'message' : 'Cannot perform that function!'})
+     return jsonify({'message' : 'Cannot perform that function!'})
 
    user = Utilizatori.query.filter_by(public_id = public_id).first()
 
    if not user:
-      return jsonify({'message' : 'No user found!'})
+     return jsonify({'message' : 'No user found!'})
    
    user.admin = True
    db.session.commit()
@@ -208,6 +161,8 @@ def login():
    return make_response('Could not verify', 401, {'WWW-Authenticate' : 'Basic realm="Login required!"'})
    
 
+
+
 # HTTP METHOD
 
 @app.route('/doctori', methods=['POST'])
@@ -216,14 +171,12 @@ def create_doctor(current_user):
 
    data = request.get_json()
 
-  # utilizator = Utilizatori.query.filter_by(id_utilizator=current_user.id_utilizator).first()
-
    cadru_medical = Cadre_medicale(tip_cadru_medical="doctor")
 
    try:
         db.session.add(cadru_medical)
         db.session.commit()
-        doctor = Doctori(nume=data['nume'], prenume=data['prenume'], tip_doctor=data['tip_doctor'], cabinet=data['cabinet'], descriere=data['descriere'], contact=data['contact'], recenzii=data['recenzii'], utilizatori_id=data['utilizatori_id'], cadre_medicale_id_cadru=cadru_medical.id_cadru)
+        doctor = Doctori(nume=data['nume'], prenume=data['prenume'], tip_doctor=data['tip_doctor'], cabinet=data['cabinet'], descriere=data['descriere'], contact=data['contact'], recenzii=data['recenzii'], utilizatori_id_utilizator=data['utilizatori_id'], cadre_medicale_id_cadru=cadru_medical.id_cadru)
 
         try:
            db.session.add(doctor)
@@ -235,29 +188,487 @@ def create_doctor(current_user):
         return jsonify({'mesaj': 'Eroare la adăugarea cadrului medical!'}), 500
      
 
+@app.route('/doctori', methods=['GET'])
+@token_required
+def get_all_doctors(current_user):
+   
+   global Doctori
+   
+   doctors = Doctori.query.all()
+   
+   output = []
+   
+   for Doctori in doctors:
+      doctors_data = {}
+      doctors_data['nume'] = Doctori.nume
+      doctors_data['prenume'] = Doctori.prenume
+      doctors_data['tip_doctor'] = Doctori.tip_doctor
+      doctors_data['cabinet'] = Doctori.cabinet
+      doctors_data['descriere'] = Doctori.descriere
+      doctors_data['contact'] = Doctori.contact
+      doctors_data['recenzii'] = Doctori.recenzii
+      doctors_data['utilizatori_id_utilizator'] = Doctori.utilizatori_id_utilizator
+      doctors_data['cadre_medicale_id_cadru'] = Doctori.cadre_medicale_id_cadru
+      output.append(doctors_data)
+
+      
+   return jsonify({'doctors' : output})
+
+
+@app.route('/doctori/<id_doctor>', methods=['GET'])
+@token_required
+def get_one_doctors(current_user, id_doctor):
+   
+   global Doctori
+   
+   doctor = Doctori.query.filter_by(id_doctor = id_doctor).first()
+   
+   
+   doctors_data = {}
+   doctors_data['nume'] = doctor.nume
+   doctors_data['prenume'] = doctor.prenume
+   doctors_data['tip_doctor'] = doctor.tip_doctor
+   doctors_data['cabinet'] = doctor.cabinet
+   doctors_data['descriere'] = doctor.descriere
+   doctors_data['contact'] = doctor.contact
+   doctors_data['recenzii'] = doctor.recenzii
+   doctors_data['utilizatori_id_utilizator'] = doctor.utilizatori_id_utilizator
+   doctors_data['cadre_medicale_id_cadru'] = doctor.cadre_medicale_id_cadru
+      
+   return jsonify({'doctor' : doctors_data})
+
+     
+     
 @app.route('/psihologi', methods=['POST'])
 @token_required
-def create_teraphist(current_user):
+def create_teraphists(current_user):
 
    data = request.get_json()
 
-  # utilizator = Utilizatori.query.filter_by(id_utilizator=current_user.id_utilizator).first()
-
    cadru_medical = Cadre_medicale(tip_cadru_medical="psiholog")
 
-  
-   db.session.add(cadru_medical)
-   db.session.commit()
-   psiholog = Psihologi(nume=data['nume'], prenume=data['prenume'], cabinet=data['cabinet'], descriere=data['descriere'], contact=data['contact'], recenzii=data['recenzii'], utilizatori_id_utilizator=data['utilizatori_id'], cadre_medicale_id_cadru=cadru_medical.id_cadru)
+   try:
+      db.session.add(cadru_medical)
+      db.session.commit()
+      psiholog = Psihologi(nume=data['nume'], prenume=data['prenume'], cabinet=data['cabinet'], descriere=data['descriere'], contact=data['contact'], recenzii=data['recenzii'], utilizatori_id_utilizator=data['utilizatori_id'], cadre_medicale_id_cadru=cadru_medical.id_cadru)
+     
+      try:
+         db.session.add(psiholog)
+         db.session.commit()
+         return jsonify({'mesaj': 'Psiholog adăugat cu succes!'})
+      except:
+         return jsonify({'mesaj': 'Eroare la adăugarea psihologului!'}), 500
+   except:
+        return jsonify({'mesaj': 'Eroare la adăugarea cadrului medical!'}), 500
 
-        
-   db.session.add(psiholog)
-   db.session.commit()
-   return jsonify({'mesaj': 'Psiholog adăugat cu succes!'})
-        
 
-
+@app.route('/psihologi', methods=['GET'])
+@token_required
+def get_all_theraphists(current_user):
    
+   global Psihologi
+   
+   theraphists = Psihologi.query.all()
+   
+   output = []
+   
+   for Psihologi in theraphists:
+      theraphists_data = {}
+      theraphists_data['nume'] = Psihologi.nume
+      theraphists_data['prenume'] = Psihologi.prenume
+      theraphists_data['cabinet'] = Psihologi.cabinet
+      theraphists_data['descriere'] = Psihologi.descriere
+      theraphists_data['contact'] = Psihologi.contact
+      theraphists_data['recenzii'] = Psihologi.recenzii
+      theraphists_data['utilizatori_id_utilizator'] = Psihologi.utilizatori_id_utilizator
+      theraphists_data['cadre_medicale_id_cadru'] = Psihologi.cadre_medicale_id_cadru
+      output.append(theraphists_data)
+
+      
+   return jsonify({'theraphists' : output})
+
+
+@app.route('/psihologi/<id_psiholog>', methods=['GET'])
+@token_required
+def get_one_theraphist(current_user, id_psiholog):
+   
+   global Psihologi
+   
+   theraphist = Psihologi.query.filter_by(id_psiholog = id_psiholog).first()
+   
+   
+   theraphist_data = {}
+   theraphist_data['nume'] = theraphist.nume
+   theraphist_data['prenume'] = theraphist.prenume
+   theraphist_data['cabinet'] = theraphist.cabinet
+   theraphist_data['descriere'] = theraphist.descriere
+   theraphist_data['contact'] = theraphist.contact
+   theraphist_data['recenzii'] = theraphist.recenzii
+   theraphist_data['utilizatori_id_utilizator'] = theraphist.utilizatori_id_utilizator
+   theraphist_data['cadre_medicale_id_cadru'] = theraphist.cadre_medicale_id_cadru
+      
+   return jsonify({'theraphist' : theraphist_data})
+
+
+
+@app.route('/nutritionisti', methods=['POST'])
+@token_required
+def create_nutritionist(current_user):
+
+   data = request.get_json()
+
+
+   cadru_medical = Cadre_medicale(tip_cadru_medical="nutritionist")
+
+   try:
+      db.session.add(cadru_medical)
+      db.session.commit()
+      nutritionist = Nutritionisti(nume=data['nume'], prenume=data['prenume'], cabinet=data['cabinet'], descriere=data['descriere'], contact=data['contact'], recenzii=data['recenzii'], utilizatori_id_utilizator=data['utilizatori_id'], cadre_medicale_id_cadru=cadru_medical.id_cadru)
+
+      try:
+         db.session.add(nutritionist)
+         db.session.commit()
+         return jsonify({'mesaj': 'Nutritionist adăugat cu succes!'})
+      except:
+        return jsonify({'mesaj': 'Eroare la adăugarea nutritionistului!'}), 500
+   except:
+        return jsonify({'mesaj': 'Eroare la adăugarea cadrului medical!'}), 500
+ 
+
+
+@app.route('/nutritionisti', methods=['GET'])
+@token_required
+def get_all_nutritionists(current_user):
+   
+   global Nutritionisti
+   
+   nutritionists = Nutritionisti.query.all()
+   
+   output = []
+   
+   for Nutritionisti in nutritionists:
+      nutritionists_data = {}
+      nutritionists_data['nume'] = Nutritionisti.nume
+      nutritionists_data['prenume'] = Nutritionisti.prenume
+      nutritionists_data['cabinet'] = Nutritionisti.cabinet
+      nutritionists_data['descriere'] = Nutritionisti.descriere
+      nutritionists_data['contact'] = Nutritionisti.contact
+      nutritionists_data['recenzii'] = Nutritionisti.recenzii
+      nutritionists_data['utilizatori_id_utilizator'] = Nutritionisti.utilizatori_id_utilizator
+      nutritionists_data['cadre_medicale_id_cadru'] = Nutritionisti.cadre_medicale_id_cadru
+      output.append(nutritionists_data)
+
+      
+   return jsonify({'nutritionisti' : output})
+   
+
+@app.route('/nutritionisti/<id_nutritionist>', methods=['GET'])
+@token_required
+def get_one_nutritionist(current_user, id_nutritionist):
+   
+   global Nutritionisti
+   
+   nutritionist = Nutritionisti.query.filter_by(id_nutritionist = id_nutritionist).first()
+   
+   
+   nutritionist_data = {}
+   nutritionist_data['nume'] = nutritionist.nume
+   nutritionist_data['prenume'] = nutritionist.prenume
+   nutritionist_data['cabinet'] = nutritionist.cabinet
+   nutritionist_data['descriere'] = nutritionist.descriere
+   nutritionist_data['contact'] = nutritionist.contact
+   nutritionist_data['recenzii'] = nutritionist.recenzii
+   nutritionist_data['utilizatori_id_utilizator'] = nutritionist.utilizatori_id_utilizator
+   nutritionist_data['cadre_medicale_id_cadru'] = nutritionist.cadre_medicale_id_cadru
+      
+   return jsonify({'nutritionist' : nutritionist_data})
+   
+
+@app.route('/consultatii', methods=['POST'])
+@token_required
+def create_consultations(current_user):
+
+   data = request.get_json()
+   
+   new_consultations = Consultatii(data = data['data'], simptome = data['simptome'], diagnostic = data['diagnostic'], durata = data['durata'], pret = data['pret'], schema_tratament = data['schema_tratament'], formular_de_prescriptie_id_formular = data['formular_de_prescriptie_id_formular'], fisa_medicala_id_fisa = data['fisa_medicala_id_fisa'], cadre_medicale_id_cadru = data['cadre_medicale_id_cadru'])
+   
+   db.session.add(new_consultations)
+   db.session.commit()
+   
+   return jsonify({'mesaj': 'Consultatie adăugată cu succes!'})
+
+
+@app.route('/consultatii/<id_consultatie>', methods = ['PUT'])
+@token_required
+def update_consultation(current_user, id_consultatie):
+   
+   consultation = Consultatii.query.filter_by(id_consultatie = id_consultatie).first()  
+   
+   if not consultation:
+      return jsonify({'message' : 'No consultation found!'})
+   
+   #consultation.schema_tratament = True
+   #consultation.diagnostic = True
+   
+   data = request.get_json()
+   
+   consultation.diagnostic = data['diagnostic']
+   
+   
+   # consultation.diagnostic = request.json.get('diagnostic', consultation.diagnostic)
+   # consultation.schema_tratament = request.json.get('schema_tratament', consultation.schema_tratament)
+
+   db.session.commit()
+   
+   return jsonify({'message' : 'Update made by the healthcare professional!'})
+
+
+@app.route('/consultatii/<fisa_medicala_id_fisa>', methods=['GET'])
+@token_required
+def get_one_consultation_by_fisa_medicala_id_fisa(current_user, fisa_medicala_id_fisa):
+   
+   global Consultatii
+   
+   consultation = Consultatii.query.filter_by(fisa_medicala_id_fisa = fisa_medicala_id_fisa).first()
+   
+   
+   consultation_data = {}
+   consultation_data['data'] = consultation.data
+   consultation_data['simptome'] = consultation.simptome
+   consultation_data['diagnostic'] = consultation.diagnostic
+   consultation_data['durata'] = consultation.durata
+   consultation_data['pret'] = consultation.pret
+   consultation_data['schema_tratament'] = consultation.schema_tratament
+   consultation_data['formular_de_prescriptie_id_formular'] = consultation.formular_de_prescriptie_id_formular
+   consultation_data['fisa_medicala_id_fisa'] = consultation.fisa_medicala_id_fisa
+   consultation_data['cadre_medicale_id_cadru'] = consultation.cadre_medicale_id_cadru
+      
+   return jsonify({'nutritionist' : consultation_data})
+
+
+@app.route('/consultatii/<id_consultatie>', methods=['GET'])
+@token_required
+def get_one_consultation_by_id_consultatie(current_user, id_consultatie):
+   
+   global Consultatii
+   
+   consultation = Consultatii.query.filter_by(id_consultatie = id_consultatie).first()
+   
+   
+   consultation_data = {}
+   consultation_data['data'] = consultation.data
+   consultation_data['simptome'] = consultation.simptome
+   consultation_data['diagnostic'] = consultation.diagnostic
+   consultation_data['durata'] = consultation.durata
+   consultation_data['pret'] = consultation.pret
+   consultation_data['schema_tratament'] = consultation.schema_tratament
+   consultation_data['formular_de_prescriptie_id_formular'] = consultation.formular_de_prescriptie_id_formular
+   consultation_data['fisa_medicala_id_fisa'] = consultation.fisa_medicala_id_fisa
+   consultation_data['cadre_medicale_id_cadru'] = consultation.cadre_medicale_id_cadru
+      
+   return jsonify({'nutritionist' : consultation_data})
+      
+
+@app.route('/fisa_medicala/<id_fisa>', methods=['GET'])
+@token_required
+def get_one_medical_record(current_user, id_fisa):
+   
+   global Fisa_Medicala
+   
+   medical_record = Fisa_Medicala.query.filter_by(id_fisa = id_fisa).first()
+   
+   
+   medical_record_data = {}
+   medical_record_data['istoric_medical'] = medical_record.istoric_medical
+   medical_record_data['observatii'] = medical_record.observatii
+   medical_record_data['pacienti_id_pacient'] = medical_record.pacienti_id_pacient
+      
+   return jsonify({'medical_record' : medical_record_data})
+
+
+@app.route('/pacienti/<id_pacient>', methods=['GET'])
+@token_required
+def get_one_patient(current_user, id_pacient):
+   
+   global Pacienti
+   
+   patient = Pacienti.query.filter_by(id_pacient = id_pacient).first()
+   
+   
+   patient_data = {}
+   patient_data['nume'] = patient.nume
+   patient_data['prenume'] = patient.prenume
+   patient_data['CNP'] = patient.CNP
+   patient_data['nr_telefon'] = patient.nr_telefon
+   patient_data['email'] = patient.email
+   patient_data['judet'] = patient.judet
+   patient_data['localitate'] = patient.localitate
+   patient_data['adresa'] = patient.adresa
+   patient_data['utilizatori_id_utilizator'] = patient.utilizatori_id_utilizator
+      
+   return jsonify({'patient' : patient_data})
+
+
+@app.route('/pacienti/<fisa_medicala>', methods=['GET'])
+@token_required
+def get_one_patient_by_fisa_medicala(current_user, fisa_medicala):
+   
+   global Pacienti
+   
+   patient = Pacienti.query.filter_by(fisa_medicala = fisa_medicala).first()
+   
+   
+   patient_data = {}
+   patient_data['nume'] = patient.nume
+   patient_data['prenume'] = patient.prenume
+   patient_data['CNP'] = patient.CNP
+   patient_data['nr_telefon'] = patient.nr_telefon
+   patient_data['email'] = patient.email
+   patient_data['judet'] = patient.judet
+   patient_data['localitate'] = patient.localitate
+   patient_data['adresa'] = patient.adresa
+   patient_data['utilizatori_id_utilizator'] = patient.utilizatori_id_utilizator
+      
+   return jsonify({'patient' : patient_data})
+
+
+@app.route('/retete_medicale', methods=['POST'])
+@token_required
+def create_medical_prescriptions(current_user):
+
+   data = request.get_json()
+   
+   new_medical_prescriptions = Retete_Medicale(denumire_diagnostic = data['denumire_diagnostic'], medicamente = data['medicamente'], formular_de_prescriptie_id_formular = data['formular_de_prescriptie_id_formular'], doctori_id_doctor = data['doctori_id_doctor'])
+   
+   db.session.add(new_medical_prescriptions)
+   db.session.commit()
+   
+   return jsonify({'mesaj': 'Reteta medicala adăugată cu succes!'})
+
+
+@app.route('/retete_medicale/<formular_de_prescriptie_id_formular>', methods=['GET'])
+@token_required
+def get_one_patient_by_formular_de_prescriptie(current_user, formular_de_prescriptie_id_formular):
+   
+   global Retete_Medicale
+   
+   medical_prescriptions = Retete_Medicale.query.filter_by(formular_de_prescriptie_id_formular = formular_de_prescriptie_id_formular).first()
+   
+   
+   medical_prescriptions_data = {}
+   medical_prescriptions_data['denumire_diagnostic'] = medical_prescriptions.denumire_diagnostic
+   medical_prescriptions_data['medicamente'] = medical_prescriptions.medicamente
+   medical_prescriptions_data['doctori_id_doctor'] = medical_prescriptions.doctori_id_doctor
+   medical_prescriptions_data['formular_de_prescriptie_id_formular'] = medical_prescriptions.formular_de_prescriptie_id_formular
+      
+   return jsonify({'patient' : medical_prescriptions_data})
+
+
+@app.route('/nutritie_indicatie', methods=['POST'])
+@token_required
+def create_nutritional_indication(current_user):
+
+   data = request.get_json()
+   
+   new_nutritional_indication = Nutritie_Indicatie(denumire = data['denumire'], pret = data['pret'], formular_de_prescriptie_id_formular = data['formular_de_prescriptie_id_formular'], nutritionisti_id_nutritionist = data['nutritionisti_id_nutritionist'], planuri_alimentare_id_plan = data['planuri_alimentare_id_plan'])
+   
+   db.session.add(new_nutritional_indication)
+   db.session.commit()
+   
+   return jsonify({'mesaj': 'Indicatiile nutritionale adăugate cu succes!'})
+
+
+@app.route('/nutritie_indicatie/<formular_de_prescriptie_id_formular>', methods=['GET'])
+@token_required
+def get_one_nutritional_indication_by_formular_de_prescriptie(current_user, formular_de_prescriptie_id_formular):
+   
+   global Nutritie_Indicatie
+   
+   nutritional_indication = Nutritie_Indicatie.query.filter_by(formular_de_prescriptie_id_formular = formular_de_prescriptie_id_formular).first()
+   
+   
+   nutritional_indication_data = {}
+   nutritional_indication_data['denumire'] = nutritional_indication.denumire
+   nutritional_indication_data['pret'] = nutritional_indication.pret
+   nutritional_indication_data['nutritionisti_id_nutritionist'] = nutritional_indication.nutritionisti_id_nutritionist
+   nutritional_indication_data['formular_de_prescriptie_id_formular'] = nutritional_indication.formular_de_prescriptie_id_formular
+   nutritional_indication_data['planuri_alimentare_id_plan'] = nutritional_indication.planuri_alimentare_id_plan
+
+      
+   return jsonify({'nutritional_indication' : nutritional_indication_data})
+
+
+@app.route('/psiholog_terapie', methods=['POST'])
+@token_required
+def create_psychotherapy(current_user):
+
+   data = request.get_json()
+   
+   new_psychotherapy = Psiholog_Terapie(denumire = data['denumire'], pret = data['pret'], formular_de_prescriptie_id_formular = data['formular_de_prescriptie_id_formular'], psihologi_id_psiholog = data['psihologi_id_psiholog'], terapii_id_terapie = data['terapii_id_terapie'])
+   
+   db.session.add(new_psychotherapy)
+   db.session.commit()
+   
+   return jsonify({'mesaj': 'Terapia psihologului adăugată cu succes!'})
+
+
+@app.route('/psiholog_terapie/<formular_de_prescriptie_id_formular>', methods=['GET'])
+@token_required
+def get_one_psychotherapy_by_formular_de_prescriptie(current_user, formular_de_prescriptie_id_formular):
+   
+   global Psiholog_Terapie
+   
+   psychotherapy = Psiholog_Terapie.query.filter_by(formular_de_prescriptie_id_formular = formular_de_prescriptie_id_formular).first()
+   
+   
+   psychotherapy_data = {}
+   psychotherapy_data['denumire'] = psychotherapy.denumire
+   psychotherapy_data['pret'] = psychotherapy.pret
+   psychotherapy_data['psihologi_id_psiholog'] = psychotherapy.psihologi_id_psiholog
+   psychotherapy_data['formular_de_prescriptie_id_formular'] = psychotherapy.formular_de_prescriptie_id_formular
+   psychotherapy_data['terapii_id_terapie'] = psychotherapy.terapii_id_terapie
+      
+   return jsonify({'psychotherapy' : psychotherapy_data})
+
+
+@app.route('/planuri_alimentare/<id_plan>', methods=['GET'])
+@token_required
+def get_one_diet_plan(current_user, id_plan):
+   
+   global Planuri_Alimentare
+   
+   diet_plan = Planuri_Alimentare.query.filter_by(id_plan = id_plan).first()
+   
+   
+   diet_plan_data = {}
+   diet_plan_data['dieta'] = diet_plan.dieta
+   diet_plan_data['ingrediente'] = diet_plan.ingrediente
+   diet_plan_data['observatii'] = diet_plan.observatii
+      
+   return jsonify({'diet_plan' : diet_plan_data})
+
+
+@app.route('/planuri_alimentare', methods=['GET'])
+@token_required
+def get_all_diet_plan(current_user):
+   
+   global Planuri_Alimentare
+   
+   diet_plans = Planuri_Alimentare.query.all()
+   
+   output = []
+   
+   for Planuri_Alimentare in diet_plans:
+      diet_plans_data = {}
+      diet_plans_data['dieta'] = Planuri_Alimentare.dieta
+      diet_plans_data['ingrediente'] = Planuri_Alimentare.ingrediente
+      diet_plans_data['observatii'] = Planuri_Alimentare.observatii
+      output.append(diet_plans_data)
+
+      
+   return jsonify({'diet_plans' : output})
+
+
 
 
    
