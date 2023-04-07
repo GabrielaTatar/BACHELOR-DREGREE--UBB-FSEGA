@@ -390,7 +390,7 @@ def create_consultations(current_user):
 
    data = request.get_json()
    
-   new_consultations = Consultatii(data = data['data'], simptome = data['simptome'], diagnostic = data['diagnostic'], durata = data['durata'], pret = data['pret'], schema_tratament = data['schema_tratament'], formular_de_prescriptie_id_formular = data['formular_de_prescriptie_id_formular'], fisa_medicala_id_fisa = data['fisa_medicala_id_fisa'], cadre_medicale_id_cadru = data['cadre_medicale_id_cadru'])
+   new_consultations = Consultatii(data = data['data'], simptome = data['simptome'], diagnostic = data['diagnostic'], durata = data['durata'], pret = data['pret'], schema_tratament = data['schema_tratament'], fisa_medicala_id_fisa = data['fisa_medicala_id_fisa'], cadre_medicale_id_cadru = data['cadre_medicale_id_cadru'])
    
    db.session.add(new_consultations)
    db.session.commit()
@@ -402,22 +402,20 @@ def create_consultations(current_user):
 @token_required
 def update_consultation(current_user, id_consultatie):
    
-   consultation = Consultatii.query.filter_by(id_consultatie = id_consultatie).first()  
+   consultation = Consultatii.query.get(id_consultatie) 
    
    if not consultation:
       return jsonify({'message' : 'No consultation found!'})
    
-   #consultation.schema_tratament = True
-   #consultation.diagnostic = True
    
-   data = request.get_json()
+   diagnostic = request.json['diagnostic']
+   schema_tratament = request.json['schema_tratament']
+   formular_de_prescriptie_id_formular = request.json['formular_de_prescriptie_id_formular']
    
-   consultation.diagnostic = data['diagnostic']
+   consultation.diagnostic = diagnostic
+   consultation.schema_tratament = schema_tratament
+   consultation.formular_de_prescriptie_id_formular = formular_de_prescriptie_id_formular
    
-   
-   # consultation.diagnostic = request.json.get('diagnostic', consultation.diagnostic)
-   # consultation.schema_tratament = request.json.get('schema_tratament', consultation.schema_tratament)
-
    db.session.commit()
    
    return jsonify({'message' : 'Update made by the healthcare professional!'})
@@ -486,6 +484,29 @@ def get_one_medical_record(current_user, id_fisa):
    return jsonify({'medical_record' : medical_record_data})
 
 
+@app.route('/pacienti', methods=['POST'])
+@token_required
+def create_medical_patient(current_user):
+
+   data = request.get_json()
+   
+   try:
+      new_user = Utilizatori(nume_utilizator = data['nume_utilizator'], parola = data['parola'], email = data['email'], tip_utilizator = 'pacient', public_id = str(uuid.uuid4()), admin = False)
+      db.session.add(new_user)
+      db.session.commit()
+      
+      try:
+         new_patient = Pacienti(nume = data['nume'], prenume = data['prenume'], CNP = data['CNP'], nr_telefon = data['nr_telefon'], email = data['email'], judet = data['judet'], localitate = data['localitate'], adresa = data['adresa'], utilizatori_id_utilizator = new_user.id_utilizator)
+   
+         db.session.add(new_patient)
+         db.session.commit()
+         return jsonify({'mesaj': 'Pacient adăugat cu succes!'})
+      except:
+         return jsonify({'mesaj': 'Eroare la adăugarea pacientului!'})
+   except: 
+      return jsonify({'mesaj' : 'Eroare la adaugarea utilizatorului'})
+   
+
 @app.route('/pacienti/<id_pacient>', methods=['GET'])
 @token_required
 def get_one_patient(current_user, id_pacient):
@@ -509,13 +530,17 @@ def get_one_patient(current_user, id_pacient):
    return jsonify({'patient' : patient_data})
 
 
-@app.route('/pacienti/<fisa_medicala>', methods=['GET'])
+@app.route('/pacientDinConsultatie/<id_consultatie>', methods=['GET'])
 @token_required
-def get_one_patient_by_fisa_medicala(current_user, fisa_medicala):
+def get_one_patient_by_fisa_medicala(current_user, id_consultatie):
    
-   global Pacienti
+   global Consultatii
    
-   patient = Pacienti.query.filter_by(fisa_medicala = fisa_medicala).first()
+   consultation = Consultatii.query.filter_by(id_consultatie = id_consultatie).first()
+   
+   medical_file = Fisa_Medicala.query.filter_by(id_fisa = consultation.fisa_medicala_id_fisa).first()
+   
+   patient = Pacienti.query.filter_by(id_pacient = medical_file.pacienti_id_pacient).first()
    
    
    patient_data = {}
@@ -538,12 +563,21 @@ def create_medical_prescriptions(current_user):
 
    data = request.get_json()
    
-   new_medical_prescriptions = Retete_Medicale(denumire_diagnostic = data['denumire_diagnostic'], medicamente = data['medicamente'], formular_de_prescriptie_id_formular = data['formular_de_prescriptie_id_formular'], doctori_id_doctor = data['doctori_id_doctor'])
-   
-   db.session.add(new_medical_prescriptions)
-   db.session.commit()
-   
-   return jsonify({'mesaj': 'Reteta medicala adăugată cu succes!'})
+   formular_de_prescriptie = Formular_de_prescriptie(tip_formular="reteta_medicala")
+
+   try:
+      db.session.add(formular_de_prescriptie)
+      db.session.commit()
+      new_medical_prescriptions = Retete_Medicale(denumire_diagnostic = data['denumire_diagnostic'], medicamente = data['medicamente'], formular_de_prescriptie_id_formular = formular_de_prescriptie.id_formular, doctori_id_doctor = data['doctori_id_doctor'])
+
+      try:
+         db.session.add(new_medical_prescriptions)
+         db.session.commit()
+         return jsonify({'mesaj': 'Reteta medicala adăugată cu succes!', 'id_formular_reteta_medicala' : formular_de_prescriptie.id_formular})
+      except:
+        return jsonify({'mesaj': 'Eroare la adăugarea retetei!'}), 500
+   except:
+        return jsonify({'mesaj': 'Eroare la adăugarea formularului!'}), 500
 
 
 @app.route('/retete_medicale/<formular_de_prescriptie_id_formular>', methods=['GET'])
@@ -568,14 +602,23 @@ def get_one_patient_by_formular_de_prescriptie(current_user, formular_de_prescri
 @token_required
 def create_nutritional_indication(current_user):
 
-   data = request.get_json()
-   
-   new_nutritional_indication = Nutritie_Indicatie(denumire = data['denumire'], pret = data['pret'], formular_de_prescriptie_id_formular = data['formular_de_prescriptie_id_formular'], nutritionisti_id_nutritionist = data['nutritionisti_id_nutritionist'], planuri_alimentare_id_plan = data['planuri_alimentare_id_plan'])
-   
-   db.session.add(new_nutritional_indication)
-   db.session.commit()
-   
-   return jsonify({'mesaj': 'Indicatiile nutritionale adăugate cu succes!'})
+   data = request.get_json() 
+
+   formular_de_prescriptie = Formular_de_prescriptie(tip_formular="nutritie_indicatie")
+
+   try:
+      db.session.add(formular_de_prescriptie)
+      db.session.commit()
+      new_nutritional_indication = Nutritie_Indicatie(denumire = data['denumire'], pret = data['pret'], formular_de_prescriptie_id_formular = formular_de_prescriptie.id_formular, nutritionisti_id_nutritionist = data['nutritionisti_id_nutritionist'], planuri_alimentare_id_plan = data['planuri_alimentare_id_plan'])
+
+      try:
+         db.session.add(new_nutritional_indication)
+         db.session.commit()
+         return jsonify({'mesaj': 'Nutritie indicatie adăugată cu succes!', 'id_formular_nutritie_indicatie' : formular_de_prescriptie.id_formular})
+      except:
+        return jsonify({'mesaj': 'Eroare la adăugarea indicatiei!'}), 500
+   except:
+        return jsonify({'mesaj': 'Eroare la adăugarea formularului!'}), 500
 
 
 @app.route('/nutritie_indicatie/<formular_de_prescriptie_id_formular>', methods=['GET'])
@@ -604,12 +647,21 @@ def create_psychotherapy(current_user):
 
    data = request.get_json()
    
-   new_psychotherapy = Psiholog_Terapie(denumire = data['denumire'], pret = data['pret'], formular_de_prescriptie_id_formular = data['formular_de_prescriptie_id_formular'], psihologi_id_psiholog = data['psihologi_id_psiholog'], terapii_id_terapie = data['terapii_id_terapie'])
-   
-   db.session.add(new_psychotherapy)
-   db.session.commit()
-   
-   return jsonify({'mesaj': 'Terapia psihologului adăugată cu succes!'})
+   formular_de_prescriptie = Formular_de_prescriptie(tip_formular="psiholog_terapie")
+
+   try:
+      db.session.add(formular_de_prescriptie)
+      db.session.commit()
+      new_psychotherapy = Psiholog_Terapie(denumire = data['denumire'], pret = data['pret'], formular_de_prescriptie_id_formular = formular_de_prescriptie.id_formular, psihologi_id_psiholog = data['psihologi_id_psiholog'], terapii_id_terapie = data['terapii_id_terapie'])
+
+      try:
+         db.session.add(new_psychotherapy)
+         db.session.commit()
+         return jsonify({'mesaj': 'Psiholog terapie adăugat cu succes!', 'id_formular_psiholog_terapie' : formular_de_prescriptie.id_formular})
+      except:
+        return jsonify({'mesaj': 'Eroare la adăugarea terapiei!'}), 500
+   except:
+        return jsonify({'mesaj': 'Eroare la adăugarea formularului!'}), 500
 
 
 @app.route('/psiholog_terapie/<formular_de_prescriptie_id_formular>', methods=['GET'])
@@ -667,6 +719,45 @@ def get_all_diet_plan(current_user):
 
       
    return jsonify({'diet_plans' : output})
+
+
+@app.route('/terapii/<id_terapie>', methods=['GET'])
+@token_required
+def get_one_therapy(current_user, id_terapie):
+   
+   global Terapii
+   
+   therapy = Terapii.query.filter_by(id_terapie = id_terapie).first()
+   
+   
+   therapy_data = {}
+   therapy_data['tip_terapie'] = therapy.tip_terapie
+   therapy_data['durata'] = therapy.durata
+   therapy_data['observatii'] = therapy.observatii
+      
+   return jsonify({'therapy' : therapy_data})
+
+
+@app.route('/terapii', methods=['GET'])
+@token_required
+def get_all_therapies(current_user):
+   
+   global Terapii
+   
+   therapies = Terapii.query.all()
+   
+   output = []
+   
+   for Terapii in therapies:
+      therapies_data = {}
+      therapies_data['tip_terapie'] = Terapii.tip_terapie
+      therapies_data['durata'] = Terapii.durata
+      therapies_data['observatii'] = Terapii.observatii
+      output.append(therapies_data)
+
+      
+   return jsonify({'therapies' : output})
+
 
 
 
