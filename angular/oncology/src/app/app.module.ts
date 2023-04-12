@@ -14,11 +14,15 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTabsModule} from '@angular/material/tabs';
 import { FormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
+import { MessagesComponent } from './messages/messages.component';
+import { UtilizatoriComponent } from './utilizatori/utilizatori.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    MessagesComponent,
+    UtilizatoriComponent
   ],
   imports: [
     BrowserModule,
