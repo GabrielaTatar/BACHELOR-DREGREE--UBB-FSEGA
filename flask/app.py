@@ -495,8 +495,7 @@ def get_one_medical_record(current_user, id_fisa):
 
 
 @app.route('/pacienti', methods=['POST'])
-@token_required
-def create_medical_patient(current_user):
+def create_medical_patient():
 
    data = request.get_json()
    
@@ -507,11 +506,14 @@ def create_medical_patient(current_user):
       
       try:
          new_patient = Pacienti(nume = data['nume'], prenume = data['prenume'], CNP = data['CNP'], nr_telefon = data['nr_telefon'], email = data['email'], judet = data['judet'], localitate = data['localitate'], adresa = data['adresa'], utilizatori_id_utilizator = new_user.id_utilizator)
-   
+         print(new_patient.nume)
          db.session.add(new_patient)
          db.session.commit()
-         response = jsonify({'mesaj': 'Pacient adăugat cu succes!'})
-         response.headers.add('Access-Control-Allow-Origin', '*')
+         
+         print("a trecut de commit")
+         token = jwt.encode({'public_id' : new_user.public_id, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=60)}, app.config['SECRET_KEY'])
+         print(token)
+         response = jsonify({'token' : token})
          return response
       except:
          return jsonify({'mesaj': 'Eroare la adăugarea pacientului!'})

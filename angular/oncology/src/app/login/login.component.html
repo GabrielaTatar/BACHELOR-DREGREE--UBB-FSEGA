@@ -1,22 +1,38 @@
-<mat-toolbar>
-    <span>Bine ati venit!</span>
-</mat-toolbar>
-<mat-card class="my-card">
-    <mat-card-content>
-        <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate class="my-form">
-            <mat-form-field class="full-width">
-                <mat-label>Nume utilizator</mat-label>
-                <input type="text" class="form-control" [(ngModel)]="form.nume_utilizator" required minlength="3" maxlength="20" #nume_utilizator="ngModel" [ngClass]="{ 'is-invalid': f.submitted && nume_utilizator.errors }" matInput placeholder="Nume utilizator" name="nume_utilizator"
-                    required>
-            </mat-form-field>
-            <mat-form-field class="full-width">
-                <mat-label>Parola</mat-label>
-                <input type="password" class="form-control" name="parola" [(ngModel)]="form.parola" required minlength="6" #parola="ngModel" [ngClass]="{ 'is-invalid': f.submitted && parola.errors }" matInput placeholder="Parola" name="parola" required>
-            </mat-form-field>
+<div class="col-md-12">
+    <div class="card card-container">
+        <img id="profile-img" src="https://imaginidesktop3d.files.wordpress.com/2013/01/1.jpeg" class="profile-img-card" />
+        <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+            <div class="form-group">
+                <label for="nume_utilizator">Username</label>
+                <input type="text" class="form-control" name="nume_utilizator" [(ngModel)]="form.nume_utilizator" required #nume_utilizator="ngModel" [ngClass]="{ 'is-invalid': f.submitted && nume_utilizator.errors }" />
+                <div *ngIf="nume_utilizator.errors && f.submitted" class="invalid-feedback">
+                    Nume utilizator is required!
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="parola">Parola</label>
+                <input type="parola" class="form-control" name="parola" [(ngModel)]="form.parola" required minlength="6" #parola="ngModel" [ngClass]="{ 'is-invalid': f.submitted && parola.errors }" />
+                <div *ngIf="parola.errors && f.submitted" class="invalid-feedback">
+                    <div *ngIf="parola.errors['required']">Parola is required</div>
+                    <!-- <div *ngIf="parola.errors['minlength']">
+                        Password must be at least 6 characters
+                    </div> -->
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary btn-block">
+          Login
+        </button>
+            </div>
+            <div class="form-group">
+                <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger" role="alert">
+                    Login failed: {{ errorMessage }}
+                </div>
+            </div>
         </form>
-    </mat-card-content>
-    <mat-card-actions>
-        <button mat-raised-button (click)="onSubmit()" color="primary">Autentificare</button>
 
-    </mat-card-actions>
-</mat-card>
+        <div class="alert alert-success" *ngIf="isLoggedIn">
+            Logged in as
+        </div>
+    </div>
+</div>

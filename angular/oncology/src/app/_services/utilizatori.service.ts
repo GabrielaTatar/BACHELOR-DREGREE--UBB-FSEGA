@@ -8,7 +8,6 @@ const API_URL = 'http://127.0.0.1:5000/';
   providedIn: 'root',
 })
 export class UserService {
-  getPublicContent: any;
   constructor(private http: HttpClient) {}
 
 

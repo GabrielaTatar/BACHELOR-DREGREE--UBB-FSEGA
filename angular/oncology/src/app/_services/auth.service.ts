@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { StorageService } from './storage.service';
 
 const AUTH_API = 'http://127.0.0.1:5000/';
 
@@ -12,7 +13,7 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private storageService: StorageService) {}
 
   login(nume_utilizator: string, parola: string): Observable<any> {
     const str = nume_utilizator + ":" + parola;

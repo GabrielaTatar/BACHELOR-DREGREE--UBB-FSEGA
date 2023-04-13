@@ -1,54 +1,122 @@
-<mat-toolbar>
-    <span>Inregistrare</span>
-</mat-toolbar>
-<mat-card class="my-card">
-    <mat-card-content>
-        <form class="my-form">
-            <mat-form-field class="full-width">
-                <mat-label>Nume utilizator</mat-label>
-                <input matInput placeholder="Nume utilizator" name="nume_utilizator" required>
-            </mat-form-field>
-            <mat-form-field class="full-width">
-                <mat-label>Parola</mat-label>
-                <input matInput placeholder="Parola" name="parola" required>
-            </mat-form-field>
+<div class="col-md-12">
+    <div class="card card-container">
+        <img id="profile-img" src="https://mindenlivrareflori.md/wp-content/uploads/2022/12/lalele.png" class="profile-img-card" />
+        <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+            <div class="form-group">
+                <label for="username">Nume Utilizator</label>
+                <input type="text" class="form-control" name="nume_utilizator" [(ngModel)]="form.nume_utilizator" required minlength="3" maxlength="20" #nume_utilizator="ngModel" [ngClass]="{ 'is-invalid': f.submitted && nume_utilizator.errors }" />
+                <div class="invalid-feedback" *ngIf="nume_utilizator.errors && f.submitted">
+                    <div *ngIf="nume_utilizator.errors['required']">Nume utilizator este necesar!</div>
+                    <div *ngIf="nume_utilizator.errors['minlength']">
+                        Numele utilizatorului trebuie sa aiba minim 3 caractere!
+                    </div>
+                    <div *ngIf="nume_utilizator.errors['maxlength']">
+                        Numele utilizatorului trebuie sa aiba minim 20 caractere!
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="parola">Parola</label>
+                <input type="parola" class="form-control" name="parola" [(ngModel)]="form.parola" required minlength="6" #parola="ngModel" [ngClass]="{ 'is-invalid': f.submitted && parola.errors }" />
+                <div class="invalid-feedback" *ngIf="parola.errors && f.submitted">
+                    <div *ngIf="parola.errors['required']">Parola este necesara!</div>
+                    <div *ngIf="parola.errors['minlength']">
+                        Parola trebuie sa aiba minim 6 caractere!
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" [(ngModel)]="form.email" required email #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.errors }" />
+                <div class="invalid-feedback" *ngIf="email.errors && f.submitted">
+                    <div *ngIf="email.errors['required']">Email-ul este necesar!</div>
+                    <div *ngIf="email.errors['email']">
+                        Email-ul trebuie sa contina o adresa valida!
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="nume">Nume</label>
+                <input type="nume" class="form-control" name="nume" [(ngModel)]="form.nume" #nume="ngModel" [ngClass]="{ 'is-invalid': f.submitted && nume.errors }" />
+                <div class="invalid-feedback" *ngIf="nume.errors && f.submitted">
+                    <div *ngIf="nume.errors['required']">Numele este necesar!</div>
+                    <div *ngIf="nume.errors['nume']">
 
-            <mat-form-field class="full-width">
-                <mat-label>Email</mat-label>
-                <input matInput placeholder="Email" name="email" required>
-            </mat-form-field>
-            <mat-form-field class="full-width">
-                <mat-label>Nume</mat-label>
-                <input matInput placeholder="Nume" name="nume">
-            </mat-form-field>
-            <mat-form-field class="full-width">
-                <mat-label>Prenume</mat-label>
-                <input matInput placeholder="Prenume" name="prenume">
-            </mat-form-field>
-            <mat-form-field class="full-width">
-                <mat-label>CNP</mat-label>
-                <input matInput placeholder="CNP" name="CNP" required>
-            </mat-form-field>
-            <mat-form-field class="full-width">
-                <mat-label>Numar telefon</mat-label>
-                <input matInput placeholder="Numar telefon" name="nr_telefon" required>
-            </mat-form-field>
-            <mat-form-field class="full-width">
-                <mat-label>Judet</mat-label>
-                <input matInput placeholder="Judet" name="judet" required>
-            </mat-form-field>
-            <mat-form-field class="full-width">
-                <mat-label>Localitate</mat-label>
-                <input matInput placeholder="Localitate" name="localitate" required>
-            </mat-form-field>
-            <mat-form-field class="full-width">
-                <mat-label>Adresa</mat-label>
-                <input matInput placeholder="Adresa" name="adresa" required>
-            </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="prenume">Prenume</label>
+                <input type="prenume" class="form-control" name="prenume" [(ngModel)]="form.prenume" #prenume="ngModel" [ngClass]="{ 'is-invalid': f.submitted && prenume.errors }" />
+                <div class="invalid-feedback" *ngIf="prenume.errors && f.submitted">
+                    <div *ngIf="prenume.errors['required']">Prenumele este necesar!</div>
+                    <div *ngIf="prenume.errors['prenume']">
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="CNP">CNP</label>
+                <input type="CNP" class="form-control" name="CNP" [(ngModel)]="form.CNP" #CNP="ngModel" [ngClass]="{ 'is-invalid': f.submitted && CNP.errors }" />
+                <div class="invalid-feedback" *ngIf="CNP.errors && f.submitted">
+                    <div *ngIf="CNP.errors['required']">CNP este necesar!</div>
+                    <div *ngIf="CNP.errors['CNP']">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="nr_telefon">Numar telefon</label>
+                <input type="nr_telefon" class="form-control" name="nr_telefon" [(ngModel)]="form.nr_telefon" #nr_telefon="ngModel" [ngClass]="{ 'is-invalid': f.submitted && nr_telefon.errors }" />
+                <div class="invalid-feedback" *ngIf="nr_telefon.errors && f.submitted">
+                    <div *ngIf="nr_telefon.errors['required']">Numarul de telefon este necesar!</div>
+                    <div *ngIf="nr_telefon.errors['nr_telefon']">
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="judet">Judet</label>
+                <input type="judet" class="form-control" name="judet" [(ngModel)]="form.judet" #judet="ngModel" [ngClass]="{ 'is-invalid': f.submitted && judet.errors }" />
+                <div class="invalid-feedback" *ngIf="judet.errors && f.submitted">
+                    <div *ngIf="judet.errors['required']">Judetul este necesar!</div>
+                    <div *ngIf="judet.errors['judet']">
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="localitate">Localitate</label>
+                <input type="localitate" class="form-control" name="localitate" [(ngModel)]="form.localitate" #localitate="ngModel" [ngClass]="{ 'is-invalid': f.submitted && localitate.errors }" />
+                <div class="invalid-feedback" *ngIf="localitate.errors && f.submitted">
+                    <div *ngIf="localitate.errors['required']">Localitatea este necesar!</div>
+                    <div *ngIf="localitate.errors['localitate']">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="adresa">Adresa</label>
+                <input type="adresa" class="form-control" name="adresa" [(ngModel)]="form.adresa" #adresa="ngModel" [ngClass]="{ 'is-invalid': f.submitted && adresa.errors }" />
+                <div class="invalid-feedback" *ngIf="adresa.errors && f.submitted">
+                    <div *ngIf="adresa.errors['required']">Adresa este necesar!</div>
+                    <div *ngIf="adresa.errors['adresa']">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary btn-block">Sign Up</button>
+            </div>
+
+            <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+                Signup failed!<br />{{ errorMessage }}
+            </div>
         </form>
-    </mat-card-content>
-    <mat-card-actions>
-        <button mat-raised-button (click)="onSubmit()" color="primary">Inregistrare</button>
 
-    </mat-card-actions>
-</mat-card>
+        <div class="alert alert-success" *ngIf="isSuccessful">
+            Your registration is successful!
+        </div>
+    </div>
+</div>
