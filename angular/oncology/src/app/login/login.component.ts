@@ -1,34 +1,55 @@
-import { Component } from '@angular/core';
-
-
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../_services/auth.service';
+import { StorageService } from '../_services/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  title = 'demoApp';
-  nume_utilizator!: string;
-  parola!: string;
-  rnume_utilizator!: string;
-  rparola!: string;
-  rconfirmare_parola!: string;
-  remail!: string;
-  rnume!: string;
-  rprenume!: string;
-  rCNP!: string;
-  rnumar_telefon!: string;
-  rjudet!: string;
-  rlocalitate!: string;
-  radresa!: string;
+export class LoginComponent implements OnInit {
+  form: any = {
+    nume_utilizator: null,
+    parola: null
+  };
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+  //roles: string[] = [];
 
+  constructor(private authService: AuthService, private storageService: StorageService, private router: Router) { }
 
-  register() {
-
+  ngOnInit(): void {
+    if (this.storageService.isLoggedIn()) {
+      this.isLoggedIn = true;
+      //this.roles = this.storageService.getUserToken().roles;
+    }
   }
 
-  login() {
+  onSubmit(): void {
+    const { nume_utilizator, parola } = this.form;
+    console.log(nume_utilizator);
+    console.log(parola);
 
+    this.authService.login(nume_utilizator, parola).subscribe({
+      next: data => {
+        console.log(data);
+        this.storageService.saveUser(data);
+
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        //this.roles = this.storageService.getUser().roles;
+        this.router.navigateByUrl('/home');
+      },
+      error: err => {
+        this.errorMessage = err.error.message;
+        this.isLoginFailed = true;
+      }
+    });
+  }
+
+  reloadPage(): void {
+    window.location.reload();
   }
 }

@@ -1,87 +1,22 @@
-<div class="center-content">
-    <mat-card class="example-card">
-        <!-- <mat-card-header>
-            <mat-card-title>Pagina de autentificare</mat-card-title>
-        </mat-card-header> -->
-        <mat-card-content>
-            <mat-tab-group>
-                <mat-tab label="Autentificare">
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Nume utilizator</mat-label>
-                        <input matInput placeholder="Nume utilizator" value="" [(ngModel)]="nume_utilizator">
-                        <!-- <mat-icon matSuffix>email</mat-icon> -->
-                    </mat-form-field>
+<mat-toolbar>
+    <span>Bine ati venit!</span>
+</mat-toolbar>
+<mat-card class="my-card">
+    <mat-card-content>
+        <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate class="my-form">
+            <mat-form-field class="full-width">
+                <mat-label>Nume utilizator</mat-label>
+                <input type="text" class="form-control" [(ngModel)]="form.nume_utilizator" required minlength="3" maxlength="20" #nume_utilizator="ngModel" [ngClass]="{ 'is-invalid': f.submitted && nume_utilizator.errors }" matInput placeholder="Nume utilizator" name="nume_utilizator"
+                    required>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <mat-label>Parola</mat-label>
+                <input type="password" class="form-control" name="parola" [(ngModel)]="form.parola" required minlength="6" #parola="ngModel" [ngClass]="{ 'is-invalid': f.submitted && parola.errors }" matInput placeholder="Parola" name="parola" required>
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button (click)="onSubmit()" color="primary">Autentificare</button>
 
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Parola</mat-label>
-                        <input type="password" matInput placeholder="Parola" [(ngModel)]="parola">
-                        <!-- <mat-icon matSuffix>vpn_key</mat-icon> -->
-                    </mat-form-field>
-                    <button mat-button color="primary" (click)="login()">Autentificare</button>
-                </mat-tab>
-                <mat-tab label="Inregistrare">
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Nume utilizator</mat-label>
-                        <input matInput placeholder="Nume utilizator" value="" [(ngModel)]="rnume_utilizator">
-                    </mat-form-field>
-
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Email</mat-label>
-                        <input type="email" matInput placeholder="Email" value="" [(ngModel)]="remail">
-                        <mat-icon matSuffix>email</mat-icon>
-                    </mat-form-field>
-
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Parola</mat-label>
-                        <input type="password" matInput placeholder="Parola" [(ngModel)]="rparola">
-                    </mat-form-field>
-
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Confirmare parola</mat-label>
-                        <input type="password" matInput placeholder="Confirmare parola" [(ngModel)]="rconfirmare_parola">
-                    </mat-form-field>
-
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Nume</mat-label>
-                        <input matInput placeholder="Nume" value="" [(ngModel)]="rnume">
-                    </mat-form-field>
-
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Prenume</mat-label>
-                        <input matInput placeholder="Prenume" value="" [(ngModel)]="rprenume">
-                    </mat-form-field>
-
-                    <mat-form-field class="example-full-width">
-                        <mat-label>CNP</mat-label>
-                        <input matInput placeholder="CNP" value="" [(ngModel)]="rCNP">
-                    </mat-form-field>
-
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Numar telefon</mat-label>
-                        <input matInput placeholder="Numar telefon" value="" [(ngModel)]="rnumar_telefon">
-                        <mat-icon matSuffix>mode_edit</mat-icon>
-                    </mat-form-field>
-
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Judet</mat-label>
-                        <input matInput placeholder="Judet" value="" [(ngModel)]="rjudet">
-                    </mat-form-field>
-
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Localitate</mat-label>
-                        <input matInput placeholder="Localitate" value="" [(ngModel)]="rlocalitate">
-                    </mat-form-field>
-
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Adresa</mat-label>
-                        <input matInput placeholder="Adresa" value="" [(ngModel)]="radresa">
-                    </mat-form-field>
-
-                    <button class="mat-button" mat-button color="primary" (click)="register()">Inregistrare</button>
-                </mat-tab>
-            </mat-tab-group>
-
-        </mat-card-content>
-
-    </mat-card>
-</div>
+    </mat-card-actions>
+</mat-card>

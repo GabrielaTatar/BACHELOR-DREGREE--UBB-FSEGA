@@ -1,16 +1,18 @@
+from flask_cors import CORS
 from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from models import db, Doctori, Utilizatori, Pacienti, Nutritionisti, Psihologi, Fisa_Medicala, Planuri_Alimentare, Consultatii, Retete_Medicale, Terapii, Formular_de_prescriptie, Cadre_medicale, Nutritie_Indicatie, Psiholog_Terapie
 import uuid
-from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
+from werkzeug.security import generate_password_hash, check_password_hash
+
 import datetime
 from functools import wraps
 
 
 app = Flask(__name__)
-
+CORS(app, supports_credentials=True)
 
 app.config['SECRET_KEY'] = 'thisissecret'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:''@localhost/oncologie'
@@ -144,19 +146,27 @@ def delete_user(current_user, public_id):
 @app.route('/login')
 def login():
    auth = request.authorization
+   
 
    if not auth or not auth.username or not auth.password:
       return make_response('Could not verify', 401, {'WWW-Authenticate' : 'Basic realm="Login required!"'})
    
    user = Utilizatori.query.filter_by(nume_utilizator=auth.username).first()
-
+   
    if not user:
       return make_response('Could not verify', 401, {'WWW-Authenticate' : 'Basic realm="Login required!"'})
    
    if user.parola == auth.password:
-      token = jwt.encode({'public_id' : user.public_id, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
+      token = jwt.encode({'public_id' : user.public_id, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=60)}, app.config['SECRET_KEY'])
       
-      return jsonify({'token' : token})
+      response = jsonify({'token' : token})
+      
+      # response.headers.add('Access-Control-Allow-Origin', '*')
+      # response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+      # response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+      # response.headers.add('Access-Control-Allow-Credentials', 'true')
+      
+      return response
 
    return make_response('Could not verify', 401, {'WWW-Authenticate' : 'Basic realm="Login required!"'})
    
@@ -500,7 +510,9 @@ def create_medical_patient(current_user):
    
          db.session.add(new_patient)
          db.session.commit()
-         return jsonify({'mesaj': 'Pacient adăugat cu succes!'})
+         response = jsonify({'mesaj': 'Pacient adăugat cu succes!'})
+         response.headers.add('Access-Control-Allow-Origin', '*')
+         return response
       except:
          return jsonify({'mesaj': 'Eroare la adăugarea pacientului!'})
    except: 
@@ -757,10 +769,6 @@ def get_all_therapies(current_user):
 
       
    return jsonify({'therapies' : output})
-
-
-
-
 
    
 if __name__ == "__main__":

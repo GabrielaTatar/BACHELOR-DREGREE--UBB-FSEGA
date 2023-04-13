@@ -1,0 +1,54 @@
+<mat-toolbar>
+    <span>Inregistrare</span>
+</mat-toolbar>
+<mat-card class="my-card">
+    <mat-card-content>
+        <form class="my-form">
+            <mat-form-field class="full-width">
+                <mat-label>Nume utilizator</mat-label>
+                <input matInput placeholder="Nume utilizator" name="nume_utilizator" required>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <mat-label>Parola</mat-label>
+                <input matInput placeholder="Parola" name="parola" required>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Email" name="email" required>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <mat-label>Nume</mat-label>
+                <input matInput placeholder="Nume" name="nume">
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <mat-label>Prenume</mat-label>
+                <input matInput placeholder="Prenume" name="prenume">
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <mat-label>CNP</mat-label>
+                <input matInput placeholder="CNP" name="CNP" required>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <mat-label>Numar telefon</mat-label>
+                <input matInput placeholder="Numar telefon" name="nr_telefon" required>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <mat-label>Judet</mat-label>
+                <input matInput placeholder="Judet" name="judet" required>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <mat-label>Localitate</mat-label>
+                <input matInput placeholder="Localitate" name="localitate" required>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <mat-label>Adresa</mat-label>
+                <input matInput placeholder="Adresa" name="adresa" required>
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button (click)="onSubmit()" color="primary">Inregistrare</button>
+
+    </mat-card-actions>
+</mat-card>
