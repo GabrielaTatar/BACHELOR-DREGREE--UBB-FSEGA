@@ -7,7 +7,7 @@ const API_URL = 'http://127.0.0.1:5000/';
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
+export class UtilizatoriService {
   constructor(private http: HttpClient) {}
 
 

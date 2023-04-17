@@ -18,6 +18,9 @@ import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { ActivatedRoute } from '@angular/router';
+import { MediciComponent } from './medici/medici.component';
+import { PsihologiComponent } from './psihologi/psihologi.component';
+import { NutritionistiComponent } from './nutritionisti/nutritionisti.component';
 
 
 
@@ -28,7 +31,10 @@ import { ActivatedRoute } from '@angular/router';
     MessagesComponent,
     UtilizatoriComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    MediciComponent,
+    PsihologiComponent,
+    NutritionistiComponent
   ],
   imports: [
     BrowserModule,

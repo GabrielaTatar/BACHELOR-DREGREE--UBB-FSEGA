@@ -1,0 +1,20 @@
+<h1>
+    Nutritionisti
+</h1>
+
+<div class="container text-center">
+    <div class="row row-cols-3">
+
+        <div class="col" *ngFor="let item of data">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h3 class="card-title">{{item.nume}} {{item.prenume}}</h3>
+                    <h4>{{item.cabinet}} , {{item.contact}}</h4>
+                    <p class="card-text">{{item.descriere}}</p>
+                    <a href="#" class="btn btn-primary">Programează-te!</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

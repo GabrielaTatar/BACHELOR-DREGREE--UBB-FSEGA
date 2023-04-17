@@ -210,6 +210,7 @@ def get_all_doctors(current_user):
    
    for Doctori in doctors:
       doctors_data = {}
+      doctors_data['id_doctor'] = Doctori.id_doctor
       doctors_data['nume'] = Doctori.nume
       doctors_data['prenume'] = Doctori.prenume
       doctors_data['tip_doctor'] = Doctori.tip_doctor
@@ -284,6 +285,7 @@ def get_all_theraphists(current_user):
    
    for Psihologi in theraphists:
       theraphists_data = {}
+      theraphists_data['id_psiholog'] = Psihologi.id_psiholog
       theraphists_data['nume'] = Psihologi.nume
       theraphists_data['prenume'] = Psihologi.prenume
       theraphists_data['cabinet'] = Psihologi.cabinet
@@ -358,6 +360,7 @@ def get_all_nutritionists(current_user):
    
    for Nutritionisti in nutritionists:
       nutritionists_data = {}
+      nutritionists_data['id_nutritionist'] = Nutritionisti.id_nutritionist
       nutritionists_data['nume'] = Nutritionisti.nume
       nutritionists_data['prenume'] = Nutritionisti.prenume
       nutritionists_data['cabinet'] = Nutritionisti.cabinet
