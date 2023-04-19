@@ -152,12 +152,34 @@ def login():
       return make_response('Could not verify', 401, {'WWW-Authenticate' : 'Basic realm="Login required!"'})
    
    user = Utilizatori.query.filter_by(nume_utilizator=auth.username).first()
+   pacient_id = None
+   pacient = Pacienti.query.filter_by(utilizatori_id_utilizator=user.id_utilizator).first()
+   if pacient != None:
+      pacient_id = pacient.id_pacient
+   fisa_medicala_id = None
+   if user.tip_utilizator == "pacient":
+      fisa_medicala = Fisa_Medicala.query.filter_by(pacienti_id_pacient=pacient.id_pacient).first()
+      fisa_medicala_id = fisa_medicala.id_fisa
+   doctor = Doctori.query.filter_by(utilizatori_id_utilizator=user.id_utilizator).first()
+   psiholog = Psihologi.query.filter_by(utilizatori_id_utilizator=user.id_utilizator).first()
+   nutritionist = Nutritionisti.query.filter_by(utilizatori_id_utilizator=user.id_utilizator).first()
+   doctorId = None
+   cadruMedicalId = None
+   if doctor != None:
+      doctorId = doctor.id_doctor
+      cadruMedicalId = doctor.cadre_medicale_id_cadru
+   elif psiholog != None:
+      doctorId = psiholog.id_psiholog
+      cadruMedicalId = psiholog.cadre_medicale_id_cadru
+   elif nutritionist != None :
+      doctorId = nutritionist.id_nutritionist
+      cadruMedicalId = nutritionist.cadre_medicale_id_cadru
    
    if not user:
       return make_response('Could not verify', 401, {'WWW-Authenticate' : 'Basic realm="Login required!"'})
    
    if user.parola == auth.password:
-      token = jwt.encode({'public_id' : user.public_id, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=60)}, app.config['SECRET_KEY'])
+      token = jwt.encode({'user_id' : user.id_utilizator, 'user_type': user.tip_utilizator,'pacient_id':pacient_id, 'fisa_medicala_id': fisa_medicala_id, 'doctor_id':doctorId, 'cadru_medical_id':cadruMedicalId, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=60)}, app.config['SECRET_KEY'])
       
       response = jsonify({'token' : token})
       
@@ -420,10 +442,14 @@ def update_consultation(current_user, id_consultatie):
    
    diagnostic = request.json['diagnostic']
    schema_tratament = request.json['schema_tratament']
+   durata = request.json['durata']
+   pret = request.json['pret']
    formular_de_prescriptie_id_formular = request.json['formular_de_prescriptie_id_formular']
    
    consultation.diagnostic = diagnostic
    consultation.schema_tratament = schema_tratament
+   consultation.durata = durata
+   consultation.pret = pret
    consultation.formular_de_prescriptie_id_formular = formular_de_prescriptie_id_formular
    
    db.session.commit()
