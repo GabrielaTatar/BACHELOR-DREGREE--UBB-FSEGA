@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { StorageService } from './_services/storage.service';
 import { AuthService } from './_services/auth.service';
+
 
 // verificam starea de IsLoggedIn, folosind StorageService
 // daca este true obtinem rolurile utilizatorului
@@ -46,4 +47,9 @@ export class AppComponent {
     //   }
     // });
   }
+
+  reloadCurrentPage() {
+    window.location.reload();
+  }
+
 }

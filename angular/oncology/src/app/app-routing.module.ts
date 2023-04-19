@@ -7,18 +7,26 @@ import { HomeComponent } from './home/home.component';
 import { httpInterceptorProviders } from './_helpers/auth.interceptor';
 import { RouterModule, Routes } from '@angular/router';
 import { UtilizatoriComponent } from './utilizatori/utilizatori.component';
-import { MediciComponent } from './medici/medici.component';
 import { PsihologiComponent } from './psihologi/psihologi.component';
 import { NutritionistiComponent } from './nutritionisti/nutritionisti.component';
+import { MediconcologComponent } from './medici.component/mediconcolog/mediconcolog.component';
+import { ChirurgoncologComponent } from './medici.component/chirurgoncolog/chirurgoncolog.component';
+import { HematooncologComponent } from './medici.component/hematooncolog/hematooncolog.component';
+import { OncologmedicalComponent } from './medici.component/oncologmedical/oncologmedical.component';
+import { OncologradioterapeutComponent } from './medici.component/oncologradioterapeut/oncologradioterapeut.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'utilizator', component: UtilizatoriComponent },
-  { path: 'medic', component: MediciComponent },
   { path: 'psiholog', component: PsihologiComponent },
   { path: 'nutritionist', component: NutritionistiComponent },
+  { path: 'mediconcolog', component: MediconcologComponent },
+  { path: 'chirurgoncolog', component: ChirurgoncologComponent },
+  { path: 'hematooncolog', component: HematooncologComponent },
+  { path: 'oncologmedical', component: OncologmedicalComponent },
+  { path: 'oncologradioterapeut', component: OncologradioterapeutComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {path: '*', redirectTo: 'home', pathMatch: 'full'}
 ];

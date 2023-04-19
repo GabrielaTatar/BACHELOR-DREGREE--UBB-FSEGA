@@ -18,9 +18,16 @@ import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { ActivatedRoute } from '@angular/router';
-import { MediciComponent } from './medici/medici.component';
 import { PsihologiComponent } from './psihologi/psihologi.component';
 import { NutritionistiComponent } from './nutritionisti/nutritionisti.component';
+import { ConsultatiiComponent } from './consultatii/consultatii.component';
+import { AdaugareConsultatieComponent } from './adaugare.consultatie/adaugare.consultatie.component';
+import { MediconcologComponent } from './medici.component/mediconcolog/mediconcolog.component';
+import { OncologmedicalComponent } from './medici.component/oncologmedical/oncologmedical.component';
+import { OncologradioterapeutComponent } from './medici.component/oncologradioterapeut/oncologradioterapeut.component';
+import { ChirurgoncologComponent } from './medici.component/chirurgoncolog/chirurgoncolog.component';
+import { HematooncologComponent } from './medici.component/hematooncolog/hematooncolog.component';
+
 
 
 
@@ -32,9 +39,15 @@ import { NutritionistiComponent } from './nutritionisti/nutritionisti.component'
     UtilizatoriComponent,
     RegisterComponent,
     HomeComponent,
-    MediciComponent,
     PsihologiComponent,
-    NutritionistiComponent
+    NutritionistiComponent,
+    ConsultatiiComponent,
+    AdaugareConsultatieComponent,
+    MediconcologComponent,
+    OncologmedicalComponent,
+    OncologradioterapeutComponent,
+    ChirurgoncologComponent,
+    HematooncologComponent
   ],
   imports: [
     BrowserModule,

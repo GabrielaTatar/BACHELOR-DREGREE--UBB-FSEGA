@@ -18,9 +18,9 @@ export class NutritionistiService {
 
 
   getData(): Observable<any> {
-    const userToken = this.storageService.getUserToken().token;
-    httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
-    console.log(userToken);
+    // const userToken = this.storageService.getUserToken().token;
+    // httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
+    // console.log(userToken);
     console.log(httpOptions);
     const response = this.http.get(API_URL + 'nutritionisti', {responseType: 'json', headers:  httpOptions.headers, withCredentials: true});
     return response;

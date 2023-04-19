@@ -199,8 +199,7 @@ def create_doctor(current_user):
      
 
 @app.route('/doctori', methods=['GET'])
-@token_required
-def get_all_doctors(current_user):
+def get_all_doctors():
    
    global Doctori
    
@@ -274,8 +273,7 @@ def create_teraphists(current_user):
 
 
 @app.route('/psihologi', methods=['GET'])
-@token_required
-def get_all_theraphists(current_user):
+def get_all_theraphists():
    
    global Psihologi
    
@@ -349,8 +347,7 @@ def create_nutritionist(current_user):
 
 
 @app.route('/nutritionisti', methods=['GET'])
-@token_required
-def get_all_nutritionists(current_user):
+def get_all_nutritionists():
    
    global Nutritionisti
    
