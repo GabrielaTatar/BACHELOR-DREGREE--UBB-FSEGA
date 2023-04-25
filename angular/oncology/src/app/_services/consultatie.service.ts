@@ -13,16 +13,18 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class ConsultatieService {
+  isAppointmentDone: any;
+  saveAppointment: any;
+
   constructor(private http: HttpClient, private storageService: StorageService) {}
 
-  // login(nume_utilizator: string, parola: string): Observable<any> {
-  //   const str = nume_utilizator + ":" + parola;
-  //   const response = this.http.get(
-  //     AUTH_API + 'login',
-  //     {responseType: 'json', headers:  new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', "Authorization": "Basic " + btoa(str) }), withCredentials: true}
-  //   );
-  //   return response;
-  // }
+  programarileMele(fisa_medicala_id_fisa: number, data: string): Observable<any> {
+     const response = this.http.get(
+       AUTH_API + 'consultatii/' + fisa_medicala_id_fisa + '?data=' + data,
+       {responseType: 'json', headers:  new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', "Authorization": "Basic " }), withCredentials: true}
+     );
+     return response;
+  }
 
   adaugareConsultatie(data: Date, simptome: string, cadre_medicale_id_cadru: number): Observable<any> {
     const userToken = this.storageService.getUserToken().token;
@@ -41,7 +43,9 @@ export class ConsultatieService {
     );
   }
 
-  logout(): Observable<any> {
-    return this.http.post(AUTH_API + 'signout', { }, httpOptions);
-  }
+  // logout(): Observable<any> {
+  //   return this.http.post(AUTH_API + 'signout', { }, httpOptions);
+  // }
+
+
 }

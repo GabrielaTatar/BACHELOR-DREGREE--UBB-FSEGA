@@ -1,1 +1,11 @@
-home works!
+<div *ngIf="isLoggedIn">
+    <h2>Fisa medicala a utilizatorului logat:</h2>
+    <p>Nume: {{ fisaMedicala?.nume }}</p>
+    <p>Prenume: {{ fisaMedicala?.prenume }}</p>
+    <p>...</p>
+</div>
+
+<div *ngIf="!isLoggedIn">
+    <h2>Descrierea clinicii:</h2>
+    <p>Aceasta clinica ofera servicii de ...</p>
+</div>

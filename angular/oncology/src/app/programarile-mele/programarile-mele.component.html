@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Programări de consultare</h2>
+            <div class="card-deck">
+                <div class="card" *ngFor="let consultatie of consultatii">
+                    <div class="card-header">{{ consultatie.data }}</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ consultatie.pacient }}</h5>
+                        <p class="card-text"><strong>Simptome:</strong> {{ consultatie.simptome }}</p>
+                        <p class="card-text"><strong>Diagnostic:</strong> {{ consultatie.diagnostic }}</p>
+                        <p class="card-text"><strong>Durata:</strong> {{ consultatie.durata }}</p>
+                        <p class="card-text"><strong>Preț:</strong> {{ consultatie.pret }}</p>
+                        <p class="card-text"><strong>Schema de tratament:</strong> {{ consultatie.schema_tratament }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

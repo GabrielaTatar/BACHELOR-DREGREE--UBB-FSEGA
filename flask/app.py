@@ -520,6 +520,23 @@ def get_one_medical_record(current_user, id_fisa):
    return jsonify({'medical_record' : medical_record_data})
 
 
+@app.route('/fisa_medicala/<pacienti_id_pacient>', methods=['GET'])
+@token_required
+def get_medical_record_by_patient(current_user, pacienti_id_pacient):
+   
+   global Fisa_Medicala
+   
+   medical_record_by_id = Fisa_Medicala.query.filter_by(pacienti_id_pacient = pacienti_id_pacient).first()
+   
+   
+   medical_record_by_id_data = {}
+   medical_record_by_id_data['istoric_medical'] = medical_record_by_id.istoric_medical
+   medical_record_by_id_data['observatii'] = medical_record_by_id.observatii
+   medical_record_by_id_data['pacienti_id_pacient'] = medical_record_by_id.pacienti_id_pacient
+      
+   return jsonify({'medical_record_by_patient' : medical_record_by_id_data})
+
+
 @app.route('/pacienti', methods=['POST'])
 def create_medical_patient():
 

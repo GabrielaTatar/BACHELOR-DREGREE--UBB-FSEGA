@@ -27,8 +27,9 @@ import { OncologmedicalComponent } from './medici.component/oncologmedical/oncol
 import { OncologradioterapeutComponent } from './medici.component/oncologradioterapeut/oncologradioterapeut.component';
 import { ChirurgoncologComponent } from './medici.component/chirurgoncolog/chirurgoncolog.component';
 import { HematooncologComponent } from './medici.component/hematooncolog/hematooncolog.component';
-
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ProgramarileMeleComponent } from './programarile-mele/programarile-mele.component';
+import { FilterDataPipe } from './filter-data.pipe';
 
 
 @NgModule({
@@ -47,7 +48,9 @@ import { HematooncologComponent } from './medici.component/hematooncolog/hematoo
     OncologmedicalComponent,
     OncologradioterapeutComponent,
     ChirurgoncologComponent,
-    HematooncologComponent
+    HematooncologComponent,
+    ProgramarileMeleComponent,
+    FilterDataPipe
   ],
   imports: [
     BrowserModule,
@@ -57,8 +60,9 @@ import { HematooncologComponent } from './medici.component/hematooncolog/hematoo
     CommonModule,
     HttpClientModule,
     RouterModule,
-    AppRoutingModule
-  ],
+    AppRoutingModule,
+    NgbModule
+    ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })

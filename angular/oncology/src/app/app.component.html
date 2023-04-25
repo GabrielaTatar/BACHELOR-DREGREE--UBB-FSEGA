@@ -2,8 +2,8 @@
     <div class="container-fluid">
         <a class="navbar-brand">Clinica de oncologie</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-  </button>
+    <span class="navbar-toggler-icon"></span>
+</button>
         <!-- <div class="collapse navbar-collapse" id="navbarNavDropdown" routerLinkActive="active"> -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
@@ -32,7 +32,7 @@
                     <a class="nav-link" href="/abonament" routerLink="abonament">Abonamente</a>
                 </li>
                 <li class="nav-item" *ngIf="isLoggedIn">
-                    <a class="nav-link" href="/programari" routerLink="programari">Programările mele</a>
+                    <a class="nav-link" href="/programarile-mele" routerLink="programarile-mele">Programările mele</a>
                 </li>
                 <li class="nav-item" *ngIf="isLoggedIn">
                     <a class="nav-link" href="/istoric" routerLink="istoric">Istoric consultații</a>
@@ -53,8 +53,8 @@
             <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
 
                 <!-- <li class="nav-item">
-                <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
-            </li> -->
+              <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
+          </li> -->
                 <li class="nav-item">
                     <a href class="nav-link" (click)="logout()">LogOut</a>
                 </li>

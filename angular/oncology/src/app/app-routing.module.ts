@@ -14,6 +14,8 @@ import { ChirurgoncologComponent } from './medici.component/chirurgoncolog/chiru
 import { HematooncologComponent } from './medici.component/hematooncolog/hematooncolog.component';
 import { OncologmedicalComponent } from './medici.component/oncologmedical/oncologmedical.component';
 import { OncologradioterapeutComponent } from './medici.component/oncologradioterapeut/oncologradioterapeut.component';
+import { AdaugareConsultatieComponent } from './adaugare.consultatie/adaugare.consultatie.component';
+import { ProgramarileMeleComponent } from './programarile-mele/programarile-mele.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -27,6 +29,9 @@ const routes: Routes = [
   { path: 'hematooncolog', component: HematooncologComponent },
   { path: 'oncologmedical', component: OncologmedicalComponent },
   { path: 'oncologradioterapeut', component: OncologradioterapeutComponent },
+  { path: 'adaugare.consultatie', component: AdaugareConsultatieComponent },
+  { path: 'programarile-mele', component: ProgramarileMeleComponent },
+
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {path: '*', redirectTo: 'home', pathMatch: 'full'}
 ];
