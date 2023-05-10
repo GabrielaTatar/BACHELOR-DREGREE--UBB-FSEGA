@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MediciService } from '../../_services/medici.service';
 import { Doctor } from '../../models/doctor';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-mediconcolog',
@@ -12,7 +14,7 @@ export class MediconcologComponent {
   data: Array<Doctor>;
 
 
-  constructor(private medicService: MediciService) {
+  constructor(private medicService: MediciService, private router:Router) {
     // this.psiholog.getData().subscribe(data=>{
     //   console.warn(data)
     //   this.data=data
@@ -43,6 +45,10 @@ export class MediconcologComponent {
         }
 
     );
+  }
+  visitPage(id_doctor: number):void {
+    //visit page for details of medication
+    this.router.navigate(["/adaugare.consultatie",id_doctor])
   }
 
 }
