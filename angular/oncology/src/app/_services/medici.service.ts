@@ -21,8 +21,20 @@ export class MediciService {
     // const userToken = this.storageService.getUserToken().token;
     // httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
     // console.log(userToken);
-    console.log(httpOptions);
+    //console.log(httpOptions);
     const response = this.http.get(API_URL + 'doctori', {responseType: 'json', headers:  httpOptions.headers, withCredentials: true});
+    return response;
+  }
+
+
+  getDoctorInfoByDoctorId(id_doctor: number): Observable<any> {
+    console.log(id_doctor)
+    const userToken = this.storageService.getUserToken().token;
+    httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
+    const response = this.http.get(
+      API_URL + 'doctori/' + id_doctor,
+      httpOptions
+    );
     return response;
   }
 

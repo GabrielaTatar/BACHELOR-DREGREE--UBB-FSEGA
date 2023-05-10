@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Consultatie } from '../models/consultatie';
 import { ConsultatieService } from '../_services/consultatie.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { first, switchMap } from 'rxjs';
+import { Doctor } from '../models/doctor';
+import { MediciService } from '../_services/medici.service';
 
 
 @Component({
@@ -12,69 +15,72 @@ import { Router } from '@angular/router';
 })
 
 export class AdaugareConsultatieComponent implements OnInit{
+  form:FormGroup;
+  loading = false;
+  submitted = false;
+  error1 = '';
+  error = '';
+  doctor:Doctor;
 
-  form: any = {
-    simptome: null,
-    data: null
-  };
-  isAppointmentDone = false;
-  isAppointmentFailed = false;
-  errorMessage = '';
-  router: any;
 
-  constructor(private formBuilder: FormBuilder, private consultatieService: ConsultatieService) { }
-
-  ngOnInit(): void {
-
-    if (this.consultatieService.isAppointmentDone()) {
-
-      this.isAppointmentDone = true;
-    }
+  constructor(private formBuilder: FormBuilder,
+    private router: Router,
+    private consultatieService:ConsultatieService,
+    private route:ActivatedRoute,
+    private doctorService: MediciService) {
+      this.doctor = {} as Doctor;
+      this.form=this.formBuilder.group({
+        simptome: ['', Validators.required],
+        data:['',Validators.required],
+        //ora: ['', Validators.required]
+      });
   }
 
-    // this.programariForm = this.formBuilder.group({
-    //   data: ['', [Validators.required, Validators.pattern(/^\d{4}-\d{2}-\d{2}$/)]],
-    //   ora: ['', Validators.required]
-    // });
+  ngOnInit(): void {
+    this.route.params.pipe(
+      switchMap(
+        (params:Params) => this.doctorService.getDoctorInfoByDoctorId(+params['id'])
+      )).subscribe(data=>{
+        const doctorFromResponse = JSON.parse(JSON.stringify(data)).doctor;
+        this.doctor = doctorFromResponse;
+        var today = new Date();
+        this.form.setValue({
+          simptome: '',
+          data: today
+      });
+    });
 
-    // this.dataErrorMessage = 'Câmpul Data este obligatoriu și trebuie să respecte formatul yyyy-mm-dd.';
-    // this.oraErrorMessage = 'Câmpul Ora este obligatoriu.';
+  }
 
-    // this.programariForm.controls['data'].valueChanges.subscribe((value: any) => {
-    //   this.dataErrorMessage = this.programariForm.controls['data'].hasError('required') ? 'Data este obligatorie.' :
-    //     this.programariForm.controls['data'].hasError('pattern') ? 'Formatul datei trebuie sa fie yyyy-mm-dd.' :
-    //       '';
-    // });
-    // this.programariForm.controls['ora'].valueChanges.subscribe((value: any) => {
-    //   this.oraErrorMessage = this.programariForm.controls['ora'].hasError('required') ? 'Ora este obligatorie.' : '';
-    // });
+
+
+    // convenience getter for easy access to form fields
+    get f() { return this.form.controls; }
+
 
 
     onSubmit(): void {
+      this.submitted = true;
 
-      const { data, ora, simptome } = this.form;
-      console.log(data);
-      console.log(ora);
-      console.log(simptome);
+      // stop here if form is invalid
+      if (this.form.invalid) {
+          return;
+      }
 
-      this.consultatieService.adaugareConsultatie(data, ora, simptome).subscribe({
-        next: (data: any) => {
-          console.log(data);
-          this.consultatieService.saveAppointment(data);
+      this.loading = true;
 
-          this.isAppointmentFailed = false;
-          this.isAppointmentDone = true;
-          //this.roles = this.storageService.getUser().roles;
-          //this.reloadPageAndGoToHome();
-          this.router.navigateByUrl('/home');
-        },
-        error: (err: { error: { message: string; }; }) => {
-          this.errorMessage = err.error.message;
-          this.isAppointmentFailed = true;
-        }
-      })
-    }
+      this.consultatieService.adaugareConsultatie(this.f['data'].value,this.f['simptome'].value, this.doctor.cadre_medicale_id_cadru)
+          .subscribe({next: (data: any) => {
+                  this.router.navigateByUrl('/home');
+              },
+              error: (error: string)=>{
+                  this.error = "";
+                  this.loading = false;
+              }
+              });
+      }
+
+
 
 
 }
-

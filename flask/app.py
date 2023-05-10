@@ -422,7 +422,7 @@ def create_consultations(current_user):
 
    data = request.get_json()
    
-   new_consultations = Consultatii(data = data['data'], simptome = data['simptome'], diagnostic = data['diagnostic'], durata = data['durata'], pret = data['pret'], schema_tratament = data['schema_tratament'], fisa_medicala_id_fisa = data['fisa_medicala_id_fisa'], cadre_medicale_id_cadru = data['cadre_medicale_id_cadru'])
+   new_consultations = Consultatii(data = data['data'], simptome = data['simptome'], diagnostic = data['diagnostic'], durata = data['durata'], pret = data['pret'], schema_tratament = data['schema_tratament'], fisa_medicala_id_fisa = data['fisa_medicala_id_fisa'], cadre_medicale_id_cadru = data['cadre_medicale_id_cadru'], formular_de_prescriptie_id_formular = None)
    
    db.session.add(new_consultations)
    db.session.commit()

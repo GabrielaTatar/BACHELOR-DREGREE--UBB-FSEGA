@@ -28,15 +28,27 @@ export class ConsultatieService {
 
   adaugareConsultatie(data: Date, simptome: string, cadre_medicale_id_cadru: number): Observable<any> {
     const userToken = this.storageService.getUserToken().token;
-    const medicalFileId = this.storageService.getUserMedicalFileId()
+    const fisa_medicala_id_fisa = this.storageService.getUserMedicalFileId()
     httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
-    //console.log(userToken);
+    let diagnostic = "";
+    let durata = "";
+    let pret = "";
+    let schema_tratament = "";
+    console.log(userToken);
+    console.log(fisa_medicala_id_fisa);
+    console.log(data);
+    console.log(simptome);
+    console.log(cadre_medicale_id_cadru);
     return this.http.post(
       AUTH_API + 'consultatii',
       {
         data,
         simptome,
-        medicalFileId,
+        diagnostic,
+        durata,
+        pret,
+        schema_tratament,
+        fisa_medicala_id_fisa,
         cadre_medicale_id_cadru
       },
       httpOptions

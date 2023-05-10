@@ -29,7 +29,7 @@ const routes: Routes = [
   { path: 'hematooncolog', component: HematooncologComponent },
   { path: 'oncologmedical', component: OncologmedicalComponent },
   { path: 'oncologradioterapeut', component: OncologradioterapeutComponent },
-  { path: 'adaugare.consultatie', component: AdaugareConsultatieComponent },
+  { path: 'adaugare.consultatie/:id', component: AdaugareConsultatieComponent },
   { path: 'programarile-mele', component: ProgramarileMeleComponent },
 
   { path: '', redirectTo: 'home', pathMatch: 'full' },
