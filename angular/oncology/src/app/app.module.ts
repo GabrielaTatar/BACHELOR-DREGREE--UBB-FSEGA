@@ -30,6 +30,7 @@ import { HematooncologComponent } from './medici.component/hematooncolog/hematoo
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProgramarileMeleComponent } from './programarile-mele/programarile-mele.component';
 import { FilterDataPipe } from './filter-data.pipe';
+import { IonicModule } from '@ionic/angular';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { FilterDataPipe } from './filter-data.pipe';
     HttpClientModule,
     RouterModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    IonicModule
     ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

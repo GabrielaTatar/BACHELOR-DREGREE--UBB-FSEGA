@@ -32,7 +32,7 @@ def token_required(f):
             return jsonify({'message' : 'Token is missing!'}), 401
         try:
            data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
-           current_user = Utilizatori.query.filter_by(public_id=data['public_id']).first()
+           current_user = Utilizatori.query.filter_by(id_utilizator=data['user_id']).first()
         except:
            return jsonify({'message' : 'Token is invalid!'}), 401
            
@@ -508,8 +508,11 @@ def get_one_consultation_by_id_consultatie(current_user, id_consultatie):
 def get_one_medical_record(current_user, id_fisa):
    
    global Fisa_Medicala
-   
    medical_record = Fisa_Medicala.query.filter_by(id_fisa = id_fisa).first()
+   
+   
+   if medical_record is None:
+    return jsonify({'message': 'No medical file found for the specified file ID.'}), 404
    
    
    medical_record_data = {}
@@ -520,7 +523,7 @@ def get_one_medical_record(current_user, id_fisa):
    return jsonify({'medical_record' : medical_record_data})
 
 
-@app.route('/fisa_medicala/<pacienti_id_pacient>', methods=['GET'])
+@app.route('/fisa_medicala_dupa_pacient/<pacienti_id_pacient>', methods=['GET'])
 @token_required
 def get_medical_record_by_patient(current_user, pacienti_id_pacient):
    
@@ -528,6 +531,8 @@ def get_medical_record_by_patient(current_user, pacienti_id_pacient):
    
    medical_record_by_id = Fisa_Medicala.query.filter_by(pacienti_id_pacient = pacienti_id_pacient).first()
    
+   if medical_record_by_id is None:
+    return jsonify({'message': 'No medical record found for the specified patient ID.'}), 404
    
    medical_record_by_id_data = {}
    medical_record_by_id_data['istoric_medical'] = medical_record_by_id.istoric_medical

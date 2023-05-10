@@ -13,13 +13,19 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root',
 })
-export class HomeService {
+export class FisaMedicalaService {
   constructor(private http: HttpClient, private storageService: StorageService) {}
 
-  getPacientByIdFisaMedicala(pacienti_id_pacient: number): Observable<any> {
+  getFisaMedicalaByPacient(pacienti_id_pacient: number): Observable<any> {
+    //console.log(pacienti_id_pacient)
+    const userToken = this.storageService.getUserToken().token;
+    //console.log(userToken)
+    httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
+    //console.log(httpOptions)
+    //console.log(AUTH_API + 'fisa_medicala_dupa_pacient/${pacienti_id_pacient}')
     const response = this.http.get(
-      AUTH_API + 'fisa_medicala/${pacienti_id_pacient}',
-      {responseType: 'json', headers:  new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', "Authorization": "Basic " }), withCredentials: true}
+      AUTH_API + 'fisa_medicala_dupa_pacient/' + pacienti_id_pacient,
+      httpOptions
     );
     return response;
   }
