@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { PsihologiService } from '../_services/psihologi.service';
 import { Psiholog } from '../models/psiholog';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-psihologi',
@@ -10,7 +12,7 @@ import { Psiholog } from '../models/psiholog';
 export class PsihologiComponent {
   title = 'blog';
   data: Array<Psiholog>;
-  constructor(private psihologService: PsihologiService) {
+  constructor(private psihologService: PsihologiService, private router:Router) {
     // this.psiholog.getData().subscribe(data=>{
     //   console.warn(data)
     //   this.data=data
@@ -27,6 +29,10 @@ export class PsihologiComponent {
         this.data=arrayFromResponse;
       }
     );
+  }
+  visitPage(id_psiholog: number):void {
+    //visit page for details of medication
+    this.router.navigate(["/adaugare.consultatie.psiholog",id_psiholog])
   }
 
 }

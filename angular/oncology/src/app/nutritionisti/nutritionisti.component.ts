@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NutritionistiService } from '../_services/nutritionisti.service';
 import { Nutritionist } from '../models/nutritionist';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-nutritionisti',
@@ -10,7 +12,7 @@ import { Nutritionist } from '../models/nutritionist';
 export class NutritionistiComponent {
   title = 'blog';
   data: Array<Nutritionist>;
-  constructor(private nutritionistService: NutritionistiService) {
+  constructor(private nutritionistService: NutritionistiService, private router:Router) {
     // this.psiholog.getData().subscribe(data=>{
     //   console.warn(data)
     //   this.data=data
@@ -27,6 +29,11 @@ export class NutritionistiComponent {
         this.data=arrayFromResponse;
       }
     );
+  }
+
+  visitPage(id_nutritionist: number):void {
+    //visit page for details of medication
+    this.router.navigate(["/adaugare.consultatie.nutritionist",id_nutritionist])
   }
 
 }

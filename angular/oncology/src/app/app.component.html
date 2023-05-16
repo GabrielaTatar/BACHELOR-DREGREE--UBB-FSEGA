@@ -28,17 +28,20 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/nutritionist" routerLink="nutritionist">Nutritionisti</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/abonament" routerLink="abonament">Abonamente</a>
+
+                <li class="nav-item" *ngIf="isLoggedIn">
+                    <a class="nav-link" href="/programarile.mele" routerLink="programarile.mele">Programările mele</a>
                 </li>
                 <li class="nav-item" *ngIf="isLoggedIn">
-                    <a class="nav-link" href="/programarile-mele" routerLink="programarile-mele">Programările mele</a>
+                    <a class="nav-link" href="/istoric.medical" routerLink="istoric.medical">Istoric consultații</a>
                 </li>
-                <li class="nav-item" *ngIf="isLoggedIn">
-                    <a class="nav-link" href="/istoric" routerLink="istoric">Istoric consultații</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/informatii" routerLink="informatii">Informatii</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/info" role="button" data-bs-toggle="dropdown" aria-expanded="false">Informatii</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/planuri.alimentare">Planuri alimentare</a></li>
+                        <li><a class="dropdown-item" href="/terapii">Terapii</a></li>
+                        <li><a class="dropdown-item" href="/">Tratamente</a></li>
+                    </ul>
                 </li>
 
             </ul>
@@ -62,7 +65,7 @@
         </div>
     </div>
 </nav>
-<div class="container">
+<div class="container" style="width: 100%; display: block;">
     <router-outlet></router-outlet>
 </div>
 

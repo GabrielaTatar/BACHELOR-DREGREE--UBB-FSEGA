@@ -15,7 +15,12 @@ import { HematooncologComponent } from './medici.component/hematooncolog/hematoo
 import { OncologmedicalComponent } from './medici.component/oncologmedical/oncologmedical.component';
 import { OncologradioterapeutComponent } from './medici.component/oncologradioterapeut/oncologradioterapeut.component';
 import { AdaugareConsultatieComponent } from './adaugare.consultatie/adaugare.consultatie.component';
-import { ProgramarileMeleComponent } from './programarile-mele/programarile-mele.component';
+import { AdaugareConsultatiePsihologComponent } from './adaugare.consultatie.psiholog/adaugare.consultatie.psiholog.component';
+import { AdaugareConsultatieNutritionistComponent } from './adaugare.consultatie.nutritionist/adaugare.consultatie.nutritionist.component';
+import { ProgramarileMeleComponent } from './programarile.mele/programarile.mele.component';
+import { IstoricMedicalComponent } from './istoric.medical/istoric.medical.component';
+import { PlanuriAlimentareComponent } from './informatii/planuri.alimentare/planuri.alimentare.component';
+import { TerapiiComponent } from './informatii/terapii/terapii.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -30,7 +35,17 @@ const routes: Routes = [
   { path: 'oncologmedical', component: OncologmedicalComponent },
   { path: 'oncologradioterapeut', component: OncologradioterapeutComponent },
   { path: 'adaugare.consultatie/:id', component: AdaugareConsultatieComponent },
-  { path: 'programarile-mele', component: ProgramarileMeleComponent },
+  { path: 'programarile.mele', component: ProgramarileMeleComponent },
+  { path: 'adaugare.consultatie.psiholog/:id', component: AdaugareConsultatiePsihologComponent },
+  { path: 'adaugare.consultatie.nutritionist/:id', component: AdaugareConsultatieNutritionistComponent },
+  { path: 'istoric.medical', component: IstoricMedicalComponent },
+  { path: 'planuri.alimentare', component: PlanuriAlimentareComponent },
+  { path: 'terapii', component: TerapiiComponent },
+
+
+
+
+
 
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {path: '*', redirectTo: 'home', pathMatch: 'full'}

@@ -1,0 +1,84 @@
+<div class="card-body">
+
+
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group py-2">
+            <label for="simptome" class="fs-6 pb-1">Simptome</label>
+            <input type="text" formControlName="simptome" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['simptome'].errors }" />
+            <div *ngIf="submitted && f['simptome'].errors" class="invalid-feedback">
+                <div *ngIf="f['simptome'].errors">Treceti macar un simptom!</div>
+            </div>
+        </div>
+        <div class="form-group py-2">
+            <label for="data" class="fs-6 pb-1">Data</label>
+            <input type="date" formControlName="data" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['data'].errors }" />
+            <div *ngIf="submitted && f['data'].errors" class="invalid-feedback">
+                <div *ngIf="f['data'].errors">Alegeti data</div>
+            </div>
+        </div>
+        <!-- <div class="form-group py-2">
+          <label for="ora" class="fs-6 pb-1">Ora</label>
+          <input type="time" formControlName="ora" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['ora'].errors }" />
+          <div *ngIf="submitted && f['ora'].errors" class="invalid-feedback">
+              <div *ngIf="f['ora'].errors">Alegeti ora</div>
+          </div>
+      </div> -->
+
+        <button [disabled]="loading" mat-raised-button color="warn">
+<span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+Programeaza-te
+</button>
+        <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+    </form>
+</div>
+
+
+
+<!-- <div class="col-md-12">
+  <div class="card card-container">
+      <form *ngIf="!isAppointmentDone" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+          <div [formGroup]="form" class="form-group">
+              <label for="simptome">Simptome</label>
+              <textarea type="text" class="form-control" name="simptome" [(ngModel)]="form.simptome" required #simptome="ngModel" [ngClass]="{ 'is-invalid': f.submitted && simptome.errors }"></textarea>
+              <div *ngIf="simptome.errors && f.submitted" class="invalid-feedback">
+                  Nume utilizator is required!
+              </div>
+          </div>
+          <div class="form-group">
+              <label for="data">Data</label>
+              <input type="date" class="form-control" formControlName="data" id="data">
+              <div *ngIf="form.controls['data'].invalid && (form.controls['data'].dirty || form.controls['data'].touched)">
+                   <div *ngIf="programariForm.controls['data'].errors.required">Data este obligatorie.</div>
+              <div *ngIf="programariForm.controls['data'].errors.pattern">Data trebuie să fie de formatul YYYY-MM-DD.</div>
+<div *ngIf="form.controls['data'].hasError('required')">
+  {{ errorMessage }}
+</div>
+<div *ngIf="form.controls['data'].hasError('pattern')">
+  {{ errorMessage }}
+</div>
+</div>
+</div>
+<div class="form-group">
+  <label for="ora">Ora</label>
+  <input type="time" class="form-control" formControlName="ora" id="ora">
+  <div *ngIf="form.controls['ora'].invalid && (form.controls['ora'].dirty || form.controls['ora'].touched)">
+      <div *ngIf="programariForm.controls['ora'].errors.required">Ora este obligatorie.</div>
+      <div *ngIf="form.controls['ora'].hasError('required')">
+          {{ errorMessage }}
+      </div>
+  </div>
+</div>
+<div class="form-group">
+  <button class="btn btn-primary btn-block">
+      Programeaza-te!
+    </button>
+</div>
+<div class="form-group">
+  <div *ngIf="f.submitted && isAppointmentFailed" class="alert alert-danger" role="alert">
+      Programare esuata: {{ errorMessage }}
+  </div>
+</div>
+</form>
+</div>
+</div> -->

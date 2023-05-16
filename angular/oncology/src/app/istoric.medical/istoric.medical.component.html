@@ -1,0 +1,24 @@
+<h1>Istoric medical</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Data</th>
+            <th>Simptome</th>
+            <th>Diagnostic</th>
+            <th>Durata</th>
+            <th>Pret</th>
+            <th>Schema tratament</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let consultatie of consultatii">
+            <td>{{ consultatie.data }}</td>
+            <td>{{ consultatie.simptome }}</td>
+            <td>{{ consultatie.diagnostic }}</td>
+            <td>{{ consultatie.durata }}</td>
+            <td>{{ consultatie.pret }}</td>
+            <td>{{ consultatie.schema_tratament }}</td>
+        </tr>
+    </tbody>
+</table>

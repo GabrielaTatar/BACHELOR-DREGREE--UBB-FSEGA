@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProgramarileMeleComponent } from './programarile-mele.component';
+import { ProgramarileMeleComponent } from './programarile.mele.component';
 
 describe('ProgramarileMeleComponent', () => {
   let component: ProgramarileMeleComponent;

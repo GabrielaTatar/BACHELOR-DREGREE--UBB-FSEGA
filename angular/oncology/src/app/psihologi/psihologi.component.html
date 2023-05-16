@@ -12,8 +12,7 @@
                     <h3 class="card-title">{{item.nume}} {{item.prenume}}</h3>
                     <h4>{{item.cabinet}} , {{item.contact}}</h4>
                     <p class="card-text">{{item.descriere}}</p>
-                    <a href="adaugare.consultatie" class="btn btn-primary">Programează-te!</a>
-                </div>
+                    <button (click)="visitPage(item.id_psiholog)" class="btn btn-primary">Programează-te!</button> </div>
             </div>
         </div>
 

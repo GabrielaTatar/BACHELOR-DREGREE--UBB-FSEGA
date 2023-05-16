@@ -4,31 +4,29 @@ import { Consultatie } from '../models/consultatie';
 import { ConsultatieService } from '../_services/consultatie.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { first, switchMap } from 'rxjs';
-import { Doctor } from '../models/doctor';
-import { MediciService } from '../_services/medici.service';
-
+import { Nutritionist } from '../models/nutritionist';
+import { NutritionistiService } from '../_services/nutritionisti.service';
 
 @Component({
-  selector: 'app-adaugare.consultatie',
-  templateUrl: './adaugare.consultatie.component.html',
-  styleUrls: ['./adaugare.consultatie.component.css']
+  selector: 'app-adaugare.consultatie.nutritionist',
+  templateUrl: './adaugare.consultatie.nutritionist.component.html',
+  styleUrls: ['./adaugare.consultatie.nutritionist.component.css']
 })
-
-export class AdaugareConsultatieComponent implements OnInit{
+export class AdaugareConsultatieNutritionistComponent implements OnInit {
   form:FormGroup;
   loading = false;
   submitted = false;
   error1 = '';
   error = '';
-  doctor:Doctor;
+  nutritionist:Nutritionist;
 
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     private consultatieService:ConsultatieService,
     private route:ActivatedRoute,
-    private doctorService: MediciService) {
-      this.doctor = {} as Doctor;
+    private nutritionistService: NutritionistiService) {
+      this.nutritionist = {} as Nutritionist;
       this.form=this.formBuilder.group({
         simptome: ['', Validators.required],
         data:['',Validators.required],
@@ -39,10 +37,10 @@ export class AdaugareConsultatieComponent implements OnInit{
   ngOnInit(): void {
     this.route.params.pipe(
       switchMap(
-        (params:Params) => this.doctorService.getDoctorInfoByDoctorId(+params['id'])
+        (params:Params) => this.nutritionistService.getNutritionistInfoByNutritionistId(+params['id'])
       )).subscribe(data=>{
-        const doctorFromResponse = JSON.parse(JSON.stringify(data)).doctor;
-        this.doctor = doctorFromResponse;
+        const nutritionistFromResponse = JSON.parse(JSON.stringify(data)).nutritionist;
+        this.nutritionist = nutritionistFromResponse;
         var today = new Date();
         this.form.setValue({
           simptome: '',
@@ -69,9 +67,9 @@ export class AdaugareConsultatieComponent implements OnInit{
 
       this.loading = true;
 
-      this.consultatieService.adaugareConsultatie(this.f['data'].value,this.f['simptome'].value, this.doctor.cadre_medicale_id_cadru)
+      this.consultatieService.adaugareConsultatie(this.f['data'].value,this.f['simptome'].value, this.nutritionist.cadre_medicale_id_cadru)
           .subscribe({next: (data: any) => {
-                  this.router.navigateByUrl('/home');
+                  this.router.navigateByUrl('/nutritionist');
               },
               error: (error: string)=>{
                   this.error = "";
@@ -81,3 +79,4 @@ export class AdaugareConsultatieComponent implements OnInit{
       }
 
 }
+

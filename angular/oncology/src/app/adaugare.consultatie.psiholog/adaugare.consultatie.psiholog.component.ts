@@ -4,31 +4,29 @@ import { Consultatie } from '../models/consultatie';
 import { ConsultatieService } from '../_services/consultatie.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { first, switchMap } from 'rxjs';
-import { Doctor } from '../models/doctor';
-import { MediciService } from '../_services/medici.service';
-
+import { Psiholog } from '../models/psiholog';
+import { PsihologiService } from '../_services/psihologi.service';
 
 @Component({
-  selector: 'app-adaugare.consultatie',
-  templateUrl: './adaugare.consultatie.component.html',
-  styleUrls: ['./adaugare.consultatie.component.css']
+  selector: 'app-adaugare.consultatie.psiholog',
+  templateUrl: './adaugare.consultatie.psiholog.component.html',
+  styleUrls: ['./adaugare.consultatie.psiholog.component.css']
 })
-
-export class AdaugareConsultatieComponent implements OnInit{
+export class AdaugareConsultatiePsihologComponent implements OnInit {
   form:FormGroup;
   loading = false;
   submitted = false;
   error1 = '';
   error = '';
-  doctor:Doctor;
+  psiholog:Psiholog;
 
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     private consultatieService:ConsultatieService,
     private route:ActivatedRoute,
-    private doctorService: MediciService) {
-      this.doctor = {} as Doctor;
+    private psihologService: PsihologiService) {
+      this.psiholog = {} as Psiholog;
       this.form=this.formBuilder.group({
         simptome: ['', Validators.required],
         data:['',Validators.required],
@@ -39,10 +37,10 @@ export class AdaugareConsultatieComponent implements OnInit{
   ngOnInit(): void {
     this.route.params.pipe(
       switchMap(
-        (params:Params) => this.doctorService.getDoctorInfoByDoctorId(+params['id'])
+        (params:Params) => this.psihologService.getPsihologInfoByPsihologId(+params['id'])
       )).subscribe(data=>{
-        const doctorFromResponse = JSON.parse(JSON.stringify(data)).doctor;
-        this.doctor = doctorFromResponse;
+        const psihologFromResponse = JSON.parse(JSON.stringify(data)).psiholog;
+        this.psiholog = psihologFromResponse;
         var today = new Date();
         this.form.setValue({
           simptome: '',
@@ -69,7 +67,7 @@ export class AdaugareConsultatieComponent implements OnInit{
 
       this.loading = true;
 
-      this.consultatieService.adaugareConsultatie(this.f['data'].value,this.f['simptome'].value, this.doctor.cadre_medicale_id_cadru)
+      this.consultatieService.adaugareConsultatie(this.f['data'].value,this.f['simptome'].value, this.psiholog.cadre_medicale_id_cadru)
           .subscribe({next: (data: any) => {
                   this.router.navigateByUrl('/home');
               },
@@ -79,5 +77,4 @@ export class AdaugareConsultatieComponent implements OnInit{
               }
               });
       }
-
-}
+    }

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ConsultatieService } from '../_services/consultatie.service';
 
+
 @Component({
-  selector: 'app-programarile-mele',
-  templateUrl: './programarile-mele.component.html',
-  styleUrls: ['./programarile-mele.component.css']
+  selector: 'app-programarile.mele',
+  templateUrl: './programarile.mele.component.html',
+  styleUrls: ['./programarile.mele.component.css']
 })
 export class ProgramarileMeleComponent implements OnInit {
   consultatii: any;

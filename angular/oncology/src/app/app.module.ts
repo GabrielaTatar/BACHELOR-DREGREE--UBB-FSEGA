@@ -28,9 +28,14 @@ import { OncologradioterapeutComponent } from './medici.component/oncologradiote
 import { ChirurgoncologComponent } from './medici.component/chirurgoncolog/chirurgoncolog.component';
 import { HematooncologComponent } from './medici.component/hematooncolog/hematooncolog.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ProgramarileMeleComponent } from './programarile-mele/programarile-mele.component';
 import { FilterDataPipe } from './filter-data.pipe';
 import { IonicModule } from '@ionic/angular';
+import { AdaugareConsultatiePsihologComponent } from './adaugare.consultatie.psiholog/adaugare.consultatie.psiholog.component';
+import { AdaugareConsultatieNutritionistComponent } from './adaugare.consultatie.nutritionist/adaugare.consultatie.nutritionist.component';
+import { ProgramarileMeleComponent } from './programarile.mele/programarile.mele.component';
+import { IstoricMedicalComponent } from './istoric.medical/istoric.medical.component';
+import { PlanuriAlimentareComponent } from './informatii/planuri.alimentare/planuri.alimentare.component';
+import { TerapiiComponent } from './informatii/terapii/terapii.component';
 
 
 @NgModule({
@@ -50,8 +55,13 @@ import { IonicModule } from '@ionic/angular';
     OncologradioterapeutComponent,
     ChirurgoncologComponent,
     HematooncologComponent,
+    FilterDataPipe,
+    AdaugareConsultatiePsihologComponent,
+    AdaugareConsultatieNutritionistComponent,
     ProgramarileMeleComponent,
-    FilterDataPipe
+    IstoricMedicalComponent,
+    PlanuriAlimentareComponent,
+    TerapiiComponent
   ],
   imports: [
     BrowserModule,

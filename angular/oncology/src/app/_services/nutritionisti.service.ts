@@ -26,4 +26,15 @@ export class NutritionistiService {
     return response;
   }
 
+  getNutritionistInfoByNutritionistId(id_nutritionist: number): Observable<any> {
+    console.log(id_nutritionist)
+    const userToken = this.storageService.getUserToken().token;
+    httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
+    const response = this.http.get(
+      API_URL + 'nutritionisti/' + id_nutritionist,
+      httpOptions
+    );
+    return response;
+  }
+
 }
