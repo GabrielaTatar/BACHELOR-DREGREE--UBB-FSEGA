@@ -10,10 +10,7 @@
 </head>
 
 <body>
-    <div class="test">
-
-    </div>
-    <div class="full-page">
+    <div class="container-fluid background">
         <div class="d-flex justify-content-center h-100">
             <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
                 <div class="card">

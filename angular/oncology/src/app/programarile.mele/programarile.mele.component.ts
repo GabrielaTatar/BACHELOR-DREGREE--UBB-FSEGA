@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConsultatieService } from '../_services/consultatie.service';
+import { Consultatie } from '../models/consultatie';
 
 
 @Component({
@@ -8,26 +9,35 @@ import { ConsultatieService } from '../_services/consultatie.service';
   styleUrls: ['./programarile.mele.component.css']
 })
 export class ProgramarileMeleComponent implements OnInit {
-  consultatii: any;
-  fisa_medicala_id_fisa: any;
-  dataCurenta!: string;
+  consultatii:  Array<Consultatie>;
 
-  constructor(private consultatieService: ConsultatieService) {}
+  constructor(private consultatieService: ConsultatieService) {this.consultatii = [];}
 
   ngOnInit() {
-    this.dataCurenta = this.formatDate(new Date());
     this.programarileMele();
   }
 
-  programarileMele() {
-    this.consultatieService.programarileMele(this.fisa_medicala_id_fisa, this.dataCurenta).subscribe((data: any) => {
-      this.consultatii = data;
-    });
+  programarileMele(){
+    this.consultatieService.getData().subscribe(
+      data=>{
+        const arrayFromResponse: Array<Consultatie> = JSON.parse(JSON.stringify(data)).consultatii;
+        let filteredArray : Array<Consultatie> = [];
+        let currentDate = new Date();
+        currentDate.setHours(0,0,0,0);
+        for(var index in arrayFromResponse){
+          //console.log(arrayFromResponse[index].data.getTime());
+          let dateFromConsultation = new Date(arrayFromResponse[index].data);
+          dateFromConsultation.setHours(0,0,0,0);
+          if(dateFromConsultation.getTime() >= currentDate.getTime()){
+            filteredArray.push(arrayFromResponse[index]);
+          }
+        }
+        this.consultatii = filteredArray;
+        }
+
+    );
   }
 
-  formatDate(date: Date) {
-    return date.toISOString().slice(0, 10);
-  }
 }
 
 

@@ -18,12 +18,16 @@ export class ConsultatieService {
 
   constructor(private http: HttpClient, private storageService: StorageService) {}
 
-  programarileMele(fisa_medicala_id_fisa: number, data: string): Observable<any> {
-     const response = this.http.get(
-       AUTH_API + 'consultatii/' + fisa_medicala_id_fisa + '?data=' + data,
-       {responseType: 'json', headers:  new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', "Authorization": "Basic " }), withCredentials: true}
-     );
-     return response;
+
+
+  getData(): Observable<any> {
+    const file_medical_id = this.storageService.getUserMedicalFileId();
+    const userToken = this.storageService.getUserToken().token;
+    httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
+    // console.log(userToken);
+    //console.log(httpOptions);
+    const response = this.http.get(AUTH_API + 'consultatiiDupaFisa/'+ file_medical_id, {responseType: 'json', headers:  httpOptions.headers, withCredentials: true});
+    return response;
   }
 
   adaugareConsultatie(data: Date, simptome: string, cadre_medicale_id_cadru: number): Observable<any> {

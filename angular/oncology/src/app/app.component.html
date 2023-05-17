@@ -25,6 +25,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/psiholog" routerLink="psiholog">Psihologi</a>
                 </li>
+                <!-- <li class="nav-item" *ngIf="utilizatoriService.isUserPacient()"> -->
                 <li class="nav-item">
                     <a class="nav-link" href="/nutritionist" routerLink="nutritionist">Nutritionisti</a>
                 </li>
@@ -65,7 +66,7 @@
         </div>
     </div>
 </nav>
-<div class="container" style="width: 100%; display: block;">
+<div class="container-fluid background" style="width: 100%; display: block;">
     <router-outlet></router-outlet>
 </div>
 

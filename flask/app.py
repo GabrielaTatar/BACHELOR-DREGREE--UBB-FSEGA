@@ -457,27 +457,30 @@ def update_consultation(current_user, id_consultatie):
    return jsonify({'message' : 'Update made by the healthcare professional!'})
 
 
-@app.route('/consultatii/<fisa_medicala_id_fisa>', methods=['GET'])
+@app.route('/consultatiiDupaFisa/<fisa_medicala_id_fisa>', methods=['GET'])
 @token_required
 def get_one_consultation_by_fisa_medicala_id_fisa(current_user, fisa_medicala_id_fisa):
    
    global Consultatii
    
-   consultation = Consultatii.query.filter_by(fisa_medicala_id_fisa = fisa_medicala_id_fisa).first()
+   consultations = Consultatii.query.filter_by(fisa_medicala_id_fisa = fisa_medicala_id_fisa)
    
+   output = []
    
-   consultation_data = {}
-   consultation_data['data'] = consultation.data
-   consultation_data['simptome'] = consultation.simptome
-   consultation_data['diagnostic'] = consultation.diagnostic
-   consultation_data['durata'] = consultation.durata
-   consultation_data['pret'] = consultation.pret
-   consultation_data['schema_tratament'] = consultation.schema_tratament
-   consultation_data['formular_de_prescriptie_id_formular'] = consultation.formular_de_prescriptie_id_formular
-   consultation_data['fisa_medicala_id_fisa'] = consultation.fisa_medicala_id_fisa
-   consultation_data['cadre_medicale_id_cadru'] = consultation.cadre_medicale_id_cadru
+   for consultation in consultations:
+      consultation_data = {}
+      consultation_data['data'] = consultation.data
+      consultation_data['simptome'] = consultation.simptome
+      consultation_data['diagnostic'] = consultation.diagnostic
+      consultation_data['durata'] = consultation.durata
+      consultation_data['pret'] = consultation.pret
+      consultation_data['schema_tratament'] = consultation.schema_tratament
+      consultation_data['formular_de_prescriptie_id_formular'] = consultation.formular_de_prescriptie_id_formular
+      consultation_data['fisa_medicala_id_fisa'] = consultation.fisa_medicala_id_fisa
+      consultation_data['cadre_medicale_id_cadru'] = consultation.cadre_medicale_id_cadru
+      output.append(consultation_data)
       
-   return jsonify({'nutritionist' : consultation_data})
+   return jsonify({'consultatii' : output})
 
 
 @app.route('/consultatii/<id_consultatie>', methods=['GET'])
@@ -487,6 +490,9 @@ def get_one_consultation_by_id_consultatie(current_user, id_consultatie):
    global Consultatii
    
    consultation = Consultatii.query.filter_by(id_consultatie = id_consultatie).first()
+   
+   if consultation is None:
+      return jsonify({'message': 'No consultation found for the specified ID.'}), 404
    
    
    consultation_data = {}
