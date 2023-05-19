@@ -35,13 +35,16 @@ export class LoginComponent implements OnInit {
     this.authService.login(nume_utilizator, parola).subscribe({
       next: data => {
         console.log(data);
-        this.storageService.saveUser(data);
+
 
         this.isLoginFailed = false;
-        this.isLoggedIn = true;
+        this.storageService.saveUser(data);
+
         //this.roles = this.storageService.getUser().roles;
         //this.reloadPageAndGoToHome();
-        this.router.navigateByUrl('/home');
+        this.isLoggedIn = true;
+        //this.router.navigateByUrl('/home');
+        this.navigateAndReload('/home');
       },
       error: err => {
         this.errorMessage = err.error.message;
@@ -52,6 +55,13 @@ export class LoginComponent implements OnInit {
 
   reloadPage(): void {
     window.location.reload();
+}
+
+  navigateAndReload(url: string) {
+    this.router.navigateByUrl(url)
+      .then(() => {
+        window.location.reload();
+      });
 }
 
 //   reloadPageAndGoToHome(): void {
