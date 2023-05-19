@@ -8,10 +8,9 @@
                     <div class="card-body">
                         <!-- <h5 class="card-title">{{ consultatie.pacient }}</h5> -->
                         <p class="card-text"><strong>Simptome:</strong> {{ consultatie.simptome }}</p>
-                        <p class="card-text"><strong>Diagnostic:</strong> {{ consultatie.diagnostic }}</p>
-                        <p class="card-text"><strong>Durata:</strong> {{ consultatie.durata }}</p>
-                        <p class="card-text"><strong>Preț:</strong> {{ consultatie.pret }}</p>
-                        <p class="card-text"><strong>Schema de tratament:</strong> {{ consultatie.schema_tratament }}</p>
+                        <p class="card-text"><strong>Medic:</strong> {{ consultatie.nume }} {{ consultatie.prenume }}</p>
+                        <p class="card-text"><strong>Cabinet:</strong> {{ consultatie.cabinet }}</p>
+                        <p class="card-text">{{ consultatie.tip_doctor }}</p>
                     </div>
                 </div>
             </div>

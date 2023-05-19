@@ -118,6 +118,17 @@
 
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-solid fa-city"></i></span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Localitate" name="localitate" [(ngModel)]="form.localitate" #localitate="ngModel" [ngClass]="{ 'is-invalid': f.submitted && localitate.errors }" />
+                        <div class="invalid-feedback" *ngIf="localitate.errors && f.submitted">
+                            <div *ngIf="localitate.errors['required']">Localitatea este necesar!</div>
+                            <div *ngIf="localitate.errors['localitate']"></div>
+                        </div>
+                    </div>
+
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-solid fa-address-card"></i></span>
                         </div>
                         <input type="text" class="form-control" placeholder="Adresă" name="adresa" [(ngModel)]="form.adresa" #adresa="ngModel" [ngClass]="{ 'is-invalid': f.submitted && adresa.errors }" />

@@ -269,6 +269,55 @@ def get_one_doctor(current_user, id_doctor):
       
    return jsonify({'doctor' : doctors_data})
 
+
+@app.route('/doctorDupaIdCadru/<id_cadru>', methods=['GET'])
+@token_required
+def get_one_doctor_by_cadre(current_user, id_cadru):
+   
+   global Doctori
+   global Nutritionisti
+   global Psihologi
+   
+   doctor = Doctori.query.filter_by(cadre_medicale_id_cadru = id_cadru).first()
+   if doctor is None:
+      nutritionist = Nutritionisti.query.filter_by(cadre_medicale_id_cadru = id_cadru).first()
+      if nutritionist is None:
+         psiholog = Psihologi.query.filter_by(cadre_medicale_id_cadru = id_cadru).first()
+         if psiholog is None:
+            return jsonify({'message': 'No doctor found for the specified cadre ID.'}), 404
+         else:
+            doctors_data = {}
+            doctors_data['id_doctor'] = psiholog.id_psiholog
+            doctors_data['nume'] = psiholog.nume
+            doctors_data['prenume'] = psiholog.prenume
+            doctors_data['tip_doctor'] = ""
+            doctors_data['cabinet'] = psiholog.cabinet
+            doctors_data['contact'] = psiholog.contact
+            doctors_data['cadre_medicale_id_cadru'] = id_cadru
+         
+            return jsonify({'doctor' : doctors_data})
+      else:
+         doctors_data = {}
+         doctors_data['id_doctor'] = nutritionist.id_nutritionist
+         doctors_data['nume'] = nutritionist.nume
+         doctors_data['prenume'] = nutritionist.prenume
+         doctors_data['tip_doctor'] = ""
+         doctors_data['cabinet'] = nutritionist.cabinet
+         doctors_data['contact'] = nutritionist.contact
+         doctors_data['cadre_medicale_id_cadru'] = id_cadru
+            
+         return jsonify({'doctor' : doctors_data})
+   else:
+      doctors_data = {}
+      doctors_data['id_doctor'] = doctor.id_doctor
+      doctors_data['nume'] = doctor.nume
+      doctors_data['prenume'] = doctor.prenume
+      doctors_data['tip_doctor'] = doctor.tip_doctor
+      doctors_data['cabinet'] = doctor.cabinet
+      doctors_data['contact'] = doctor.contact
+      doctors_data['cadre_medicale_id_cadru'] = id_cadru
+         
+      return jsonify({'doctor' : doctors_data})
      
      
 @app.route('/psihologi', methods=['POST'])
@@ -564,15 +613,29 @@ def create_medical_patient():
          db.session.add(new_patient)
          db.session.commit()
          
-         print("a trecut de commit")
-         token = jwt.encode({'public_id' : new_user.public_id, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=60)}, app.config['SECRET_KEY'])
-         print(token)
-         response = jsonify({'token' : token})
-         return response
+         try:
+            new_fisa = Fisa_Medicala(istoric_medical = "", observatii ="", pacienti_id_pacient = new_patient.id_pacient)
+            db.session.add(new_fisa)
+            db.session.commit()
+         
+            print("a trecut de commit")
+            
+            doctorId = None
+            cadruMedicalId = None
+
+            token = jwt.encode({'user_id' : new_user.id_utilizator, 'user_type': 'pacient','pacient_id':new_patient.id_pacient, 'fisa_medicala_id': new_fisa.id_fisa, 'doctor_id':doctorId, 'cadru_medical_id':cadruMedicalId, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=60)}, app.config['SECRET_KEY'])
+            print(token)
+            response = jsonify({'token' : token})
+            return response
+         except:
+            return jsonify({'mesaj': 'Eroare la adăugarea fisei medicale!'})
       except:
          return jsonify({'mesaj': 'Eroare la adăugarea pacientului!'})
    except: 
       return jsonify({'mesaj' : 'Eroare la adaugarea utilizatorului'})
+   
+   
+
    
 
 @app.route('/pacienti/<id_pacient>', methods=['GET'])
