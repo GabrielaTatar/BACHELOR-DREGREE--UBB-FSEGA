@@ -4,7 +4,7 @@
             <h2>Programări de consultare</h2>
             <div class="card-deck">
                 <div class="card" *ngFor="let consultatie of consultatii">
-                    <div class="card-header">{{ consultatie.data }}</div>
+                    <div class="card-header">{{ consultatie.data | date:'dd/MM/yyyy' }}</div>
                     <div class="card-body">
                         <!-- <h5 class="card-title">{{ consultatie.pacient }}</h5> -->
                         <p class="card-text"><strong>Simptome:</strong> {{ consultatie.simptome }}</p>

@@ -20,7 +20,8 @@ export class FisaMedicalaService {
     //console.log(pacienti_id_pacient)
     const userToken = this.storageService.getUserToken().token;
     //console.log(userToken)
-    httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
+    if(!httpOptions.headers.has('x-access-token'))
+      httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
     //console.log(httpOptions)
     //console.log(AUTH_API + 'fisa_medicala_dupa_pacient/${pacienti_id_pacient}')
     const response = this.http.get(

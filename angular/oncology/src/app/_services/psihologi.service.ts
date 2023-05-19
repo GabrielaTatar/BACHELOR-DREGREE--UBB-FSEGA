@@ -29,7 +29,8 @@ export class PsihologiService {
   getPsihologInfoByPsihologId(id_psiholog: number): Observable<any> {
     console.log(id_psiholog)
     const userToken = this.storageService.getUserToken().token;
-    httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
+    if(!httpOptions.headers.has('x-access-token'))
+      httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
     const response = this.http.get(
       API_URL + 'psihologi/' + id_psiholog,
       httpOptions

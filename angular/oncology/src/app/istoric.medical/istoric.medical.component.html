@@ -13,7 +13,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let consultatie of consultatii">
-            <td>{{ consultatie.data }}</td>
+            <td>{{ consultatie.data | date: 'shortDate'}}</td>
             <td>{{ consultatie.simptome }}</td>
             <td>{{ consultatie.diagnostic }}</td>
             <td>{{ consultatie.durata }}</td>

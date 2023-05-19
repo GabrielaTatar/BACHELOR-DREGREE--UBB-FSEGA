@@ -30,7 +30,8 @@ export class MediciService {
   getDoctorInfoByDoctorId(id_doctor: number): Observable<any> {
     console.log(id_doctor)
     const userToken = this.storageService.getUserToken().token;
-    httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
+    if(!httpOptions.headers.has('x-access-token'))
+      httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
     const response = this.http.get(
       API_URL + 'doctori/' + id_doctor,
       httpOptions

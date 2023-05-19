@@ -17,7 +17,8 @@ export class PacientiService {
 
   getPacientInfoByPacientId(id_pacient: number): Observable<any> {
     const userToken = this.storageService.getUserToken().token;
-    httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
+    if(!httpOptions.headers.has('x-access-token'))
+      httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
     const response = this.http.get(
       AUTH_API + 'pacienti/' + id_pacient,
       httpOptions

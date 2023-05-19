@@ -29,7 +29,8 @@ export class NutritionistiService {
   getNutritionistInfoByNutritionistId(id_nutritionist: number): Observable<any> {
     console.log(id_nutritionist)
     const userToken = this.storageService.getUserToken().token;
-    httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
+    if(!httpOptions.headers.has('x-access-token'))
+      httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
     const response = this.http.get(
       API_URL + 'nutritionisti/' + id_nutritionist,
       httpOptions

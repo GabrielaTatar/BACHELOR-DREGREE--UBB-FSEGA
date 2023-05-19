@@ -23,8 +23,10 @@ export class ConsultatieService {
   getData(): Observable<any> {
     const file_medical_id = this.storageService.getUserMedicalFileId();
     const userToken = this.storageService.getUserToken().token;
-    httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
-    // console.log(userToken);
+    if(!httpOptions.headers.has('x-access-token'))
+      httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
+    //console.log(userToken);
+    //console.log(file_medical_id);
     //console.log(httpOptions);
     const response = this.http.get(AUTH_API + 'consultatiiDupaFisa/'+ file_medical_id, {responseType: 'json', headers:  httpOptions.headers, withCredentials: true});
     return response;
@@ -33,7 +35,8 @@ export class ConsultatieService {
   adaugareConsultatie(data: Date, simptome: string, cadre_medicale_id_cadru: number): Observable<any> {
     const userToken = this.storageService.getUserToken().token;
     const fisa_medicala_id_fisa = this.storageService.getUserMedicalFileId()
-    httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
+    if(!httpOptions.headers.has('x-access-token'))
+      httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
     let diagnostic = "";
     let durata = "";
     let pret = "";

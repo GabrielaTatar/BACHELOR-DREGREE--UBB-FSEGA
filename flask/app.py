@@ -249,7 +249,7 @@ def get_all_doctors():
 
 @app.route('/doctori/<id_doctor>', methods=['GET'])
 @token_required
-def get_one_doctors(current_user, id_doctor):
+def get_one_doctor(current_user, id_doctor):
    
    global Doctori
    
@@ -273,7 +273,7 @@ def get_one_doctors(current_user, id_doctor):
      
 @app.route('/psihologi', methods=['POST'])
 @token_required
-def create_teraphists(current_user):
+def create_therapists(current_user):
 
    data = request.get_json()
 
