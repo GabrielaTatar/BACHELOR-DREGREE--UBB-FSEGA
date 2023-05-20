@@ -21,6 +21,7 @@ import { ProgramarileMeleComponent } from './programarile.mele/programarile.mele
 import { IstoricMedicalComponent } from './istoric.medical/istoric.medical.component';
 import { PlanuriAlimentareComponent } from './informatii/planuri.alimentare/planuri.alimentare.component';
 import { TerapiiComponent } from './informatii/terapii/terapii.component';
+import { ConsultatiiComponent } from './consultatii/consultatii.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'oncologmedical', component: OncologmedicalComponent },
   { path: 'oncologradioterapeut', component: OncologradioterapeutComponent },
   { path: 'adaugare.consultatie/:id', component: AdaugareConsultatieComponent },
+  { path: 'consultatii', component: ConsultatiiComponent },
   { path: 'programarile.mele', component: ProgramarileMeleComponent },
   { path: 'adaugare.consultatie.psiholog/:id', component: AdaugareConsultatiePsihologComponent },
   { path: 'adaugare.consultatie.nutritionist/:id', component: AdaugareConsultatieNutritionistComponent },
@@ -47,8 +49,8 @@ const routes: Routes = [
 
 
 
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  {path: '*', redirectTo: 'home', pathMatch: 'full'}
+  // Wildcard route for unknown routes
+  { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];
 
 

@@ -14,9 +14,9 @@ import { UtilizatoriService } from './_services/utilizatori.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  //private roles: string[] = [];
+  private role: string = "";
   isLoggedIn = false;
-  username?: string;
+  showDoctorButtons = false;
 
   constructor(private storageService: StorageService, private authService: AuthService, private utilizatoriService: UtilizatoriService) { }
 
@@ -24,11 +24,8 @@ export class AppComponent {
     this.isLoggedIn = this.storageService.isLoggedIn();
 
     if (this.isLoggedIn) {
-      const user = this.storageService.getUserToken();
-      //this.roles = user.roles;
-
-
-      this.username = user.username;
+      this.role = this.storageService.getUserType();
+      this.showDoctorButtons = this.role === 'cadru_medical';
     }
   }
   // isUserPacient(): boolean {
@@ -40,17 +37,6 @@ export class AppComponent {
     this.storageService.clean();
     window.location.reload();
 
-    // this.authService.logout().subscribe({
-    //   next: res => {
-    //     console.log(res);
-    //     this.storageService.clean();
-
-    //     window.location.reload();
-    //   },
-    //   error: err => {
-    //     console.log(err);
-    //   }
-    // });
   }
 
   reloadCurrentPage() {

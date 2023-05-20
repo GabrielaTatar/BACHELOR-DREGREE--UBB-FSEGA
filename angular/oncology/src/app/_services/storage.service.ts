@@ -68,7 +68,10 @@ export class StorageService {
   public getUserType(): any {
     const user_type = window.sessionStorage.getItem(USER_TYPE);
     if (user_type) {
-      return user_type;
+      if(user_type === 'psiholog' || user_type === 'doctor' || user_type === 'nutritionist')
+        return 'cadru_medical';
+      else if(user_type === 'pacient')
+        return 'pacient';
     }
 
     return {};

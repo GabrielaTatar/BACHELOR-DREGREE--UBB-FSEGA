@@ -1,8 +1,9 @@
 <div *ngIf="isLoggedIn">
-    <h2>Fisa medicala a utilizatorului logat:</h2>
-    <p>Nume: {{ pacient.nume }} {{pacient.prenume}}</p>
-    <p>Istoric Medical: {{ fisaMedicala.istoric_medical }}</p>
-    <p>Observatii: {{ fisaMedicala.observatii }}</p>
+    <h2 *ngIf="!showDoctorButtons">Fisa medicala a utilizatorului logat:</h2>
+    <h2 *ngIf="showDoctorButtons"> Welcome {{doctor.nume_utilizator}}</h2>
+    <p *ngIf="!showDoctorButtons">Nume: {{ pacient.nume }} {{pacient.prenume}}</p>
+    <p *ngIf="!showDoctorButtons">Istoric Medical: {{ fisaMedicala.istoric_medical }}</p>
+    <p *ngIf="!showDoctorButtons">Observatii: {{ fisaMedicala.observatii }}</p>
 </div>
 
 <div *ngIf="!isLoggedIn">

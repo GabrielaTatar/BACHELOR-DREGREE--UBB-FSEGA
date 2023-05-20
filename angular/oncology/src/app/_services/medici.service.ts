@@ -51,6 +51,21 @@ export class MediciService {
     return response;
   }
 
+  getUserInfoByUserId(id_user: number): Observable<any> {
+    console.log(id_user);
+    const userToken = this.storageService.getUserToken().token;
+    if (!httpOptions.headers.has('x-access-token'))
+      httpOptions.headers = httpOptions.headers.append(
+        'x-access-token',
+        userToken
+      );
+    const response = this.http.get(
+      API_URL + 'utilizatori/' + id_user,
+      httpOptions
+    );
+    return response;
+  }
+
   getDoctorInfoByCadreId(id_cadru: number): Observable<any> {
     console.log(id_cadru);
     if (id_cadru === null) {

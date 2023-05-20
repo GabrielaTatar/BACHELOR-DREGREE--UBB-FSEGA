@@ -84,20 +84,17 @@ def get_all_users(current_user):
    return jsonify({'users' : output})
 
 
-@app.route('/utilizatori/<public_id>', methods = ['GET'])
+@app.route('/utilizatori/<id_utilizator>', methods = ['GET'])
 @token_required
-def get_one_user(current_user, public_id):
+def get_one_user(current_user, id_utilizator):
 
-   if not current_user.admin:
-      return jsonify({'message' : 'Cannot perform that function!'})
-
-   user = Utilizatori.query.filter_by(public_id = public_id).first()
+   user = Utilizatori.query.filter_by(id_utilizator = id_utilizator).first()
 
    if not user:
       return jsonify({'message' : 'No user found!'})
    
    user_data = {}
-   user_data['public_id'] = user.public_id
+   user_data['id_utilizator'] = user.id_utilizator
    user_data['nume_utilizator'] = user.nume_utilizator
    user_data['email'] = user.email
    user_data['tip_utilizator'] = user.tip_utilizator
