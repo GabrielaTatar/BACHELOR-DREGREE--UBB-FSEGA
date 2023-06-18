@@ -25,4 +25,15 @@ export class PacientiService {
     );
     return response;
   }
+
+  getPacientInfoByConsultId(id_consultatie: number): Observable<any> {
+    const userToken = this.storageService.getUserToken().token;
+    if(!httpOptions.headers.has('x-access-token'))
+      httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
+    const response = this.http.get(
+      AUTH_API + 'pacientDinConsultatie/' + id_consultatie,
+      httpOptions
+    );
+    return response;
+  }
 }

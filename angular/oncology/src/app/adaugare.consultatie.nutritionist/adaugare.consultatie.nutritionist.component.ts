@@ -19,6 +19,7 @@ export class AdaugareConsultatieNutritionistComponent implements OnInit {
   error1 = '';
   error = '';
   nutritionist:Nutritionist;
+  nutritionist_id: number;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -27,6 +28,7 @@ export class AdaugareConsultatieNutritionistComponent implements OnInit {
     private route:ActivatedRoute,
     private nutritionistService: NutritionistiService) {
       this.nutritionist = {} as Nutritionist;
+      this.nutritionist_id =0;
       this.form=this.formBuilder.group({
         simptome: ['', Validators.required],
         data:['',Validators.required],
@@ -35,6 +37,8 @@ export class AdaugareConsultatieNutritionistComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.nutritionist_id = this.route.snapshot.params['id'];
+    //console.log(this.nutritionist_id)
     this.route.params.pipe(
       switchMap(
         (params:Params) => this.nutritionistService.getNutritionistInfoByNutritionistId(+params['id'])
@@ -69,7 +73,7 @@ export class AdaugareConsultatieNutritionistComponent implements OnInit {
 
       this.consultatieService.adaugareConsultatie(this.f['data'].value,this.f['simptome'].value, this.nutritionist.cadre_medicale_id_cadru)
           .subscribe({next: (data: any) => {
-                  this.router.navigateByUrl('/nutritionist');
+                  this.router.navigateByUrl('/programarile.mele');
               },
               error: (error: string)=>{
                   this.error = "";

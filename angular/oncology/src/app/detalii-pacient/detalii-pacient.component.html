@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>Nume și prenume</th>
+                    <td> {{ pacient.nume }} {{ pacient.prenume }}</td>
+                </tr>
+                <tr>
+                    <th>CNP</th>
+                    <td>{{ pacient.CNP }}</td>
+                </tr>
+                <tr>
+                    <th>Număr de telefon</th>
+                    <td>{{ pacient.nr_telefon }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ pacient.email }}</td>
+                </tr>
+                <tr>
+                    <th>Județ</th>
+                    <td>{{ pacient.judet }}</td>
+                </tr>
+                <tr>
+                    <th>Localitate</th>
+                    <td>{{ pacient.localitate }}</td>
+                </tr>
+                <tr>
+                    <th>Adresă</th>
+                    <td>{{ pacient.adresa }}</td>
+                </tr>
+                <tr>
+                    <th>Istoric medical</th>
+                    <td>{{ fisaMedicala.istoric_medical }}</td>
+                </tr>
+                <tr>
+                    <th>Observații</th>
+                    <td>{{ fisaMedicala.observatii }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-md-4">
+            <div class="card" *ngFor="let consultatie of consultatii">
+                <div class="card-body">
+                    <h5 class="card-title">Consultație </h5>
+                    <p class="card-text">Data {{ consultatie.data }}</p>
+                    <p class="card-text">Diagnostic</p>
+                    <p class="card-text">Simptome</p>
+                    <p class="card-text">Durată</p>
+                    <p class="card-text">Preț</p>
+                    <p class="card-text">Schemă tratament</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -31,6 +31,7 @@ export class PsihologiComponent {
     );
   }
   visitPage(id_psiholog: number):void {
+    console.log(id_psiholog)
     //visit page for details of medication
     this.router.navigate(["/adaugare.consultatie.psiholog",id_psiholog])
   }

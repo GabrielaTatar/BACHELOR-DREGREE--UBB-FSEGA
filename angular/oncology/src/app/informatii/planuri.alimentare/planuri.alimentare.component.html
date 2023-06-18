@@ -1,18 +1,19 @@
 <h1>
     Planuri alimentare
 </h1>
-
-
-<div class="container text-center">
-    <div class="row row-cols-3">
-        <div class="col" *ngFor="let item of data">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h3 class="card-title">{{item.dieta}} </h3>
-                    <p class="card-text">{{item.ingrediente}}</p>
-                    <p class="card-text">{{item.observatii}}</p>
-                </div>
+<div *ngFor="let item of data" style="margin-top: 20px;">
+    <div style="margin-bottom: 10px;">
+        <h5 style="font-size: 18px;">{{ item.dieta }}</h5>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Ingrediente</span>
             </div>
+            <span class="form-control">{{ item.ingrediente }}</span>
         </div>
     </div>
+    <div>
+        <h5 style="font-size: 18px;"></h5>
+        <p><strong>Observații:</strong> {{ item.observatii }}</p>
+    </div>
+    <hr style="margin-top: 20px; margin-bottom: 20px;">
 </div>

@@ -77,6 +77,11 @@ export class StorageService {
     return {};
   }
 
+  public getUserTypeDetails(): any {
+    const user_type = window.sessionStorage.getItem(USER_TYPE);
+    return user_type;
+  }
+
   public getUserByID(): any {
     const user_id = window.sessionStorage.getItem(USER_ID);
     if (user_id) {

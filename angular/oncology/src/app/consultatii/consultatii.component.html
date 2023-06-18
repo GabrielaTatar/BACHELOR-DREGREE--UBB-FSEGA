@@ -1,1 +1,34 @@
-<p>consultatii works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h2>Consultații</h2>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4" *ngFor="let consultatie of consultAzi">
+                <img class="card-img-top custom-image" src="assets/today.png" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ consultatie.data | date:'dd/MM/yyyy' }}</h5>
+                    <p class="card-text">Pacient: {{ consultatie.fisa_medicala_id_fisa }} {{ consultatie.prenume }}</p>
+                    <p class="card-text">Simptome: {{ consultatie.simptome }}</p>
+                    <div class="d-flex justify-content-between">
+                        <!-- <a href="/modificare-consult" class="btn btn-primary">Adauga diagnostic</a> -->
+                        <button (click)="visitPage(consultatie.fisa_medicala_id_fisa, consultatie.id_consultatie)" class="btn btn-primary">Detalii pacient</button>
+                        <a href="/modificare-consult" class="btn btn-primary">Modificare programare</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngFor="let consultatie of consultViitoare">
+                <img class="card-img-top custom-image" src="assets/consult.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ consultatie.data | date:'dd/MM/yyyy' }}</h5>
+                    <p class="card-text">Pacient: {{ consultatie.fisa_medicala_id_fisa }} {{ consultatie.prenume }}</p>
+                    <p class="card-text">Simptome: {{ consultatie.simptome }}</p>
+                    <div class="d-flex justify-content-between">
+                        <button (click)="visitPage(consultatie.fisa_medicala_id_fisa, consultatie.id_consultatie)" class="btn btn-primary">Detalii pacient</button>
+                        <a href="/modificare-consult" class="btn btn-primary">Modificare programare</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

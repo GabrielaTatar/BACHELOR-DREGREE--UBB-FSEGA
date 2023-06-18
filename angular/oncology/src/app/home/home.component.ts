@@ -9,6 +9,11 @@ import { Pacient } from '../models/pacient';
 import { PacientiService } from '../_services/pacienti.service';
 import { MediciService } from '../_services/medici.service';
 import { Utilizator } from '../models/utilizator';
+import { Doctor } from '../models/doctor';
+import { Nutritionist } from '../models/nutritionist';
+import { Psiholog } from '../models/psiholog';
+import { PsihologiService } from '../_services/psihologi.service';
+import { NutritionistiService } from '../_services/nutritionisti.service';
 
 @Component({
   selector: 'app-home',
@@ -19,15 +24,21 @@ export class HomeComponent implements OnInit {
   isLoggedIn: boolean = false;
   fisaMedicala: Fisa_medicala;
   pacient: Pacient;
-  doctor: Utilizator;
   showDoctorButtons: boolean = false;
+  doctor: Doctor;
+  nutritionist: Nutritionist;
+  psiholog: Psiholog;
+  tipCadruMedical: string;
+
 
   constructor(
     private storageService: StorageService,
     private fisaMedicalaService: FisaMedicalaService,
     private pacientiService: PacientiService,
     private doctorService: MediciService,
-    private router: Router) { this.fisaMedicala = {} as Fisa_medicala; this.pacient = {} as Pacient; this.doctor= {} as Utilizator; }
+    private psihologService: PsihologiService,
+    private nutritionistService: NutritionistiService,
+    private router: Router) { this.fisaMedicala = {} as Fisa_medicala; this.pacient = {} as Pacient; this.doctor= {} as Doctor; this.nutritionist= {} as Nutritionist; this.psiholog= {} as Psiholog; this.tipCadruMedical= '';}
 
   ngOnInit(): void {
     // verificam daca utilizatorul este autentificat
@@ -50,11 +61,26 @@ export class HomeComponent implements OnInit {
     }
       else{
         this.showDoctorButtons = true;
-        this.doctorService.getUserInfoByUserId(this.storageService.getUserByID()).subscribe((data: any) => {
-          console.log(data);
-          const doctorFromResponse = JSON.parse(JSON.stringify(data)).user;
-          this.doctor = doctorFromResponse;
-        })
+        this.tipCadruMedical = this.storageService.getUserTypeDetails();
+        if(this.tipCadruMedical === 'doctor') {
+          this.doctorService.getDoctorInfoByDoctorId(this.storageService.getUserDoctorId()).subscribe((data: any) => {
+            console.log(data);
+            const doctorFromResponse = JSON.parse(JSON.stringify(data)).doctor;
+            this.doctor = doctorFromResponse;})
+        }
+        else if(this.tipCadruMedical === 'psiholog') {
+          this.psihologService.getPsihologInfoByPsihologId(this.storageService.getUserDoctorId()).subscribe((data: any) => {
+            console.log(data);
+            const psihologFromResponse = JSON.parse(JSON.stringify(data)).theraphist;
+            this.psiholog = psihologFromResponse;})
+        }
+        else if(this.tipCadruMedical === 'nutritionist') {
+          this.nutritionistService.getNutritionistInfoByNutritionistId(this.storageService.getUserDoctorId()).subscribe((data: any) => {
+            console.log(data);
+            const nutritionistFromResponse = JSON.parse(JSON.stringify(data)).nutritionist;
+            this.nutritionist = nutritionistFromResponse;})
+        }
+
       }
   }
   }

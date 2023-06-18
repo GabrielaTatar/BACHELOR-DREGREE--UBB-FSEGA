@@ -71,7 +71,7 @@ export class AdaugareConsultatieComponent implements OnInit{
 
       this.consultatieService.adaugareConsultatie(this.f['data'].value,this.f['simptome'].value, this.doctor.cadre_medicale_id_cadru)
           .subscribe({next: (data: any) => {
-                  this.router.navigateByUrl('/home');
+                  this.router.navigateByUrl('/programarile.mele');
               },
               error: (error: string)=>{
                   this.error = "";

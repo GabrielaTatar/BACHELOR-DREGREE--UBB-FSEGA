@@ -12,9 +12,12 @@
                     <a class="nav-link active" aria-current="page" href="/home">Acasă</a>
                 </li>
                 <li class="nav-item" *ngIf="isLoggedIn && showDoctorButtons">
-                    <a class="nav-link" href="/consultatii" routerLink="consultatii">consultatii</a>
+                    <a class="nav-link" href="/consultatii" routerLink="consultatii">Consultații</a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item" *ngIf="isLoggedIn && showDoctorButtons">
+                    <a class="nav-link" href="/lista-pacienti" routerLink="lista-pacienti">Listă pacienți</a>
+                </li>
+                <li class="nav-item dropdown" *ngIf="!showDoctorButtons">
                     <a class="nav-link dropdown-toggle" href="/medic" role="button" data-bs-toggle="dropdown" aria-expanded="false">Medici</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/mediconcolog">Medic oncolog</a></li>
@@ -25,21 +28,21 @@
                     </ul>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="!showDoctorButtons">
                     <a class="nav-link" href="/psiholog" routerLink="psiholog">Psihologi</a>
                 </li>
                 <!-- <li class="nav-item" *ngIf="utilizatoriService.isUserPacient()"> -->
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="!showDoctorButtons">
                     <a class="nav-link" href="/nutritionist" routerLink="nutritionist">Nutritionisti</a>
                 </li>
 
-                <li class="nav-item" *ngIf="isLoggedIn">
+                <li class="nav-item" *ngIf="isLoggedIn && !showDoctorButtons">
                     <a class="nav-link" href="/programarile.mele" routerLink="programarile.mele">Programările mele</a>
                 </li>
-                <li class="nav-item" *ngIf="isLoggedIn">
+                <li class="nav-item" *ngIf="isLoggedIn && !showDoctorButtons">
                     <a class="nav-link" href="/istoric.medical" routerLink="istoric.medical">Istoric consultații</a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" *ngIf="!showDoctorButtons">
                     <a class="nav-link dropdown-toggle" href="/info" role="button" data-bs-toggle="dropdown" aria-expanded="false">Informatii</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/planuri.alimentare">Planuri alimentare</a></li>
@@ -63,7 +66,7 @@
               <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
           </li> -->
                 <li class="nav-item">
-                    <a href class="nav-link" (click)="logout()">LogOut</a>
+                    <a href class="nav-link" (click)="logout()">Delogare</a>
                 </li>
             </ul>
         </div>

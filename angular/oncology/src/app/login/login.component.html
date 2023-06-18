@@ -25,7 +25,7 @@
                             </div>
                             <input type="text" class="form-control" placeholder="Nume utilizator" name="nume_utilizator" [(ngModel)]="form.nume_utilizator" required #nume_utilizator="ngModel" [ngClass]="{ 'is-invalid': f.submitted && nume_utilizator.errors }" />
                             <div *ngIf="nume_utilizator.errors && f.submitted" class="invalid-feedback">
-                                Nume utilizator is required!
+                                Nume utilizator este obligatoriu!
                             </div>
                         </div>
                         <div class="input-group form-group">
@@ -34,7 +34,7 @@
                             </div>
                             <input type="password" class="form-control" placeholder="Parola" name="parola" [(ngModel)]="form.parola" required minlength="6" #parola="ngModel" [ngClass]="{ 'is-invalid': f.submitted && parola.errors }" />
                             <div *ngIf="parola.errors && f.submitted" class="invalid-feedback">
-                                <div *ngIf="parola.errors['required']">Parola is required</div>
+                                <div *ngIf="parola.errors['required']">Parola este obligatorie!</div>
                                 <!-- <div *ngIf="parola.errors['minlength']">
                       Password must be at least 6 characters
                   </div> -->

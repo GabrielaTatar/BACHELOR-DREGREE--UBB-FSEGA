@@ -6,7 +6,6 @@ from models import db, Doctori, Utilizatori, Pacienti, Nutritionisti, Psihologi,
 import uuid
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
-
 import datetime
 from functools import wraps
 
@@ -34,7 +33,7 @@ def token_required(f):
            data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
            current_user = Utilizatori.query.filter_by(id_utilizator=data['user_id']).first()
         except:
-           return jsonify({'message' : 'Token is invalid!'}), 401
+           return jsonify({'message' : 'Token invalid!'}), 401
            
 
         return f(current_user, *args, **kwargs)
@@ -137,7 +136,7 @@ def delete_user(current_user, public_id):
    db.session.delete(user)
    db.session.commit()
 
-   return jsonify({'message' : 'The user has been deleted!'})
+   return jsonify({'message' : 'Utilizatorul a fost sters!'})
 
 
 @app.route('/login')
@@ -483,7 +482,7 @@ def update_consultation(current_user, id_consultatie):
    consultation = Consultatii.query.get(id_consultatie) 
    
    if not consultation:
-      return jsonify({'message' : 'No consultation found!'})
+      return jsonify({'message' : 'Nicio consultatie nu a fost gasita!'})
    
    
    diagnostic = request.json['diagnostic']
@@ -500,7 +499,7 @@ def update_consultation(current_user, id_consultatie):
    
    db.session.commit()
    
-   return jsonify({'message' : 'Update made by the healthcare professional!'})
+   return jsonify({'message' : 'Actualizarea efectuată de cadrul medical!'})
 
 
 @app.route('/consultatiiDupaFisa/<fisa_medicala_id_fisa>', methods=['GET'])
@@ -516,6 +515,32 @@ def get_one_consultation_by_fisa_medicala_id_fisa(current_user, fisa_medicala_id
    for consultation in consultations:
       consultation_data = {}
       consultation_data['data'] = consultation.data
+      consultation_data['simptome'] = consultation.simptome
+      consultation_data['diagnostic'] = consultation.diagnostic
+      consultation_data['durata'] = consultation.durata
+      consultation_data['pret'] = consultation.pret
+      consultation_data['schema_tratament'] = consultation.schema_tratament
+      consultation_data['formular_de_prescriptie_id_formular'] = consultation.formular_de_prescriptie_id_formular
+      consultation_data['fisa_medicala_id_fisa'] = consultation.fisa_medicala_id_fisa
+      consultation_data['cadre_medicale_id_cadru'] = consultation.cadre_medicale_id_cadru
+      output.append(consultation_data)
+      
+   return jsonify({'consultatii' : output})
+
+@app.route('/consultatiiDupaCM/<cadre_medicale_id_cadru>', methods=['GET'])
+@token_required
+def get_one_consultation_by_CM(current_user, cadre_medicale_id_cadru):
+   
+   global Consultatii
+   
+   consultations = Consultatii.query.filter_by(cadre_medicale_id_cadru = cadre_medicale_id_cadru)
+   
+   output = []
+   
+   for consultation in consultations:
+      consultation_data = {}
+      consultation_data['data'] = consultation.data
+      consultation_data['id_consultatie'] = consultation.id_consultatie
       consultation_data['simptome'] = consultation.simptome
       consultation_data['diagnostic'] = consultation.diagnostic
       consultation_data['durata'] = consultation.durata
@@ -829,8 +854,7 @@ def get_one_diet_plan(current_user, id_plan):
 
 
 @app.route('/planuri_alimentare', methods=['GET'])
-@token_required
-def get_all_diet_plan(current_user):
+def get_all_diet_plan():
    
    global Planuri_Alimentare
    
@@ -867,8 +891,7 @@ def get_one_therapy(current_user, id_terapie):
 
 
 @app.route('/terapii', methods=['GET'])
-@token_required
-def get_all_therapies(current_user):
+def get_all_therapies():
    
    global Terapii
    

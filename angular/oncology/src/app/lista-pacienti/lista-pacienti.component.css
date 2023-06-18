@@ -1,0 +1,16 @@
+.list-group {
+    padding: 0;
+}
+
+.list-group-item {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-bottom: 10px;
+}
+
+.list-group-item:last-child {
+    border-bottom: none;
+}

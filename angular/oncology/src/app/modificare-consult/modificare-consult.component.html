@@ -1,0 +1,52 @@
+<form>
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Diagnostic</label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Introduceti diagnosticul">
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlSelect1">Durată (minute)</label>
+        <select class="form-control" id="exampleFormControlSelect1">
+      <option>30</option>
+      <option>60</option>
+      <option>90</option>
+      <option>120</option>
+    </select>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlSelect1">Preț (ron)</label>
+        <select class="form-control" id="exampleFormControlSelect1">
+    <option>200</option>
+    <option>250</option>
+    <option>300</option>
+    <option>350</option>
+    <option>400</option>
+    <option>450</option>
+    <option>500</option>
+  </select>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">Schemă de tratment</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="openModal()">Salvează</button>
+</form>
+
+<div class="modal" tabindex="-1" role="dialog" [class.show]="modalVisible">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

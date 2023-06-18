@@ -18,7 +18,16 @@ export class ConsultatieService {
 
   constructor(private http: HttpClient, private storageService: StorageService) {}
 
-
+  getDataForDoc(cadre_medicale_id_cadru: string): Observable<any> {
+    const userToken = this.storageService.getUserToken().token;
+    if(!httpOptions.headers.has('x-access-token'))
+      httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
+    //console.log(userToken);
+    //console.log(file_medical_id);
+    //console.log(httpOptions);
+    const response = this.http.get(AUTH_API + 'consultatiiDupaCM/'+ cadre_medicale_id_cadru, {responseType: 'json', headers:  httpOptions.headers, withCredentials: true});
+    return response;
+  }
 
   getData(): Observable<any> {
     const file_medical_id = this.storageService.getUserMedicalFileId();
@@ -29,6 +38,15 @@ export class ConsultatieService {
     //console.log(file_medical_id);
     //console.log(httpOptions);
     const response = this.http.get(AUTH_API + 'consultatiiDupaFisa/'+ file_medical_id, {responseType: 'json', headers:  httpOptions.headers, withCredentials: true});
+    return response;
+  }
+
+  getConsultDupaPacient(id_fisa: number): Observable<any> {
+    const userToken = this.storageService.getUserToken().token;
+    if(!httpOptions.headers.has('x-access-token'))
+      httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
+
+    const response = this.http.get(AUTH_API + 'consultatiiDupaFisa/'+ id_fisa, {responseType: 'json', headers:  httpOptions.headers, withCredentials: true});
     return response;
   }
 

@@ -36,6 +36,9 @@ import { ProgramarileMeleComponent } from './programarile.mele/programarile.mele
 import { IstoricMedicalComponent } from './istoric.medical/istoric.medical.component';
 import { PlanuriAlimentareComponent } from './informatii/planuri.alimentare/planuri.alimentare.component';
 import { TerapiiComponent } from './informatii/terapii/terapii.component';
+import { ListaPacientiComponent } from './lista-pacienti/lista-pacienti.component';
+import { DetaliiPacientComponent } from './detalii-pacient/detalii-pacient.component';
+import { ModificareConsultComponent } from './modificare-consult/modificare-consult.component';
 
 
 @NgModule({
@@ -61,7 +64,10 @@ import { TerapiiComponent } from './informatii/terapii/terapii.component';
     ProgramarileMeleComponent,
     IstoricMedicalComponent,
     PlanuriAlimentareComponent,
-    TerapiiComponent
+    TerapiiComponent,
+    ListaPacientiComponent,
+    DetaliiPacientComponent,
+    ModificareConsultComponent
   ],
   imports: [
     BrowserModule,

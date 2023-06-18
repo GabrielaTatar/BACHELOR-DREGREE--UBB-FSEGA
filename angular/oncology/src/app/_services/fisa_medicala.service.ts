@@ -31,4 +31,16 @@ export class FisaMedicalaService {
     return response;
   }
 
+  getFisaMedicalaByFM(id_fisa: number): Observable<any> {
+    const userToken = this.storageService.getUserToken().token;
+    if(!httpOptions.headers.has('x-access-token'))
+      httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
+
+    const response = this.http.get(
+      AUTH_API + 'fisa_medicala/' + id_fisa,
+      httpOptions
+    );
+    return response;
+  }
+
 }

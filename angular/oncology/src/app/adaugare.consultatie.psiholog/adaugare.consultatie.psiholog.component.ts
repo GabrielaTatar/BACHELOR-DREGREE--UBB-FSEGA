@@ -19,6 +19,7 @@ export class AdaugareConsultatiePsihologComponent implements OnInit {
   error1 = '';
   error = '';
   psiholog:Psiholog;
+  psiholog_id : number;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -27,6 +28,7 @@ export class AdaugareConsultatiePsihologComponent implements OnInit {
     private route:ActivatedRoute,
     private psihologService: PsihologiService) {
       this.psiholog = {} as Psiholog;
+      this.psiholog_id = 0;
       this.form=this.formBuilder.group({
         simptome: ['', Validators.required],
         data:['',Validators.required],
@@ -35,11 +37,14 @@ export class AdaugareConsultatiePsihologComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.psiholog_id = this.route.snapshot.params['id'];
+    //console.log(this.psiholog_id)
     this.route.params.pipe(
       switchMap(
         (params:Params) => this.psihologService.getPsihologInfoByPsihologId(+params['id'])
       )).subscribe(data=>{
-        const psihologFromResponse = JSON.parse(JSON.stringify(data)).psiholog;
+        const psihologFromResponse = JSON.parse(JSON.stringify(data)).theraphist;
+        console.log(psihologFromResponse)
         this.psiholog = psihologFromResponse;
         var today = new Date();
         this.form.setValue({
@@ -69,7 +74,7 @@ export class AdaugareConsultatiePsihologComponent implements OnInit {
 
       this.consultatieService.adaugareConsultatie(this.f['data'].value,this.f['simptome'].value, this.psiholog.cadre_medicale_id_cadru)
           .subscribe({next: (data: any) => {
-                  this.router.navigateByUrl('/home');
+                  this.router.navigateByUrl('/programarile.mele');
               },
               error: (error: string)=>{
                   this.error = "";
