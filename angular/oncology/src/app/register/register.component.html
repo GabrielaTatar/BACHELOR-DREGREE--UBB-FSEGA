@@ -25,12 +25,12 @@
                         <input type="text" class="form-control" placeholder="Nume utilizator" name="nume_utilizator" [(ngModel)]="form.nume_utilizator" required minlength="3" maxlength="20" #nume_utilizator="ngModel" [ngClass]="{ 'is-invalid': f.submitted && nume_utilizator.errors }"
                         />
                         <div class="invalid-feedback" *ngIf="nume_utilizator.errors && f.submitted">
-                            <div *ngIf="nume_utilizator.errors['required']">Nume utilizator este necesar!</div>
+                            <div *ngIf="nume_utilizator.errors['required']">Este necesar de completat câmpul!</div>
                             <div *ngIf="nume_utilizator.errors['minlength']">
-                                Numele utilizatorului trebuie sa aiba minim 3 caractere!
+                                Numele utilizatorului trebuie să conțină minim 3 caractere!
                             </div>
                             <div *ngIf="nume_utilizator.errors['maxlength']">
-                                Numele utilizatorului trebuie sa aiba maxim 20 caractere!
+                                Numele utilizatorului trebuie să conțină maxim 20 caractere!
                             </div>
                         </div>
                     </div>
@@ -39,11 +39,11 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
-                        <input type="password" class="form-control" placeholder="Parola" name="parola" [(ngModel)]="form.parola" required minlength="6" #parola="ngModel" [ngClass]="{ 'is-invalid': f.submitted && parola.errors }" />
+                        <input type="password" class="form-control" placeholder="Parolă" name="parola" [(ngModel)]="form.parola" required minlength="6" #parola="ngModel" [ngClass]="{ 'is-invalid': f.submitted && parola.errors }" />
                         <div class="invalid-feedback" *ngIf="parola.errors && f.submitted">
-                            <div *ngIf="parola.errors['required']">Parola este necesara!</div>
+                            <div *ngIf="parola.errors['required']">Este necesar de completat câmpul!</div>
                             <div *ngIf="parola.errors['minlength']">
-                                Parola trebuie sa aiba minim 6 caractere!
+                                Parola trebuie să conțină minim 6 caractere!
                             </div>
                         </div>
                     </div>
@@ -54,9 +54,9 @@
                         </div>
                         <input type="email" class="form-control" placeholder="Email" name="email" [(ngModel)]="form.email" required email #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.errors }" />
                         <div class="invalid-feedback" *ngIf="email.errors && f.submitted">
-                            <div *ngIf="email.errors['required']">Email-ul este necesar!</div>
+                            <div *ngIf="email.errors['required']">Este necesar de completat câmpul!</div>
                             <div *ngIf="email.errors['email']">
-                                Email-ul trebuie sa contina o adresa valida!
+                                Email-ul trebuie să conțină o adresă validă!
                             </div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                         </div>
                         <input type="text" class="form-control" placeholder="Nume" name="nume" [(ngModel)]="form.nume" #nume="ngModel" [ngClass]="{ 'is-invalid': f.submitted && nume.errors }" />
                         <div class="invalid-feedback" *ngIf="nume.errors && f.submitted">
-                            <div *ngIf="nume.errors['required']">Numele este necesar!</div>
+                            <div *ngIf="nume.errors['required']">Este necesar de completat câmpul!</div>
                             <div *ngIf="nume.errors['nume']"></div>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                         </div>
                         <input type="text" class="form-control" placeholder="Prenume" name="prenume" [(ngModel)]="form.prenume" #prenume="ngModel" [ngClass]="{ 'is-invalid': f.submitted && prenume.errors }" />
                         <div class="invalid-feedback" *ngIf="prenume.errors && f.submitted">
-                            <div *ngIf="prenume.errors['required']">Prenumele este necesar!</div>
+                            <div *ngIf="prenume.errors['required']">Este necesar de completat câmpul!</div>
                             <div *ngIf="prenume.errors['prenume']"></div>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                         </div>
                         <input type="text" class="form-control" placeholder="CNP" name="CNP" [(ngModel)]="form.CNP" #CNP="ngModel" [ngClass]="{ 'is-invalid': f.submitted && CNP.errors }" />
                         <div class="invalid-feedback" *ngIf="CNP.errors && f.submitted">
-                            <div *ngIf="CNP.errors['required']">CNP este necesar!</div>
+                            <div *ngIf="CNP.errors['required']">Este necesar de completat câmpul!</div>
                             <div *ngIf="CNP.errors['CNP']"></div>
                         </div>
                     </div>
@@ -98,9 +98,9 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-solid fa-phone"></i></span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Numar telefon" name="nr_telefon" [(ngModel)]="form.nr_telefon" #nr_telefon="ngModel" [ngClass]="{ 'is-invalid': f.submitted && nr_telefon.errors }" />
+                        <input type="text" class="form-control" placeholder="Număr de telefon" name="nr_telefon" [(ngModel)]="form.nr_telefon" #nr_telefon="ngModel" [ngClass]="{ 'is-invalid': f.submitted && nr_telefon.errors }" />
                         <div class="invalid-feedback" *ngIf="nr_telefon.errors && f.submitted">
-                            <div *ngIf="nr_telefon.errors['required']">Numarul de telefon este necesar!</div>
+                            <div *ngIf="nr_telefon.errors['required']">Este necesar de completat câmpul!</div>
                             <div *ngIf="nr_telefon.errors['nr_telefon']"></div>
                         </div>
                     </div>
@@ -109,9 +109,9 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-solid fa-city"></i></span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Judet" name="judet" [(ngModel)]="form.judet" #judet="ngModel" [ngClass]="{ 'is-invalid': f.submitted && judet.errors }" />
+                        <input type="text" class="form-control" placeholder="Județ" name="judet" [(ngModel)]="form.judet" #judet="ngModel" [ngClass]="{ 'is-invalid': f.submitted && judet.errors }" />
                         <div class="invalid-feedback" *ngIf="judet.errors && f.submitted">
-                            <div *ngIf="judet.errors['required']">Judetul este necesar!</div>
+                            <div *ngIf="judet.errors['required']">Este necesar de completat câmpul!</div>
                             <div *ngIf="judet.errors['judet']"></div>
                         </div>
                     </div>
@@ -122,7 +122,7 @@
                         </div>
                         <input type="text" class="form-control" placeholder="Localitate" name="localitate" [(ngModel)]="form.localitate" #localitate="ngModel" [ngClass]="{ 'is-invalid': f.submitted && localitate.errors }" />
                         <div class="invalid-feedback" *ngIf="localitate.errors && f.submitted">
-                            <div *ngIf="localitate.errors['required']">Localitatea este necesar!</div>
+                            <div *ngIf="localitate.errors['required']">Este necesar de completat câmpul!</div>
                             <div *ngIf="localitate.errors['localitate']"></div>
                         </div>
                     </div>
@@ -133,7 +133,7 @@
                         </div>
                         <input type="text" class="form-control" placeholder="Adresă" name="adresa" [(ngModel)]="form.adresa" #adresa="ngModel" [ngClass]="{ 'is-invalid': f.submitted && adresa.errors }" />
                         <div class="invalid-feedback" *ngIf="adresa.errors && f.submitted">
-                            <div *ngIf="adresa.errors['required']">Adresa este necesar!</div>
+                            <div *ngIf="adresa.errors['required']">Este necesar de completat câmpul!</div>
                             <div *ngIf="adresa.errors['adresa']"></div>
                         </div>
                     </div>

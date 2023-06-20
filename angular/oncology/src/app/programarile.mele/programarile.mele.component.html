@@ -1,15 +1,16 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h2>Programări de consultare</h2>
-            <div class="card-deck">
-                <div class="card" *ngFor="let consultatie of consultatii">
-                    <div class="card-header">{{ consultatie.data | date:'dd/MM/yyyy' }}</div>
-                    <div class="card-body">
-                        <!-- <h5 class="card-title">{{ consultatie.pacient }}</h5> -->
-                        <p class="card-text"><strong>Simptome:</strong> {{ consultatie.simptome }}</p>
-                        <p class="card-text"><strong>Medic:</strong> {{ consultatie.nume }} {{ consultatie.prenume }}</p>
-                        <p class="card-text"><strong>Cabinet:</strong> {{ consultatie.cabinet }}</p>
+            <h2 class="text-center">Programări</h2>
+            <div class="row">
+                <div class="col-md-4" *ngFor="let consultatie of consultatii">
+                    <div class="card mb-3">
+                        <div class="card-header">{{ consultatie.data | date:'dd/MM/yyyy' }}</div>
+                        <div class="card-body">
+                            <p class="card-text"><strong>Simptome:</strong> {{ consultatie.simptome }}</p>
+                            <p class="card-text"><strong>Medic:</strong> {{ consultatie.nume }} {{ consultatie.prenume }}</p>
+                            <p class="card-text"><strong>Cabinet:</strong> {{ consultatie.cabinet }}</p>
+                        </div>
                     </div>
                 </div>
             </div>

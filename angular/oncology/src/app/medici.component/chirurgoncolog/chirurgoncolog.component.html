@@ -1,44 +1,22 @@
-<h1>
-    Medici
-</h1>
-<!-- <div class="list-group" *ngFor="let item of data">
-    <a href="#" class="list-group-item list-group-item-action">{{item.tip_doctor}}</a>
-</div> -->
-
-
-<div class="container text-center">
-    <div class="row row-cols-3">
-        <div class="col" *ngFor="let item of data">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h3 class="card-title">{{item.nume}} {{item.prenume}}</h3>
-                    <h4>{{item.cabinet}} , {{item.contact}}</h4>
-                    <p class="card-text">{{item.descriere}}</p>
-                    <button (click)="visitPage(item.id_doctor)" class="btn btn-primary">Programează-te!</button>
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h2>Chirurgi oncologi</h2>
+        </div>
+        <div class="col-12">
+            <div class="card-deck">
+                <div class="card mb-4" *ngFor="let item of data">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{item.nume}} {{item.prenume}}</h5>
+                        <p class="card-text">Cabinet: {{item.cabinet}} </p>
+                        <p class="card-text">Contact: {{item.contact}} </p>
+                        <p class="card-text">Descriere: {{item.descriere}}</p>
+                        <div class="d-flex justify-content-between">
+                            <button (click)="visitPage(item.id_doctor)" class="btn btn-primary">Programează-te!</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-
-<!--
-<div class="row">
-<div class="col-4">
-    <div class="list-group" id="list-tab" role="tablist">
-        <a class="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list" href="#list-home" role="tab" aria-controls="list-home">Home</a>
-        <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab" aria-controls="list-profile">Profile</a>
-        <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list" href="#list-messages" role="tab" aria-controls="list-messages">Messages</a>
-        <a class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list" href="#list-settings" role="tab" aria-controls="list-settings">Settings</a>
-    </div>
-</div>
-<div class="col-8">
-    <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">...</div>
-        <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">...</div>
-        <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
-        <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
-    </div>
-</div>
-</div> -->

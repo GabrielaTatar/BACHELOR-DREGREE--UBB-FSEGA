@@ -1,19 +1,20 @@
-<h1>
+<h1 class="text-center">
     Psihologi
 </h1>
 
-<div class="container text-center">
-    <div class="row row-cols-3">
-
-        <div class="col" *ngFor="let item of data">
-            <div class="card" style="width: 18rem;">
-
-                <div class="card-body">
-                    <h3 class="card-title">{{item.nume}} {{item.prenume}}</h3>
-                    <h4>{{item.cabinet}} , {{item.contact}}</h4>
-                    <p class="card-text">{{item.descriere}}</p>
-                    <button (click)="visitPage(item.id_psiholog)" class="btn btn-primary">Programează-te!</button> </div>
+<div class="container">
+    <div class="row">
+        <div class="card" *ngFor="let item of data">
+            <div class="card-header">{{item.nume}} {{item.prenume}} </div>
+            <div class="card-body">
+                <p class="card-title">Cabinet: {{item.cabinet}}</p>
+                <p>Contact: {{item.contact}}</p>
+                <p class="card-text"> Descriere: {{item.descriere}}</p>
+                <div class="d-flex justify-content-end">
+                    <button (click)="visitPage(item.id_psiholog)" class="btn btn-primary">Programează-te!</button>
+                </div>
             </div>
+
         </div>
 
     </div>

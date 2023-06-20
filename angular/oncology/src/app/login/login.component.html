@@ -10,55 +10,53 @@
 </head>
 
 <body style="width: 100%; display: block;">
-    <div class="masthead" style="background-image: url('https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/rm373batch15-bg-11.jpg?w=1200&h=1200&dpr=1&fit=clip&crop=default&fm=jpg&q=75&vib=3&con=3&usm=15&cs=srgb&bg=F4F4F3&ixlib=js-2.2.1&s=330dde5a4191a3d87204a2f9b040e3fe');">
-        <div class="container-fluid">
-            <div class="d-flex justify-content-center h-100">
-                <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Autentificare</h3>
-                        </div>
+    <div class="container-fluid background">
+        <div class="d-flex justify-content-center h-100">
+            <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Autentificare</h3>
+                    </div>
 
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Nume utilizator" name="nume_utilizator" [(ngModel)]="form.nume_utilizator" required #nume_utilizator="ngModel" [ngClass]="{ 'is-invalid': f.submitted && nume_utilizator.errors }" />
-                            <div *ngIf="nume_utilizator.errors && f.submitted" class="invalid-feedback">
-                                Nume utilizator este obligatoriu!
-                            </div>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
                         </div>
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-key"></i></span>
-                            </div>
-                            <input type="password" class="form-control" placeholder="Parola" name="parola" [(ngModel)]="form.parola" required minlength="6" #parola="ngModel" [ngClass]="{ 'is-invalid': f.submitted && parola.errors }" />
-                            <div *ngIf="parola.errors && f.submitted" class="invalid-feedback">
-                                <div *ngIf="parola.errors['required']">Parola este obligatorie!</div>
-                                <!-- <div *ngIf="parola.errors['minlength']">
-                      Password must be at least 6 characters
-                  </div> -->
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn float-right login_btn">Autentificare</button>
-                        </div>
-                        <div class="form-group">
-                            <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger" role="alert">
-                                Autentificarea a eșuat: {{ errorMessage }}
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <div class="d-flex justify-content-center links">
-                                Nu ai încă un cont? <a href="/register">Înregistrare</a>
-                            </div>
+                        <input type="text" class="form-control" placeholder="Nume utilizator" name="nume_utilizator" [(ngModel)]="form.nume_utilizator" required #nume_utilizator="ngModel" [ngClass]="{ 'is-invalid': f.submitted && nume_utilizator.errors }" />
+                        <div *ngIf="nume_utilizator.errors && f.submitted" class="invalid-feedback">
+                            Nume utilizator este obligatoriu!
                         </div>
                     </div>
-                </form>
-
-                <div class="alert alert-success" *ngIf="isLoggedIn">
-                    Logged in as
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input type="password" class="form-control" placeholder="Parola" name="parola" [(ngModel)]="form.parola" required minlength="6" #parola="ngModel" [ngClass]="{ 'is-invalid': f.submitted && parola.errors }" />
+                        <div *ngIf="parola.errors && f.submitted" class="invalid-feedback">
+                            <div *ngIf="parola.errors['required']">Parola este obligatorie!</div>
+                            <!-- <div *ngIf="parola.errors['minlength']">
+                      Password must be at least 6 characters
+                  </div> -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn float-right login_btn">Autentificare</button>
+                    </div>
+                    <div class="form-group">
+                        <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger" role="alert">
+                            Autentificarea a eșuat: {{ errorMessage }}
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-center links">
+                            Nu ai încă un cont? <a href="/register">Înregistrare</a>
+                        </div>
+                    </div>
                 </div>
+            </form>
+
+            <div class="alert alert-success" *ngIf="isLoggedIn">
+                Logged in as
             </div>
         </div>
     </div>

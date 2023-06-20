@@ -1,0 +1,82 @@
+.container {
+    margin-top: 20px;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    border-radius: 5px;
+    flex: 1 0 100%;
+    max-width: calc(33.33% - 30px);
+    /* Alegeți dimensiunea dorită a cardului (în acest caz, 33.33% pentru a afișa 3 carduri pe rând) */
+    margin: 15px;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card-deck {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -15px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-body {
+    position: relative;
+}
+
+.card-text {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.custom-image {
+    width: 100%;
+    height: auto;
+    border-radius: 5px 5px 0 0;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+
+/* Optional: Additional styles for responsiveness */
+
+@media (max-width: 576px) {
+    .col-md-4 {
+        flex-basis: 100%;
+    }
+}

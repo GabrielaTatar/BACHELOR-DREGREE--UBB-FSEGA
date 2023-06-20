@@ -1,10 +1,31 @@
 body {
     color: #000;
     overflow-x: hidden;
-    height: 100%;
-    background-color: #C5CAE9 !important;
-    background-repeat: no-repeat;
     padding: 0px !important;
+}
+
+.custom-form {
+    max-width: 400px;
+    /* Ajustați dimensiunea maximă a formei */
+    margin: auto auto;
+    /* Centrarea formei pe pagină */
+}
+
+.form-group {
+    margin-bottom: 10px;
+    /* Spațiu între elementele formei */
+}
+
+.form-control {
+    height: 400%;
+    width: 100%;
+    /* Lățimea casetelor de intrare */
+    padding: 8px;
+    /* Spatiere interna a casetelor de intrare */
+}
+
+.invalid-feedback {
+    color: red;
 }
 
 .container-fluid {
@@ -14,6 +35,11 @@ body {
 
 .card {
     box-shadow: 0px 4px 8px 0px #7986CB;
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0px 8px 16px 0px #7986CB;
 }
 
 input {
@@ -26,14 +52,11 @@ input {
     font-size: 16px;
     letter-spacing: 1px;
     width: 180px;
+    transition: border-color 0.3s ease;
 }
 
 input:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    border: 1px solid #512DA8;
-    outline-width: 0;
+    border-color: #512DA8;
 }
 
 ::placeholder {
@@ -50,9 +73,6 @@ input:focus {
 }
 
 button:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
     outline-width: 0;
 }
 

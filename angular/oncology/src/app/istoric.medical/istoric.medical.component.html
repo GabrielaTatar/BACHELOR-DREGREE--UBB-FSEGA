@@ -1,24 +1,21 @@
-<h1>Istoric medical</h1>
-
-<table>
-    <thead>
-        <tr>
-            <th>Data</th>
-            <th>Simptome</th>
-            <th>Diagnostic</th>
-            <th>Durata</th>
-            <th>Pret</th>
-            <th>Schema tratament</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let consultatie of consultatii">
-            <td>{{ consultatie.data | date: 'shortDate'}}</td>
-            <td>{{ consultatie.simptome }}</td>
-            <td>{{ consultatie.diagnostic }}</td>
-            <td>{{ consultatie.durata }}</td>
-            <td>{{ consultatie.pret }}</td>
-            <td>{{ consultatie.schema_tratament }}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center">Istoric medical</h2>
+            <div class="row">
+                <div class="col-md-4" *ngFor="let consultatie of consultatii">
+                    <div class="card mb-3">
+                        <div class="card-header text-center">{{ consultatie.diagnostic }}</div>
+                        <div class="card-body">
+                            <p class="card-text text-center"><strong>{{ consultatie.data | date:'dd/MM/yyyy' }} </strong> </p>
+                            <p class="card-text"><strong>Simptome:</strong> {{ consultatie.simptome }}</p>
+                            <p class="card-text"><strong>Schema de tratament:</strong> {{ consultatie.schema_tratament }}</p>
+                            <p class="card-text"><strong>Durată:</strong> {{ consultatie.durata }}</p>
+                            <p class="card-text"><strong>Preț:</strong> {{ consultatie.pret }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

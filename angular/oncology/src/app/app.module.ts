@@ -39,6 +39,7 @@ import { TerapiiComponent } from './informatii/terapii/terapii.component';
 import { ListaPacientiComponent } from './lista-pacienti/lista-pacienti.component';
 import { DetaliiPacientComponent } from './detalii-pacient/detalii-pacient.component';
 import { ModificareConsultComponent } from './modificare-consult/modificare-consult.component';
+import { TratamenteComponent } from './tratamente/tratamente.component';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { ModificareConsultComponent } from './modificare-consult/modificare-cons
     TerapiiComponent,
     ListaPacientiComponent,
     DetaliiPacientComponent,
-    ModificareConsultComponent
+    ModificareConsultComponent,
+    TratamenteComponent
   ],
   imports: [
     BrowserModule,

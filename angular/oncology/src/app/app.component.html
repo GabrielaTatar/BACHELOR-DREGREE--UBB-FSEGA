@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand">Clinica de oncologie</a>
+        <a class="navbar-brand">Clinică de oncologie</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -33,7 +33,7 @@
                 </li>
                 <!-- <li class="nav-item" *ngIf="utilizatoriService.isUserPacient()"> -->
                 <li class="nav-item" *ngIf="!showDoctorButtons">
-                    <a class="nav-link" href="/nutritionist" routerLink="nutritionist">Nutritionisti</a>
+                    <a class="nav-link" href="/nutritionist" routerLink="nutritionist">Nutriționiști</a>
                 </li>
 
                 <li class="nav-item" *ngIf="isLoggedIn && !showDoctorButtons">
@@ -43,18 +43,18 @@
                     <a class="nav-link" href="/istoric.medical" routerLink="istoric.medical">Istoric consultații</a>
                 </li>
                 <li class="nav-item dropdown" *ngIf="!showDoctorButtons">
-                    <a class="nav-link dropdown-toggle" href="/info" role="button" data-bs-toggle="dropdown" aria-expanded="false">Informatii</a>
+                    <a class="nav-link dropdown-toggle" href="/info" role="button" data-bs-toggle="dropdown" aria-expanded="false">Informații</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/planuri.alimentare">Planuri alimentare</a></li>
                         <li><a class="dropdown-item" href="/terapii">Terapii</a></li>
-                        <li><a class="dropdown-item" href="/">Tratamente</a></li>
+                        <li><a class="dropdown-item" href="/tratamente.component">Tratamente</a></li>
                     </ul>
                 </li>
 
             </ul>
             <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
                 <li class="nav-item">
-                    <a href="/register" class="nav-link" routerLink="register">Inregistrare</a>
+                    <a href="/register" class="nav-link" routerLink="register">Înregistrare</a>
                 </li>
                 <li class="nav-item">
                     <a href="/login" class="nav-link" routerLink="login">Autentificare</a>

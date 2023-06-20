@@ -1,17 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 .background {
-    background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20190223/ourmid/pngtree-blue-genetic-dna-medical-background-windbackground-display-boardbackgroundpsdcolorful-image_77077.jpg');
+    background-image: url('https://img.freepik.com/free-photo/top-view-background-beautiful-white-grey-brown-cream-blue-background_140725-72219.jpg?w=2000');
     background-size: cover;
     background-repeat: no-repeat;
 }
 
 body {
-    /* background: url('https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/rm373batch15-bg-11.jpg?w=1200&h=1200&dpr=1&fit=clip&crop=default&fm=jpg&q=75&vib=3&con=3&usm=15&cs=srgb&bg=F4F4F3&ixlib=js-2.2.1&s=330dde5a4191a3d87204a2f9b040e3fe'); */
-    /* background-color: antiquewhite; */
-    /* height: 100vh; */
-    /* background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center; */
     font-family: 'Numans', sans-serif;
 }
 
@@ -21,7 +15,8 @@ body {
 }
 
 .card {
-    height: 700px;
+    height: auto;
+    align-content: center;
     margin-top: auto;
     margin-bottom: auto;
     margin-left: auto;
@@ -34,7 +29,7 @@ body {
 .social_icon span {
     font-size: 60px;
     margin-left: 10px;
-    color: #FFC312;
+    color: #E9967A;
 }
 
 .social_icon span:hover {
@@ -44,11 +39,12 @@ body {
 
 .card-header h3 {
     color: white;
+    text-align: center;
 }
 
 .input-group-prepend span {
     width: 50px;
-    background-color: #FFC312;
+    background-color: #E9967A;
     color: black;
     border: 0 !important;
 }
@@ -60,11 +56,15 @@ input:focus {
 
 .register_btn {
     color: black;
-    background-color: #FFC312;
+    background-color: #E9967A;
     width: 150px;
 }
 
 .register_btn:hover {
     color: black;
     background-color: white;
+}
+
+.invalid-feedback {
+    color: black;
 }

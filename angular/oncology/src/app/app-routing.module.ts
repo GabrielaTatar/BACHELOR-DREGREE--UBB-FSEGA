@@ -25,6 +25,7 @@ import { ConsultatiiComponent } from './consultatii/consultatii.component';
 import { ListaPacientiComponent } from './lista-pacienti/lista-pacienti.component';
 import { DetaliiPacientComponent } from './detalii-pacient/detalii-pacient.component';
 import { ModificareConsultComponent } from './modificare-consult/modificare-consult.component';
+import { TratamenteComponent } from './tratamente/tratamente.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -50,7 +51,7 @@ const routes: Routes = [
   { path: 'detalii-pacient/:id_fisa_medicala/:id_consultatie', component: DetaliiPacientComponent },
   { path: 'modificare-consult', component: ModificareConsultComponent },
   { path: 'planuri.alimentare', component: PlanuriAlimentareComponent },
-
+  { path: 'tratamente.component', component: TratamenteComponent },
 
 
 
