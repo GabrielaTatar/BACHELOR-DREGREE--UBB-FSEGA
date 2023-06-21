@@ -36,4 +36,13 @@ export class PacientiService {
     );
     return response;
   }
+
+  getPacientiForDoc(cadre_medicale_id_cadru: string): Observable<any> {
+    const userToken = this.storageService.getUserToken().token;
+    if(!httpOptions.headers.has('x-access-token'))
+      httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
+
+    const response = this.http.get(AUTH_API + 'pacientiDupaCM/'+ cadre_medicale_id_cadru, {responseType: 'json', headers:  httpOptions.headers, withCredentials: true});
+    return response;
+  }
 }

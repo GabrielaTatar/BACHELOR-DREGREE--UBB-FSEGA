@@ -612,6 +612,7 @@ def get_medical_record_by_patient(current_user, pacienti_id_pacient):
     return jsonify({'message': 'No medical record found for the specified patient ID.'}), 404
    
    medical_record_by_id_data = {}
+   medical_record_by_id_data['id_fisa'] = medical_record_by_id.id_fisa
    medical_record_by_id_data['istoric_medical'] = medical_record_by_id.istoric_medical
    medical_record_by_id_data['observatii'] = medical_record_by_id.observatii
    medical_record_by_id_data['pacienti_id_pacient'] = medical_record_by_id.pacienti_id_pacient
@@ -656,8 +657,40 @@ def create_medical_patient():
    except: 
       return jsonify({'mesaj' : 'Eroare la adaugarea utilizatorului'})
    
-   
 
+@app.route('/pacientiDupaCM/<cadre_medicale_id_cadru>', methods=['GET'])
+@token_required
+def get_pacienti_by_CM(current_user, cadre_medicale_id_cadru):
+   
+   global Consultatii
+   
+   consultations = Consultatii.query.filter_by(cadre_medicale_id_cadru = cadre_medicale_id_cadru)
+   
+   pacienti_fise = []
+   for consultation in consultations:
+      pacienti_fise.append(consultation.fisa_medicala_id_fisa)
+      
+   pacienti_fise = list(dict.fromkeys(pacienti_fise))
+   output = []
+   
+   for id_fisa in pacienti_fise:
+      fisa = Fisa_Medicala.query.filter_by(id_fisa = id_fisa).first()
+      pacient = Pacienti.query.filter_by(id_pacient = fisa.pacienti_id_pacient).first()
+      pacient_data = {}
+      pacient_data['id_pacient'] = pacient.id_pacient
+      pacient_data['nume'] = pacient.nume
+      pacient_data['prenume'] = pacient.prenume
+      pacient_data['CNP'] = pacient.CNP
+      pacient_data['nr_telefon'] = pacient.nr_telefon
+      pacient_data['email'] = pacient.email
+      pacient_data['judet'] = pacient.judet
+      pacient_data['localitate'] = pacient.localitate
+      pacient_data['adresa'] = pacient.adresa
+      pacient_data['utilizatori_id_utilizator'] = pacient.utilizatori_id_utilizator
+      output.append(pacient_data)
+   
+      
+   return jsonify({'pacienti' : output})
    
 
 @app.route('/pacienti/<id_pacient>', methods=['GET'])

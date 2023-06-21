@@ -27,7 +27,7 @@ export class IstoricMedicalComponent implements OnInit {
           //console.log(arrayFromResponse[index].data.getTime());
           let dateFromConsultation = new Date(arrayFromResponse[index].data);
           dateFromConsultation.setHours(0,0,0,0);
-          if(dateFromConsultation.getTime() < currentDate.getTime()){
+          if(dateFromConsultation.getTime() < currentDate.getTime() || (dateFromConsultation.getTime() >= currentDate.getTime() && arrayFromResponse[index].schema_tratament !== "")){
             filteredArray.push(arrayFromResponse[index]);
           }
         }

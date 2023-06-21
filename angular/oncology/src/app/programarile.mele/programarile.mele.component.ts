@@ -33,7 +33,7 @@ export class ProgramarileMeleComponent implements OnInit {
           let dateFromConsultation = new Date(arrayFromResponse[index].data);
           dateFromConsultation.setHours(0,0,0,0);
           let consultatieFromResponse = arrayFromResponse[index];
-          if(dateFromConsultation.getTime() >= currentDate.getTime()){
+          if(dateFromConsultation.getTime() >= currentDate.getTime() && consultatieFromResponse.schema_tratament === ""){
             console.log(consultatieFromResponse)
             this.mediciService.getDoctorInfoByCadreId(consultatieFromResponse.cadre_medicale_id_cadru).subscribe(data=>{
               if(data === null){

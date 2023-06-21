@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ConsultatieService } from '../_services/consultatie.service';
 import { Router } from '@angular/router';
 import { StorageService } from '../_services/storage.service';
+import { Pacient } from '../models/pacient';
+import { PacientiService } from '../_services/pacienti.service';
 
 @Component({
   selector: 'app-lista-pacienti',
@@ -9,17 +11,30 @@ import { StorageService } from '../_services/storage.service';
   styleUrls: ['./lista-pacienti.component.css']
 })
 export class ListaPacientiComponent {
+  pacienti: Array<Pacient>;
 
-  constructor(private consultatieService: ConsultatieService, private router:Router, private storageService: StorageService) {
-    // this.psiholog.getData().subscribe(data=>{
-    //   console.warn(data)
-    //   this.data=data
-    // })
+  constructor(private pacientiService: PacientiService, private router:Router, private storageService: StorageService) {
+    this.pacienti = [];
   }
 
-  visitPage(fisa_medicala_id_fisa: number, id_consultatie: number):void {
-    console.log(fisa_medicala_id_fisa)
-    console.log(id_consultatie)
-    this.router.navigate(["/detalii-pacient", fisa_medicala_id_fisa, id_consultatie])
+
+  ngOnInit():void{
+    if(this.storageService.getUserType() !== 'cadru_medical')
+      this.router.navigateByUrl('/home');
+
+    this.pacientiService.getPacientiForDoc(this.storageService.getUserMedicalCadreId()).subscribe(
+      data=>{
+        const arrayFromResponse: Array<Pacient> = JSON.parse(JSON.stringify(data)).pacienti;
+        console.log(arrayFromResponse);
+        this.pacienti=arrayFromResponse;
+        }
+    );
+  }
+
+
+
+  visitPage(id_pacient: number):void {
+    console.log(id_pacient)
+    this.router.navigate(["/detalii-pacient", id_pacient, 0])
   }
 }

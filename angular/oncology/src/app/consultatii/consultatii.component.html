@@ -8,7 +8,7 @@
                 <img class="card-img-top custom-image" src="assets/today.png" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">{{ consultatie.data | date:'dd/MM/yyyy' }}</h5>
-                    <p class="card-text">Pacient: {{ consultatie.fisa_medicala_id_fisa }} {{ consultatie.prenume }}</p>
+                    <p class="card-text">Pacient: {{ consultatie.prenume }} {{ consultatie.prenume }}</p>
                     <p class="card-text">Simptome: {{ consultatie.simptome }}</p>
                     <div class="d-flex justify-content-between">
                         <!-- <a href="/modificare-consult" class="btn btn-primary">Adauga diagnostic</a> -->

@@ -4,6 +4,7 @@ import { Consultatie } from '../models/consultatie';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ConsultatieService } from '../_services/consultatie.service';
 import { switchMap } from 'rxjs';
+import { StorageService } from '../_services/storage.service';
 
 @Component({
   selector: 'app-modificare-consult',
@@ -24,7 +25,8 @@ export class ModificareConsultComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private consultatieService: ConsultatieService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private storageService: StorageService
   ) {
     this.id_consultatie = 0;
     this.form = this.formBuilder.group({
@@ -36,6 +38,8 @@ export class ModificareConsultComponent {
   }
 
   ngOnInit(): void {
+    if(this.storageService.getUserType() !== 'cadru_medical')
+      this.router.navigateByUrl('/home');
     this.id_consultatie = this.route.snapshot.params['id'];
     this.form.setValue({
       diagnostic: '',
