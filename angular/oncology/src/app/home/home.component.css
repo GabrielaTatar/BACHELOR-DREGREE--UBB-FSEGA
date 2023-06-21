@@ -55,7 +55,7 @@ h2 {
     left: 0;
     right: 0;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.1);
     padding: 10px;
     color: #fff;
 }
@@ -79,18 +79,14 @@ h2 {
 .carousel-control-prev,
 .carousel-control-next {
     opacity: 1;
-    /* Asigură vizibilitatea săgeților */
     transition: opacity 0.5s;
-    /* Adaugă o tranziție de 0.3 secunde pentru efectul de desvanecere */
 }
 
 .carousel-inner:hover .carousel-control-prev,
 .carousel-inner:hover .carousel-control-next {
     opacity: 0.5;
-    /* Reduce opacitatea săgeților la 0.5 la survolul caruselului */
 }
 
 .carousel-item {
     transition: opacity 0.5s;
-    /* Setează o tranziție de 1 secundă pentru slide-uri */
 }

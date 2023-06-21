@@ -43,16 +43,16 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-6 col-md-4">
-            <div class="card" *ngFor="let consultatie of consultatii">
+        <div class="col-sm-6" *ngFor="let consultatie of consultatii">
+            <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Consultație </h5>
-                    <p class="card-text">Data {{ consultatie.data }}</p>
-                    <p class="card-text">Diagnostic</p>
-                    <p class="card-text">Simptome</p>
-                    <p class="card-text">Durată</p>
-                    <p class="card-text">Preț</p>
-                    <p class="card-text">Schemă tratament {{ consultatie.schema_tratament }}</p>
+                    <h5 class="card-title text-center">Consultație </h5>
+                    <p class="card-text">Data: {{ consultatie.data | date:'dd/MM/yyyy' }}</p>
+                    <p class="card-text">Diagnostic: {{ consultatie.diagnostic }}</p>
+                    <p class="card-text">Simptome: {{ consultatie.simptome }}</p>
+                    <p class="card-text">Durată: {{ consultatie.durata }}</p>
+                    <p class="card-text">Preț: {{ consultatie.pret }}</p>
+                    <p class="card-text">Schemă tratament: {{ consultatie.schema_tratament }}</p>
                 </div>
             </div>
         </div>
