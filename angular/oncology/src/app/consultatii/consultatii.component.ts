@@ -130,5 +130,10 @@ export class ConsultatiiComponent {
     this.router.navigate(["/detalii-pacient", fisa_medicala_id_fisa, id_consultatie])
   }
 
+  visitModifyPage(id_consultatie: number):void {
+    console.log(id_consultatie)
+    this.router.navigate(["/modificare-consult",  id_consultatie])
+  }
+
 }
 

@@ -80,6 +80,25 @@ export class ConsultatieService {
     );
   }
 
+  modificareConsultatie(id_consultatie: number, diagnostic: string, schema_tratament: string, durata: number, pret: number): Observable<any> {
+    const userToken = this.storageService.getUserToken().token;
+    let formular_de_prescriptie_id_formular = null;
+    if(!httpOptions.headers.has('x-access-token'))
+      httpOptions.headers = httpOptions.headers.append("x-access-token", userToken);
+    console.log(userToken);
+    return this.http.put(
+      AUTH_API + 'consultatii/' + id_consultatie,
+      {
+        diagnostic,
+        schema_tratament,
+        durata,
+        pret,
+        formular_de_prescriptie_id_formular
+      },
+      httpOptions
+    );
+  }
+
   // logout(): Observable<any> {
   //   return this.http.post(AUTH_API + 'signout', { }, httpOptions);
   // }

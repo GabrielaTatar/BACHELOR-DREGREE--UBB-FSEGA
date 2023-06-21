@@ -13,7 +13,7 @@
                     <div class="d-flex justify-content-between">
                         <!-- <a href="/modificare-consult" class="btn btn-primary">Adauga diagnostic</a> -->
                         <button (click)="visitPage(consultatie.fisa_medicala_id_fisa, consultatie.id_consultatie)" class="btn btn-primary">Detalii pacient</button>
-                        <a href="/modificare-consult" class="btn btn-primary">Modificare programare</a>
+                        <button (click)="visitModifyPage(consultatie.id_consultatie)" class="btn btn-primary">Modificare programare</button>
                     </div>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                     <p class="card-text">Simptome: {{ consultatie.simptome }}</p>
                     <div class="d-flex justify-content-between">
                         <button (click)="visitPage(consultatie.fisa_medicala_id_fisa, consultatie.id_consultatie)" class="btn btn-primary">Detalii pacient</button>
-                        <a href="/modificare-consult" class="btn btn-primary">Modificare programare</a>
+                        <button (click)="visitModifyPage(consultatie.id_consultatie)" class="btn btn-primary">Modificare programare</button>
                     </div>
                 </div>
             </div>

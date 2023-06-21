@@ -51,7 +51,7 @@ export class RegisterComponent implements OnInit {
         this.storageService.saveUser(data);
 
         this.isLoggedIn = true;
-        this.router.navigateByUrl('/home');
+        this.navigateAndReload('/home');
       },
       error: err => {
         this.errorMessage = err.error.message;
@@ -59,4 +59,12 @@ export class RegisterComponent implements OnInit {
       }
     });
   }
+
+
+  navigateAndReload(url: string) {
+    this.router.navigateByUrl(url)
+      .then(() => {
+        window.location.reload();
+      });
+}
 }

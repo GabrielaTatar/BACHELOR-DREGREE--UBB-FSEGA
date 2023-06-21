@@ -1,47 +1,20 @@
-    .image-text-row {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-    
-    .image-text-row img {
-        max-width: 200px;
-        flex: 0 0 auto;
-        height: auto;
-        margin-right: 20px;
-    }
-    
-    .image-text-row .justify-container {
-        flex: 1 1 auto;
-    }
-    
-    .image-text-row p {
-        font-size: 16px;
-        color: #333;
-        width: 100%;
-    }
-    
-    @media (max-width: 767px) {
-        .image-text-row {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-    }
-    
-    .image-text-row img {
-        max-width: auto;
-        height: auto;
-        width: auto;
-        margin-right: 20px;
-    }
-    
-    .justify-container {
-        text-align: justify;
-    }
-    
-    .justify-container::after {
-        content: "";
-        display: inline-block;
-        width: 100%;
-    }
+.card-deck {
+    margin-top: 20px;
+}
+
+.card {
+    border: none;
+}
+
+.card-img-top {
+    height: 300px;
+    object-fit: cover;
+}
+
+.card-body {
+    text-align: justify;
+}
+
+.card-text {
+    margin-bottom: 15px;
+}

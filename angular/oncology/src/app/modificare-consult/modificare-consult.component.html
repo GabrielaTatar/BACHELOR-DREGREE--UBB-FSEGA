@@ -1,20 +1,27 @@
-<form>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="custom-form">
     <div class="form-group">
-        <label for="exampleFormControlInput1">Diagnostic</label>
-        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Introduceti diagnosticul">
+        <label for="diagnostic">Diagnostic</label>
+        <input type="text" class="form-control" formControlName="diagnostic" placeholder="Introduceti diagnosticul" [ngClass]="{ 'is-invalid': submitted && f['diagnostic'].errors }" />
+        <div *ngIf="submitted && f['diagnostic'].errors" class="invalid-feedback">
+            <div *ngIf="f['diagnostic'].errors">Diagnosticul nu poate fi gol!</div>
+        </div>
     </div>
+
     <div class="form-group">
-        <label for="exampleFormControlSelect1">Durată (minute)</label>
-        <select class="form-control" id="exampleFormControlSelect1">
+        <label for="durata">Durată (minute)</label>
+        <select class="form-control" formControlName="durata" [ngClass]="{ 'is-invalid': submitted && f['durata'].errors }">
       <option>30</option>
       <option>60</option>
       <option>90</option>
       <option>120</option>
     </select>
+        <div *ngIf="submitted && f['durata'].errors" class="invalid-feedback">
+            <div *ngIf="f['durata'].errors">Alegeti o durata!</div>
+        </div>
     </div>
     <div class="form-group">
-        <label for="exampleFormControlSelect1">Preț (ron)</label>
-        <select class="form-control" id="exampleFormControlSelect1">
+        <label for="pret">Preț (ron)</label>
+        <select class="form-control" formControlName="pret" [ngClass]="{ 'is-invalid': submitted && f['pret'].errors }">
     <option>200</option>
     <option>250</option>
     <option>300</option>
@@ -23,30 +30,19 @@
     <option>450</option>
     <option>500</option>
   </select>
-    </div>
-    <div class="form-group">
-        <label for="exampleFormControlTextarea1">Schemă de tratment</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-    </div>
-    <button type="button" class="btn btn-primary" (click)="openModal()">Salvează</button>
-</form>
-
-<div class="modal" tabindex="-1" role="dialog" [class.show]="modalVisible">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close" aria-label="Close" (click)="closeModal()">
-            <span aria-hidden="true">&times;</span>
-          </button>
-            </div>
-            <div class="modal-body">
-                <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
-            </div>
+        <div *ngIf="submitted && f['pret'].errors" class="invalid-feedback">
+            <div *ngIf="f['pret'].errors">Alegeti un pret!</div>
         </div>
     </div>
-</div>
+    <div class="form-group">
+        <label for="schema_tratament">Schemă de tratament</label>
+        <textarea placeholder="Introduceti schema de tratament" class="form-control" rows="3" formControlName="schema_tratament" [ngClass]="{ 'is-invalid': submitted && f['schema_tratament'].errors }"></textarea>
+        <div *ngIf="submitted && f['schema_tratament'].errors" class="invalid-feedback">
+            <div *ngIf="f['schema_tratament'].errors">Schema de tratament nu poate fi goala!</div>
+        </div>
+    </div>
+    <button [disabled]="loading" mat-raised-button color="warn" class="btn btn-primary">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> Salvează
+        </button>
+    <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+</form>

@@ -49,7 +49,7 @@ const routes: Routes = [
   { path: 'terapii', component: TerapiiComponent },
   { path: 'lista-pacienti', component: ListaPacientiComponent },
   { path: 'detalii-pacient/:id_fisa_medicala/:id_consultatie', component: DetaliiPacientComponent },
-  { path: 'modificare-consult', component: ModificareConsultComponent },
+  { path: 'modificare-consult/:id', component: ModificareConsultComponent },
   { path: 'planuri.alimentare', component: PlanuriAlimentareComponent },
   { path: 'tratamente.component', component: TratamenteComponent },
 

@@ -66,7 +66,7 @@ h2 {
 
 .carousel-caption p {
     margin: 15px;
-    color: #777;
+    color: black;
 }
 
 .carousel-item img {
@@ -80,7 +80,7 @@ h2 {
 .carousel-control-next {
     opacity: 1;
     /* Asigură vizibilitatea săgeților */
-    transition: opacity 0.3s;
+    transition: opacity 0.5s;
     /* Adaugă o tranziție de 0.3 secunde pentru efectul de desvanecere */
 }
 
@@ -91,6 +91,6 @@ h2 {
 }
 
 .carousel-item {
-    transition: opacity 0.3s;
+    transition: opacity 0.5s;
     /* Setează o tranziție de 1 secundă pentru slide-uri */
 }
