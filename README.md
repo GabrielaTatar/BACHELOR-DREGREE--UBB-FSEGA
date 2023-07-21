@@ -1,0 +1,5 @@
+# BACHELOR-DREGREE--UBB-FSEGA
+
+In this bachelor's thesis, I addressed the development of an oncology clinic with the aim of facilitating access to medical services for patients with oncological conditions. Through the platform, individuals with health issues can view profiles of medical staff (doctors, nutritionists, psychologists) and schedule appointments with the most suitable expert for them, where they will receive advice from specialists. Additionally, they have an online medical record with their data, as well as a medical history to keep track of the evolution of their condition. Moreover, medical staff have access to consultations and a list of patients for better management.
+
+With this web application, we hope to improve healthcare services by providing current and convenient solutions for both patients and medical personnel. In the future, we aim to implement more features, such as a chat to provide patients with answers to their questions. The web application is composed of a MySQL database, the back-end developed in Python with the Flask framework, and the front-end built using Angular.
